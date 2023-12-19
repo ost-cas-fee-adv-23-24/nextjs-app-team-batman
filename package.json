@@ -1,0 +1,67 @@
+{
+  "name": "nextjs-app-team-batman",
+  "version": "0.0.0-development",
+  "description": "Mumble Application for the OST Fachhochschule - Team Batman",
+  "keywords": [
+    "stroybook",
+    "tailwindcss",
+    "react",
+    "typescript",
+    "design system",
+    "component library"
+  ],
+  "license": "MIT",
+  "author": "OST Fachhochschule - Team Batman",
+  "contributors": [
+    {
+      "name": "Albin Hoti",
+      "url": "https://github.com/onivue"
+    },
+    {
+      "name": "Ricardo Vögeli",
+      "url": "https://github.com/risuiar2023"
+    }
+  ],
+  "scripts": {
+    "build": "next build",
+    "dev": "next dev",
+    "format": "prettier . --write",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "prepare": "husky install",
+    "start": "next start",
+    "storybook": "storybook dev -p 6006",
+    "updates": "npx npm-check-updates --interactive --format group"
+  },
+  "lint-staged": {
+    "*.{css,mdx,json,ts,tsx}": [
+      "prettier --write"
+    ],
+    "*.{ts,tsx}": [
+      "eslint --max-warnings 0",
+      "bash -c tsc --noEmit"
+    ]
+  },
+  "dependencies": {
+    "@commitlint/cli": "18.4.3",
+    "@commitlint/config-conventional": "18.4.3",
+    "@smartive/eslint-config": "5.1.0",
+    "@types/node": "20.10.5",
+    "@types/react": "18.2.45",
+    "@types/react-dom": "18.2.18",
+    "autoprefixer": "10.4.16",
+    "eslint": "8.56.0",
+    "eslint-config-next": "14.0.4",
+    "husky": "8.0.3",
+    "next": "14.0.4",
+    "next-auth": "^5.0.0-beta.4",
+    "postcss": "8.4.32",
+    "prettier": "^3.1.1",
+    "prettier-plugin-packagejson": "2.4.7",
+    "prettier-plugin-tailwindcss": "^0.5.9",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "tailwindcss": "3.4.0",
+    "typescript": "5.3.3"
+  }
+}
