@@ -5,6 +5,7 @@ const config = {
     'newline-before-return': 0,
     'react/forbid-component-props': ['warn', { forbid: ['style'] }],
     'react/no-children-prop': 0,
+    '@typescript-eslint/no-unsafe-member-access': 0,
   },
   // settings: {
   //   'import/resolver': {
@@ -12,6 +13,7 @@ const config = {
   //   },
   // },
   parser: '@typescript-eslint/parser',
+
   extends: ['@smartive/eslint-config/react', 'plugin:import/typescript', 'next/core-web-vitals'],
 };
 
