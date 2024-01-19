@@ -1,8 +1,12 @@
-import './globals.css';
+import { Logo } from '@ost-cas-fee-adv-23-24/design-system-component-library-team-batman';
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
-
-const inter = Inter({ subsets: ['latin'] });
+import { Poppins } from 'next/font/google';
+import './globals.css';
+const font = Poppins({
+  variable: '--font-poppins',
+  weight: ['500', '600', '700'],
+  subsets: ['latin-ext'],
+});
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -12,7 +16,12 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={font.className}>
+        <nav className="bg-primary-600">
+          <Logo variant="white" />
+        </nav>
+        {children}
+      </body>
     </html>
   );
 }

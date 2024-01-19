@@ -1,4 +1,5 @@
 import { createPost } from '@/mumble/api';
+import { Button, TextArea } from '@ost-cas-fee-adv-23-24/design-system-component-library-team-batman';
 
 export default function NewPost() {
   async function createNewPost(data: FormData) {
@@ -16,15 +17,10 @@ export default function NewPost() {
 
   return (
     <form action={createNewPost}>
-      <div>
-        <label htmlFor="text">Text</label>
-      </div>
-      <div>
-        <textarea name="text" id="text" placeholder="text"></textarea>
-      </div>
-      <button type="submit" className="rounded bg-green-500 px-4 py-2 font-bold text-white hover:bg-blue-700">
+      <TextArea name="text" label="Post" />
+      <Button type="submit" variant="secondary">
         Create
-      </button>
+      </Button>
     </form>
   );
 }

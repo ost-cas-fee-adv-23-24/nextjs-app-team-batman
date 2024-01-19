@@ -1,12 +1,11 @@
 'use client';
 
+import { Button } from '@ost-cas-fee-adv-23-24/design-system-component-library-team-batman';
 import { signOut } from 'next-auth/react';
 
 export default function LogoutButton() {
   return (
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-call
-    <button onClick={() => signOut()} className="rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700">
-      Logout
-    </button>
+    <Button onClick={() => signOut()}>Logout</Button>
   );
 }

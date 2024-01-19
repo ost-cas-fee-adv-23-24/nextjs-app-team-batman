@@ -8,7 +8,6 @@ import NewPost from '@/demo-components/new-post';
 import Post from '@/demo-components/post';
 import { getPostList } from '@/mumble/api';
 import { auth } from './api/auth/[...nextauth]/auth';
-
 export default async function Home() {
   const session = await auth();
   const posts = await getPostList();
@@ -34,12 +33,7 @@ export default async function Home() {
           </div>
         </div>
       )}
-      {session && (
-        <div>
-          <h2>Create a post</h2>
-          <NewPost />
-        </div>
-      )}
+      {session && <NewPost />}
       <div>
         <h2>Latest Posts</h2>
         <LivePosts />
