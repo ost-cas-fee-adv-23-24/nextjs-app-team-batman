@@ -1,3 +1,3 @@
-export default function Post({ params }: { params: { id: string } }) {
+export default function Posts({ params }: { params: { id: string } }) {
   return <div>My Post: {params.id}</div>;
 }
