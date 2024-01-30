@@ -8,6 +8,7 @@ export const {
   handlers: { GET, POST },
   auth,
 } = NextAuth({
+  trustHost: true,
   providers: [
     Zitadel({
       clientId: '245812844136856406@mumble',
