@@ -8,9 +8,15 @@ import NewPost from '@/demo-components/new-post';
 import Post from '@/demo-components/post';
 import { getPostList } from '@/mumble/api';
 import { auth } from './api/auth/[...nextauth]/auth';
+import { Card } from '@/components/card';
+
 export default async function Home() {
   const session = await auth();
   const posts = await getPostList();
+  const image = {
+    src: 'https://nextui.org/images/fruit-1.jpeg',
+    alt: 'test person',
+  };
 
   return (
     <main>
@@ -33,17 +39,19 @@ export default async function Home() {
           </div>
         </div>
       )}
-      {session && <NewPost />}
+      {session && (
+        <Card>
+          <NewPost />
+        </Card>
+      )}
       <div>
         <h2>Latest Posts</h2>
         <LivePosts />
-        <ul>
-          {posts.map((post) => (
-            <li key={post.id}>
-              <Post post={post} />
-            </li>
-          ))}
-        </ul>
+        {posts.map((post) => (
+          <Card image={image} key={post.id}>
+            <Post post={post} />
+          </Card>
+        ))}
       </div>
     </main>
   );
