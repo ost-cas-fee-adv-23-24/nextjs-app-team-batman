@@ -1,4 +1,5 @@
 import type { Config } from 'tailwindcss';
+import { cn } from './utils/tailwind';
 
 const config: Config = {
   presets: [require('@ost-cas-fee-adv-23-24/design-system-component-library-team-batman/tailwind.config.ts')],
@@ -13,12 +14,21 @@ const config: Config = {
       fontFamily: {
         sans: ['var(--font-poppins)'],
       },
-      backgroundImage: {
-        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+      spacing: {
+        content: '680px',
       },
     },
   },
-  plugins: [],
+  plugins: [
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    ({ addComponents }: { addComponents: any }) => {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+      addComponents({
+        '.mumble-wrapper': {
+          [cn('@apply w-full max-w-[680px]')]: {},
+        },
+      });
+    },
+  ],
 };
 export default config;

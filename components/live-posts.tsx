@@ -1,29 +1,30 @@
 'use client';
 
-import { PostEvents, getPostEventSource } from '@/mumble/api';
-import { Post as ApiPost } from '@/mumble/types';
+import { TPost } from '@/utils/api/schema';
+import { PostEvents, getPostEventSource } from '@/utils/route-service';
 import { useEffect, useState } from 'react';
+import { Card } from './card/card';
 import Post from './post';
 
 export default function LivePosts() {
-  const [posts, setPosts] = useState<ApiPost[]>([]);
+  const [posts, setPosts] = useState<TPost[]>([]);
 
   useEffect(() => {
     const events = getPostEventSource();
     events.addEventListener(PostEvents.created, (event: MessageEvent<string>) => {
-      const post = JSON.parse(event.data) as ApiPost;
+      const post = JSON.parse(event.data) as TPost;
       setPosts([post, ...posts]);
     });
     return () => events.close();
   }, [posts]);
 
   return (
-    <ul>
+    <>
       {posts.map((post) => (
-        <li key={post.id}>
+        <Card key={post.id}>
           <Post post={post} />
-        </li>
+        </Card>
       ))}
-    </ul>
+    </>
   );
 }
