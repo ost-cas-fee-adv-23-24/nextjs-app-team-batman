@@ -16,17 +16,17 @@ export default async function Page({ params }: { params: { id: string } }) {
     const handleDelete = async () => {
       'use server';
       await DELETE_POST({ id: params.id });
-      redirect(RouteService.route_page(PAGE_ROUTES.HOME));
+      redirect(RouteService.page(PAGE_ROUTES.HOME));
     };
     const handleLike = async () => {
       'use server';
       await LIKE_POST({ id: params.id });
-      revalidatePath(RouteService.route_api(API_ROUTES.POSTS_ID, { id: params.id }));
+      revalidatePath(RouteService.api(API_ROUTES.POSTS_ID, { id: params.id }));
     };
     const handleUnlike = async () => {
       'use server';
       await UNLIKE_POST({ id: params.id });
-      revalidatePath(RouteService.route_api(API_ROUTES.POSTS_ID, { id: params.id }));
+      revalidatePath(RouteService.api(API_ROUTES.POSTS_ID, { id: params.id }));
     };
 
     return (

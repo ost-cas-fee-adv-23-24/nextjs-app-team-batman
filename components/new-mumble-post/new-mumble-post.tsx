@@ -29,7 +29,7 @@ export const NewMumblePost = ({ type, parentId }: TNewMumblePost) => {
         throw new Error('No parentId');
       }
       await CREATE_POST_REPLIES({ text, media, id: parentId });
-      revalidatePath(RouteService.route_api(API_ROUTES.POSTS_ID_REPLIES, { id: parentId }));
+      revalidatePath(RouteService.api(API_ROUTES.POSTS_ID_REPLIES, { id: parentId }));
 
       return;
     }

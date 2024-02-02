@@ -1,4 +1,3 @@
-const BASE_URL_PAGE = 'http://localhost:3000';
 const BASE_URL_API = 'https://mumble-api-prod-4cxdci3drq-oa.a.run.app';
 
 export enum PAGE_ROUTES {
@@ -17,11 +16,11 @@ export enum API_ROUTES {
 }
 
 export class RouteService {
-  public static route_page(route: PAGE_ROUTES, options: unknown = {}): string {
-    return this._processUrl(BASE_URL_PAGE, route, options);
+  public static page(route: PAGE_ROUTES, options: unknown = {}): string {
+    return this._processUrl('', route, options);
   }
 
-  public static route_api(route: API_ROUTES, options: unknown = {}): string {
+  public static api(route: API_ROUTES, options: unknown = {}): string {
     return this._processUrl(BASE_URL_API, route, options);
   }
 

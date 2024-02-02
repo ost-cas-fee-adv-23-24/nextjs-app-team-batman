@@ -16,7 +16,7 @@ export default async function Page({ params }: { params: { id: string } }) {
   const handleDelete = async () => {
     'use server';
     await DELETE_POST({ id: params.id });
-    redirect(RouteService.route_page(PAGE_ROUTES.HOME));
+    redirect(RouteService.page(PAGE_ROUTES.HOME));
   };
   // const handleLike = async () => {
   //   'use server';

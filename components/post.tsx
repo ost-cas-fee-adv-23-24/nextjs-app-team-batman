@@ -15,7 +15,7 @@ export default function Post({ post }: { post: TPost }) {
       <Label size="m" as={'span'}>
         {post.creator.username ?? ''}
       </Label>
-      <a href={RouteService.route_page(PAGE_ROUTES.POSTS, { id: post.id })}>
+      <a href={RouteService.page(PAGE_ROUTES.POSTS, { id: post.id })}>
         <p>{post.text}</p>
       </a>
 
@@ -28,7 +28,7 @@ export default function Post({ post }: { post: TPost }) {
       <div className="flex gap-l">
         <CommentButton comments={post.replies ?? 0} />
         <LikeButton likes={post.likes ?? 0} isLikedByUser={Boolean(post.likedBySelf)} />
-        <CopyButton textToCopy={RouteService.route_page(PAGE_ROUTES.POSTS, { id: post.id })} />
+        <CopyButton textToCopy={RouteService.page(PAGE_ROUTES.POSTS, { id: post.id })} />
       </div>
     </div>
   );
