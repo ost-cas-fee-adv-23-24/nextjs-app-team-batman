@@ -2,7 +2,13 @@ import { auth } from '@/app/api/auth/[...nextauth]/auth';
 
 export class APIServiceBase {
   public static _handleError(response: Response) {
-    console.error(response);
+    console.error('🔴 API ERROR: ', {
+      statusText: response.statusText,
+      status: response.status,
+      body: response.body,
+      url: response.url,
+    });
+
     throw new APIError(response.statusText, response.status);
   }
 

@@ -30,7 +30,7 @@ export default async function Page({ params }: { params: { id: string } }) {
     };
 
     return (
-      <>
+      <div className="overflow-auto">
         <div>id: {post.id}</div>
         <div>id (ULID) to date: {ULID_TO_DATE(post.id).toLocaleDateString()}</div>
         <div className="overflow-auto">creator: {JSON.stringify(post.creator)}</div>
@@ -61,7 +61,7 @@ export default async function Page({ params }: { params: { id: string } }) {
             </Button>
           </form>
         </div>
-      </>
+      </div>
     );
   } catch (error) {
     if (error instanceof APIError && error.status === 404) {

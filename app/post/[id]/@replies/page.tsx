@@ -1,10 +1,12 @@
 import { auth } from '@/app/api/auth/[...nextauth]/auth';
+import { Card } from '@/components/card';
+import Post from '@/components/post';
 import { DELETE_POST, GET_POST_REPLIES } from '@/utils/api/api-service-post';
 import { PAGE_ROUTES, RouteService } from '@/utils/route-service';
 import { Button } from '@ost-cas-fee-adv-23-24/design-system-component-library-team-batman';
 import { redirect } from 'next/navigation';
 
-export default async function Post({ params }: { params: { id: string } }) {
+export default async function Page({ params }: { params: { id: string } }) {
   // throw new Error('Not implemented');
 
   const replies = await GET_POST_REPLIES({ id: params.id });
@@ -33,7 +35,13 @@ export default async function Post({ params }: { params: { id: string } }) {
 
   return (
     <>
-      <div>{JSON.stringify(replies)}</div>
+      {/* <div>{JSON.stringify(replies)}</div> */}
+
+      {replies.data.map((post) => (
+        <Card key={post.id}>
+          <Post post={post} />
+        </Card>
+      ))}
       {session && (
         <div className="flex gap-m">
           <form action={handleDelete}>

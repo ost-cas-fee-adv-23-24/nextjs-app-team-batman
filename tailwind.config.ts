@@ -24,7 +24,7 @@ const config: Config = {
     ({ addComponents }: { addComponents: any }) => {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-call
       addComponents({
-        '.mumble-wrapper': {
+        '.mumble-container': {
           [cn('@apply w-full max-w-[680px]')]: {},
         },
       });

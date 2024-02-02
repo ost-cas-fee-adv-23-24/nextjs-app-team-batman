@@ -16,8 +16,6 @@ export const DELETE_POST = async (payload: { id: string }) => {
   });
 };
 
-// TODO -> PATCH ?
-
 export const GET_POSTS = async () => {
   const res = await APIServiceBase._fetch(RouteService.route_api(API_ROUTES.POSTS));
   const posts = (await res.json()) as TPostPaginatedResult;
@@ -27,8 +25,9 @@ export const GET_POSTS = async () => {
 export const CREATE_POST = async (payload: TPayloadCreatePost) => {
   const body = new FormData();
   body.append('text', payload.text ?? '');
-  body.append('media', payload.media ?? '');
-
+  if (payload.media?.size ?? 0 > 0) {
+    body.append('media', payload.media ?? '');
+  }
   const res = await APIServiceBase._fetch(RouteService.route_api(API_ROUTES.POSTS), {
     method: 'POST',
     body,
@@ -69,9 +68,12 @@ export const GET_POST_REPLIES = async (payload: { id: string }) => {
   return replies;
 };
 
-export const CREATE_POST_REPLIES = async (payload: { id: string }) => {
+export const CREATE_POST_REPLIES = async (payload: { id: string } & TPayloadCreatePost) => {
   const body = new FormData();
-  body.append('id', payload.id ?? '');
+  body.append('text', payload.text ?? '');
+  if (payload.media?.size ?? 0 > 0) {
+    body.append('media', payload.media ?? '');
+  }
 
   await APIServiceBase._fetch(RouteService.route_api(API_ROUTES.POSTS_ID_REPLIES, { id: payload.id }), {
     method: 'POST',

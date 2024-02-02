@@ -1,10 +1,21 @@
 import { Card } from '@/components/card/card';
 
-export default function Layout({ postitem, replies }: { postitem: React.ReactNode; replies: React.ReactNode }) {
+export default function Layout({
+  post,
+  reply,
+  replies,
+}: {
+  post: React.ReactNode;
+  reply: React.ReactNode;
+  replies: React.ReactNode;
+}) {
   return (
     <Card>
-      {postitem}
-      {replies}
+      <div className="grid gap-l">
+        {post}
+        {reply}
+        {replies}
+      </div>
     </Card>
   );
 }

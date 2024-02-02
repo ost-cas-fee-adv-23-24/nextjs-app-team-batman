@@ -1,9 +1,6 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-
 import { Card } from '@/components/card/card';
 import LivePosts from '@/components/live-posts';
-import NewMumblePost from '@/components/new-mumble-post';
+import { NewMumblePost, POST_TYPE } from '@/components/new-mumble-post';
 import Post from '@/components/post';
 import { GET_POSTS } from '@/utils/api/api-service-post';
 import { Heading } from '@ost-cas-fee-adv-23-24/design-system-component-library-team-batman';
@@ -31,7 +28,7 @@ export default async function Home() {
       <div className="grid gap-s">
         {session && (
           <Card>
-            <NewMumblePost />
+            <NewMumblePost type={POST_TYPE.MUMBLE} />
           </Card>
         )}
 
