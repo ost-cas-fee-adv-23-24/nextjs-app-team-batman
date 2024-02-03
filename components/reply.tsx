@@ -1,7 +1,6 @@
-import { TPost } from '@/utils/api/api-types';
+import { TReply } from '@/utils/api/api-types';
 import { PAGE_ROUTES, RouteService } from '@/utils/route-service';
 import {
-  CommentButton,
   CopyButton,
   Image,
   Label,
@@ -10,7 +9,7 @@ import {
 import NextImage from 'next/image';
 import Link from 'next/link';
 
-export default function Post({ post }: { post: TPost }) {
+export default function Reply({ post }: { post: TReply }) {
   // TODO:  Add server actions here
   // TODO: it should work with live posts (client component)
 
@@ -21,9 +20,7 @@ export default function Post({ post }: { post: TPost }) {
           {post.creator.username ?? ''}
         </Label>
       </Link>
-      <Link href={RouteService.page(PAGE_ROUTES.POSTS, { id: post.id })}>
-        <p>{post.text}</p>
-      </Link>
+      <p>{post.text}</p>
 
       {post.mediaUrl && (
         <div className="grid place-content-center">
@@ -41,7 +38,6 @@ export default function Post({ post }: { post: TPost }) {
       )}
 
       <div className="flex gap-l">
-        <CommentButton comments={post.replies ?? 0} />
         <LikeButton likes={post.likes ?? 0} isLikedByUser={Boolean(post.likedBySelf)} />
         <CopyButton textToCopy={RouteService.page(PAGE_ROUTES.POSTS, { id: post.id })} />
       </div>

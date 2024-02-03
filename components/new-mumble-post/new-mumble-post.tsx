@@ -28,14 +28,14 @@ export const NewMumblePost = ({ type, parentId }: TNewMumblePost) => {
       if (!parentId) {
         throw new Error('No parentId');
       }
-      await CREATE_POST_REPLIES({ text, media, id: parentId });
+      await CREATE_POST_REPLIES({ data: { text, media }, id: parentId });
       revalidatePath(RouteService.api(API_ROUTES.POSTS_ID_REPLIES, { id: parentId }));
 
       return;
     }
 
     if (type === POST_TYPE.MUMBLE) {
-      await CREATE_POST({ text, media });
+      await CREATE_POST({ data: { text, media } });
       // revalidatePath(RouteService.route_api(API_ROUTES.POSTS_ID, { id: params.id }));
       return;
     }

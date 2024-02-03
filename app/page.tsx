@@ -8,6 +8,7 @@ import { auth } from './api/auth/[...nextauth]/auth';
 
 export default async function Home() {
   const session = await auth();
+  // const posts = await GET_POSTS({ query: { likedBy: ['245807989095758678', '245807822799993686'] } });
   const posts = await GET_POSTS();
   const image = {
     src: 'https://nextui.org/images/fruit-1.jpeg',

@@ -3,8 +3,8 @@ const BASE_URL_API = 'https://mumble-api-prod-4cxdci3drq-oa.a.run.app';
 export enum PAGE_ROUTES {
   HOME = '/',
   USER = '/user/:id',
+  USER_LIKED = '/user/:id/liked',
   POSTS = '/post/:id',
-  CURRENT_USER = '/user/current',
 }
 
 export enum API_ROUTES {
@@ -13,6 +13,11 @@ export enum API_ROUTES {
   POSTS_ID_LIKES = '/posts/:id/likes',
   POSTS_ID_REPLIES = '/posts/:id/replies',
   POSTS_ID_MEDIA = '/posts/:id/media',
+  USERS = '/users',
+  USERS_ID = '/users/:id',
+  USERS_ID_FOLLOWERS = '/users/:id/followers',
+  USERS_ID_FOLLOWEES = '/users/:id/followees',
+  USERS_AVATAR = '/users/avatar',
 }
 
 export class RouteService {

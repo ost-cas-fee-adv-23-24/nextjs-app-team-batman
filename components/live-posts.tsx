@@ -1,6 +1,6 @@
 'use client';
 
-import { TPost } from '@/utils/api/schema';
+import { TPost } from '@/utils/api/api-types';
 import { PostEvents, getPostEventSource } from '@/utils/route-service';
 import { useEffect, useState } from 'react';
 import { Card } from './card/card';
