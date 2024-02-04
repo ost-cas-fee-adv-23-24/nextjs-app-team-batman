@@ -1,4 +1,4 @@
-import { TReply } from '@/utils/api/api-types';
+import { TAPIReply } from '@/utils/api/api-types';
 import { PAGE_ROUTES, RouteService } from '@/utils/route-service';
 import {
   CopyButton,
@@ -9,7 +9,7 @@ import {
 import NextImage from 'next/image';
 import Link from 'next/link';
 
-export default function Reply({ post }: { post: TReply }) {
+export default function Reply({ post }: { post: TAPIReply }) {
   // TODO:  Add server actions here
   // TODO: it should work with live posts (client component)
 

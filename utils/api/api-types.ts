@@ -1,4 +1,4 @@
-export type TUser = {
+export type TAPIUser = {
   id: string | null;
   username: string | null;
   avatarUrl: string | null;
@@ -6,30 +6,30 @@ export type TUser = {
   lastname: string | null;
 };
 
-export type TPublicUser = {
+export type TAPIPublicUser = {
   id: string | null;
   username: string | null;
   avatarUrl: string | null;
 };
 
-export type TUserPaginatedResult = {
+export type TAPIUserPaginatedResult = {
   count: number;
-  data: TUser[];
+  data: TAPIUser[];
   next: string | null;
   previous: string | null;
 };
 
-export type TUpdateUserData = {
+export type TAPIUpdateUserData = {
   firstname: string | null;
   lastname: string | null;
   username: string | null;
 };
 
-export type TLikeInfo = { postId: string; userId: string | null };
+export type TAPILikeInfo = { postId: string; userId: string | null };
 
-export type TReply = {
+export type TAPIReply = {
   id: string;
-  creator: TPublicUser;
+  creator: TAPIPublicUser;
   text: string | null;
   mediaUrl: string | null;
   mediaType: string | null;
@@ -38,16 +38,16 @@ export type TReply = {
   parentId: string;
 };
 
-export type TReplyPaginatedResult = {
+export type TAPIReplyPaginatedResult = {
   count: number;
-  data: TReply[];
+  data: TAPIReply[];
   next: string | null;
   previous: string | null;
 };
 
-export type TPost = {
+export type TAPIPost = {
   id: string;
-  creator: TPublicUser;
+  creator: TAPIPublicUser;
   text: string | null;
   mediaUrl: string | null;
   mediaType: string | null;
@@ -56,9 +56,9 @@ export type TPost = {
   replies: number;
 };
 
-export type TPostBase = {
+export type TAPIPostBase = {
   id: string;
-  creator: TPublicUser;
+  creator: TAPIPublicUser;
   text: string | null;
   mediaUrl: string | null;
   mediaType: string | null;
@@ -66,15 +66,16 @@ export type TPostBase = {
   likedBySelf: boolean | null;
 };
 
-export type TPostPaginatedResult = {
+export type TAPIPostPaginatedResult = {
   count: number;
-  data: TPost[];
+  data: TAPIPost[];
   next: string | null;
   previous: string | null;
 };
 
-export type TDeletedPost = { id: string };
-export type TUpdatePostData = { text: string | null };
+export type TAPIUpdatePostText = { text: string | null };
+
+export type TAPIUpdatePost = { text?: string | undefined; media?: File | undefined };
 
 export type TAPIQueryPagination = {
   offset?: number | undefined;

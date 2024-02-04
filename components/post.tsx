@@ -1,4 +1,4 @@
-import { TPost } from '@/utils/api/api-types';
+import { TAPIPost } from '@/utils/api/api-types';
 import { PAGE_ROUTES, RouteService } from '@/utils/route-service';
 import {
   CommentButton,
@@ -10,7 +10,7 @@ import {
 import NextImage from 'next/image';
 import Link from 'next/link';
 
-export default function Post({ post }: { post: TPost }) {
+export default function Post({ post }: { post: TAPIPost }) {
   // TODO:  Add server actions here
   // TODO: it should work with live posts (client component)
 

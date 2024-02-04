@@ -8,20 +8,20 @@ export class APIServiceBase {
       body: response.body,
       url: response.url,
     });
-
     throw new APIError(response.statusText, response.status);
   }
 
   public static _authHeader = async (): Promise<HeadersInit> => {
     const session = await auth();
-
-    if (!session) {
-      return {};
-    }
-    return { Authorization: `Bearer ${session.accessToken}` };
+    if (!session) return {};
+    return session ? { Authorization: `Bearer ${session.accessToken}` } : {};
   };
 
   public static _fetch = async (input: RequestInfo, init?: RequestInit) => {
+    // TODO: remove before go live
+    // delay for testing loading states
+    // await new Promise((resolve) => setTimeout(resolve, 1000));
+
     const authHeader = await this._authHeader();
     const res = await fetch(input, {
       headers: {
@@ -30,45 +30,19 @@ export class APIServiceBase {
       },
       ...init,
     });
-    if (!res.ok) {
-      APIServiceBase._handleError(res);
-    }
+    if (!res.ok) APIServiceBase._handleError(res);
     return res;
   };
 
   public static _objectToFormData = (obj: Record<string, string | Blob>): FormData => {
     return Object.entries(obj).reduce((formData, [key, value]) => {
-      if (value === undefined || value === null) {
-        return formData;
-      }
-      if (value instanceof File && value.size === 0) {
-        return formData;
-      }
+      if (value === undefined || value === null) return formData;
+      if (value instanceof File && value.size === 0) return formData;
+
       formData.append(key, value as string);
       return formData;
     }, new FormData());
   };
-
-  public static _objectToQuery(obj: Record<string, string | string[] | number | undefined> | undefined): string | null {
-    if (obj && Object.keys(obj).length > 0) {
-      const query = Object.entries(obj).reduce((acc, [key, value]) => {
-        if (value === undefined || value === null) {
-          return acc;
-        }
-        if (Array.isArray(value)) {
-          const arrayParams = value.map((item) => `${key}=${encodeURIComponent(String(item))}`);
-          return acc ? `${acc}&${arrayParams.join('&')}` : `?${arrayParams.join('&')}`;
-        }
-        return acc
-          ? `${acc}&${key}=${encodeURIComponent(String(value))}`
-          : `?${key}=${encodeURIComponent(String(value))}`;
-      }, '');
-
-      return query || null;
-    }
-
-    return null;
-  }
 }
 
 export class APIError extends Error {

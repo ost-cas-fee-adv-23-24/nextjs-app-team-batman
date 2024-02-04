@@ -5,8 +5,6 @@ import Link from 'next/link';
 export default function Layout({ children, params }: { children: React.ReactNode; params: { id: string } }) {
   return (
     <>
-      <div>{JSON.stringify(params)}</div>
-
       <nav className="grid grid-cols-2">
         <Link href={RouteService.page(PAGE_ROUTES.USER, { id: params.id })}>
           <Button>USER POSTS</Button>
