@@ -1,19 +1,14 @@
 import { auth } from '@/app/api/auth/[...nextauth]/auth';
 import { Card } from '@/components/card';
-import { NewMumblePost, POST_TYPE } from '@/components/new-mumble-post';
+import { CreateMumble } from '@/components/create-mumble';
+import { MUMBLE_TYPE } from '@/utils/api/api-types';
 
 export default async function Page({ params }: { params: { id: string } }) {
-  // throw new Error('Not implemented');
-
   const session = await auth();
-
+  if (!session) return null;
   return (
-    <div>
-      {session && (
-        <Card>
-          <NewMumblePost type={POST_TYPE.REPLY} parentId={params.id} />
-        </Card>
-      )}
-    </div>
+    <Card>
+      <CreateMumble type={MUMBLE_TYPE.REPLY} parentId={params.id} />
+    </Card>
   );
 }

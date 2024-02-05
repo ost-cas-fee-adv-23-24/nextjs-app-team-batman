@@ -90,3 +90,8 @@ export type TAPIQueryPost = {
   creators?: string[] | undefined;
   likedBy?: string[] | undefined;
 } & TAPIQueryPagination;
+
+export enum MUMBLE_TYPE {
+  POST = 'POST',
+  REPLY = 'REPLY',
+}

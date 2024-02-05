@@ -1,5 +1,4 @@
 import { Card } from '@/components/card/card';
-import LivePosts from '@/components/live-posts';
 import Post from '@/components/post';
 import { GET_POSTS } from '@/utils/api/api-service-post';
 
@@ -9,7 +8,7 @@ export default async function DashboardPosts() {
 
   return (
     <>
-      <LivePosts />
+      {/* <LivePosts /> */}
 
       {posts.data.map((post) => (
         <Card key={post.id}>
