@@ -1,19 +1,12 @@
 import { Card } from '@/components/card/card';
-import LivePosts from '@/components/live-posts';
 import { NewMumblePost, POST_TYPE } from '@/components/new-mumble-post';
-import Post from '@/components/post';
-import { GET_POSTS } from '@/utils/api/api-service-post';
 import { Heading } from '@ost-cas-fee-adv-23-24/design-system-component-library-team-batman';
+import { Suspense } from 'react';
 import { auth } from './api/auth/[...nextauth]/auth';
+import DashboardPosts from './dashboard-posts';
 
 export default async function Home() {
   const session = await auth();
-  // const posts = await GET_POSTS({ query: { likedBy: ['245807989095758678', '245807822799993686'] } });
-  const posts = await GET_POSTS();
-  const image = {
-    src: 'https://nextui.org/images/fruit-1.jpeg',
-    alt: 'test person',
-  };
 
   return (
     <div className="grid gap-l">
@@ -33,13 +26,9 @@ export default async function Home() {
           </Card>
         )}
 
-        <LivePosts />
-
-        {posts.data.map((post) => (
-          <Card image={image} key={post.id}>
-            <Post post={post} />
-          </Card>
-        ))}
+        <Suspense fallback={<p>LOADING POSTS...</p>}>
+          <DashboardPosts />
+        </Suspense>
       </div>
     </div>
   );

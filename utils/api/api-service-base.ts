@@ -20,7 +20,7 @@ export class APIServiceBase {
   public static _fetch = async (input: RequestInfo, init?: RequestInit) => {
     // TODO: remove before go live
     // delay for testing loading states
-    // await new Promise((resolve) => setTimeout(resolve, 1000));
+    await new Promise((resolve) => setTimeout(resolve, 1000));
 
     const authHeader = await this._authHeader();
     const res = await fetch(input, {

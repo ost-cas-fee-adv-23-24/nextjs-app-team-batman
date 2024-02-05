@@ -1,6 +1,7 @@
 import { PAGE_ROUTES, RouteService } from '@/utils/route-service';
 import { Button } from '@ost-cas-fee-adv-23-24/design-system-component-library-team-batman';
 import Link from 'next/link';
+import { Suspense } from 'react';
 
 export default function Layout({ children, params }: { children: React.ReactNode; params: { id: string } }) {
   return (
@@ -14,7 +15,9 @@ export default function Layout({ children, params }: { children: React.ReactNode
         </Link>
       </nav>
 
-      <div>{children}</div>
+      <Suspense fallback={<p>Loading ...</p>}>
+        <div className="border-2 border-r-primary-800 p-s">{children}</div>
+      </Suspense>
     </>
   );
 }
