@@ -1,5 +1,5 @@
+import { GET_USER_BY_ID } from '@/utils/api/api-actions-user';
 import { APIError } from '@/utils/api/api-service-base';
-import { GET_USER_BY_ID } from '@/utils/api/api-service-user';
 import { notFound } from 'next/navigation';
 
 export default async function Page({ params }: { params: { id: string } }) {
@@ -12,9 +12,7 @@ export default async function Page({ params }: { params: { id: string } }) {
       </div>
     );
   } catch (error) {
-    if (error instanceof APIError && error.status === 404) {
-      return notFound();
-    }
+    if (error instanceof APIError && error.status === 404) return notFound();
     throw error;
   }
 }

@@ -1,6 +1,6 @@
-import Post from '@/components/post';
+import { MUMBLE_USER_INFO_VARIANT, MumblePost } from '@/components/mumble';
+import { GET_POSTS } from '@/utils/api/api-actions-post';
 import { APIError } from '@/utils/api/api-service-base';
-import { GET_POSTS } from '@/utils/api/api-service-post';
 import { notFound } from 'next/navigation';
 
 export default async function Page({ params }: { params: { id: string } }) {
@@ -10,14 +10,13 @@ export default async function Page({ params }: { params: { id: string } }) {
     return (
       <div className="overflow-auto">
         {userPosts.data.map((post) => (
-          <Post post={post} key={post.id} />
+          <MumblePost post={post} key={post.id} variant={MUMBLE_USER_INFO_VARIANT.TIMELINE} />
         ))}
       </div>
     );
   } catch (error) {
-    if (error instanceof APIError && error.status === 404) {
-      return notFound();
-    }
+    if (error instanceof APIError && error.status === 404) return notFound();
+
     throw error;
   }
 }

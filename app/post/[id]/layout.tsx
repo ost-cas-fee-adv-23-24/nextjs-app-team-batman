@@ -1,21 +1,14 @@
-import { Card } from '@/components/card/card';
+import { MumbleCard } from '@/components/mumble';
+import { ReactNode } from 'react';
 
-export default function Layout({
-  post,
-  reply,
-  replies,
-}: {
-  post: React.ReactNode;
-  reply: React.ReactNode;
-  replies: React.ReactNode;
-}) {
+export default function Layout({ post, reply, replies }: { post: ReactNode; reply: ReactNode; replies: ReactNode }) {
   return (
-    <Card>
+    <MumbleCard>
       <div className="grid gap-l">
         {post}
         {reply}
         {replies}
       </div>
-    </Card>
+    </MumbleCard>
   );
 }

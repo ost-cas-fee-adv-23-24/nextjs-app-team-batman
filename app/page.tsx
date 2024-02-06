@@ -1,10 +1,10 @@
-import { Card } from '@/components/card/card';
-import { CreateMumble } from '@/components/create-mumble';
-import DashboardPosts from '@/components/dashboard-posts';
+import { auth } from '@/app/api/auth/[...nextauth]/auth';
+import { DashboardPosts } from '@/components/dashboard';
+import { MumbleCreate } from '@/components/mumble';
+import { MumbleCard } from '@/components/mumble/mumble-card';
 import { MUMBLE_TYPE } from '@/utils/api/api-types';
 import { Heading } from '@ost-cas-fee-adv-23-24/design-system-component-library-team-batman';
 import { Suspense } from 'react';
-import { auth } from './api/auth/[...nextauth]/auth';
 
 export default async function Home() {
   const session = await auth();
@@ -22,9 +22,9 @@ export default async function Home() {
 
       <div className="grid gap-s">
         {session && (
-          <Card>
-            <CreateMumble type={MUMBLE_TYPE.POST} />
-          </Card>
+          <MumbleCard>
+            <MumbleCreate type={MUMBLE_TYPE.POST} />
+          </MumbleCard>
         )}
 
         <Suspense fallback={<p>LOADING POSTS...</p>}>

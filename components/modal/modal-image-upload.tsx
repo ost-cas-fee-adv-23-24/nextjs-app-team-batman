@@ -2,7 +2,7 @@
 import { Button, ImageUpload, Modal } from '@ost-cas-fee-adv-23-24/design-system-component-library-team-batman';
 import { useRef, useState } from 'react';
 
-export default function ImageUploadModal() {
+export const ModalImageUpload = () => {
   const [modalState, setModalState] = useState<boolean>(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -35,4 +35,4 @@ export default function ImageUploadModal() {
       </Modal>
     </>
   );
-}
+};

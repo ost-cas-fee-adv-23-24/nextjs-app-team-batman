@@ -1,26 +1,17 @@
 import { auth } from '@/app/api/auth/[...nextauth]/auth';
 
+/**
+ * @description Base class for API services
+ * @info All API calls should be made through this class
+ */
 export class APIServiceBase {
-  public static _handleError(response: Response) {
-    console.error('🔴 API ERROR: ', {
-      statusText: response.statusText,
-      status: response.status,
-      body: response.body,
-      url: response.url,
-    });
-    throw new APIError(response.statusText, response.status);
-  }
-
-  public static _authHeader = async (): Promise<HeadersInit> => {
-    const session = await auth();
-    if (!session) return {};
-    return session ? { Authorization: `Bearer ${session.accessToken}` } : {};
-  };
-
+  /**
+   * @description Re-usable fetch method with auth header
+   */
   public static _fetch = async (input: RequestInfo, init?: RequestInit) => {
-    // TODO: remove before go live
+    // TODO: remove delay before go live !
     // delay for testing loading states
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    await new Promise((resolve) => setTimeout(resolve, 600));
 
     const authHeader = await this._authHeader();
     const res = await fetch(input, {
@@ -34,17 +25,33 @@ export class APIServiceBase {
     return res;
   };
 
-  public static _objectToFormData = (obj: Record<string, string | Blob>): FormData => {
-    return Object.entries(obj).reduce((formData, [key, value]) => {
-      if (value === undefined || value === null) return formData;
-      if (value instanceof File && value.size === 0) return formData;
-
-      formData.append(key, value as string);
-      return formData;
-    }, new FormData());
+  /**
+   * @description Generate auth header for API calls
+   */
+  public static _authHeader = async (): Promise<HeadersInit> => {
+    const session = await auth();
+    if (!session) return {};
+    return session ? { Authorization: `Bearer ${session.accessToken}` } : {};
   };
+
+  /**
+   * @description Handle API errors
+   */
+  public static _handleError(response: Response) {
+    console.error('🔴 API ERROR: ', {
+      statusText: response.statusText,
+      status: response.status,
+      body: response.body,
+      url: response.url,
+    });
+    throw new APIError(response.statusText, response.status);
+  }
 }
 
+/**
+ * @description Custom error class for API errors
+ * @info All API errors should be thrown using this class
+ */
 export class APIError extends Error {
   constructor(
     message: string,

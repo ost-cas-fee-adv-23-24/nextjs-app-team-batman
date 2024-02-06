@@ -1,43 +1,26 @@
-import { Card } from '@/components/card';
-import Reply from '@/components/reply';
-import { GET_POST_REPLIES } from '@/utils/api/api-service-post';
+import { auth } from '@/app/api/auth/[...nextauth]/auth';
+import { MUMBLE_USER_INFO_VARIANT, MumbleCreate, MumbleReply, MumbleUserInfo } from '@/components/mumble';
+import { GET_POST_REPLIES } from '@/utils/api/api-actions-post';
+import { MUMBLE_TYPE } from '@/utils/api/api-types';
 
 export default async function Page({ params }: { params: { id: string } }) {
-  // throw new Error('Not implemented');
-
   const replies = await GET_POST_REPLIES({ id: params.id });
-
-  // const session = await auth();
-
-  // const handleDelete = async () => {
-  //   'use server';
-  //   await DELETE_POST({ id: params.id });
-  //   redirect(RouteService.page(PAGE_ROUTES.HOME));
-  // };
-  // const handleLike = async () => {
-  //   'use server';
-  //   await LIKE_POST({ id: params.id });
-  //   revalidatePath(RouteService.route_api(API_ROUTES.POSTS_ID, { id: params.id }));
-  // };
-  // const handleUnlike = async () => {
-  //   'use server';
-  //   await UNLIKE_POST({ id: params.id });
-  //   revalidatePath(RouteService.route_api(API_ROUTES.POSTS_ID, { id: params.id }));
-  // };
-
-  if (replies.count === 0) {
-    return <>this post hast no replies...</>;
-  }
+  const session = await auth();
 
   return (
     <>
-      {/* <div>{JSON.stringify(replies)}</div> */}
+      {session && (
+        <div className="grid gap-s">
+          <MumbleUserInfo variant={MUMBLE_USER_INFO_VARIANT.REPLY} displayname="First Name" username={'todo'} />
+          <MumbleCreate type={MUMBLE_TYPE.REPLY} parentId={params.id} />
+        </div>
+      )}
 
-      {replies.data.map((post) => (
-        <Card key={post.id}>
-          <Reply post={post} />
-        </Card>
-      ))}
+      {replies.count === 0 ? (
+        <>this post hast no replies...</>
+      ) : (
+        replies.data.map((post) => <MumbleReply post={post} key={post.id} />)
+      )}
     </>
   );
 }

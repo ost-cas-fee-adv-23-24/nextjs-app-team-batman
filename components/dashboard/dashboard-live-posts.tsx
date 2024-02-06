@@ -1,12 +1,12 @@
 'use client';
 
+import { MUMBLE_USER_INFO_VARIANT, MumblePost } from '@/components/mumble';
+import { MumbleCard } from '@/components/mumble/mumble-card';
 import { TAPIPost } from '@/utils/api/api-types';
 import { PostEvents, getPostEventSource } from '@/utils/route-service';
 import { useEffect, useState } from 'react';
-import { Card } from './card/card';
-import Post from './post';
 
-export default function LivePosts() {
+export const DashboardLivePosts = () => {
   const [posts, setPosts] = useState<TAPIPost[]>([]);
 
   useEffect(() => {
@@ -21,10 +21,10 @@ export default function LivePosts() {
   return (
     <>
       {posts.map((post) => (
-        <Card key={post.id}>
-          <Post post={post} />
-        </Card>
+        <MumbleCard key={post.id}>
+          <MumblePost post={post} variant={MUMBLE_USER_INFO_VARIANT.TIMELINE} />
+        </MumbleCard>
       ))}
     </>
   );
-}
+};

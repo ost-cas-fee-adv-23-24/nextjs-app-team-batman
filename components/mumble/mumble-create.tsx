@@ -1,13 +1,13 @@
 'use client';
-import { CREATE_MUMBLE } from '@/utils/api/api-service-post';
+import { ModalImageUpload } from '@/components/modal';
+import { CREATE_MUMBLE } from '@/utils/api/api-actions-post';
 import { MUMBLE_TYPE } from '@/utils/api/api-types';
 import { Button, Heading, TextArea } from '@ost-cas-fee-adv-23-24/design-system-component-library-team-batman';
 import { useRef, useState } from 'react';
-import ImageUploadModal from '../upload-image-modal';
 
 type TNewMumblePost = { type: MUMBLE_TYPE.REPLY; parentId: string } | { type: MUMBLE_TYPE.POST };
 
-export const CreateMumble = (props: TNewMumblePost) => {
+export const MumbleCreate = (props: TNewMumblePost) => {
   const [formState, setFormState] = useState<Awaited<ReturnType<typeof CREATE_MUMBLE>>>();
   const formRef = useRef<HTMLFormElement>(null);
 
@@ -27,7 +27,7 @@ export const CreateMumble = (props: TNewMumblePost) => {
       const result = await CREATE_MUMBLE({
         data: formData,
         type: props.type,
-        id: props.parentId,
+        parentId: props.parentId,
       });
       setFormState(result);
       if (!result?.errors) {
@@ -41,7 +41,7 @@ export const CreateMumble = (props: TNewMumblePost) => {
   return (
     <form ref={formRef} action={formAction} className="grid w-full gap-s">
       {props.type === MUMBLE_TYPE.POST && (
-        <Heading level={3} visualLevel={4} className="text-primary-600">
+        <Heading level={3} visualLevel={4} className="text-base-900">
           Hey, was gibt’s neues?
         </Heading>
       )}
@@ -53,7 +53,7 @@ export const CreateMumble = (props: TNewMumblePost) => {
         error={formState?.errors?.text?.[0] ?? formState?.errors?.media?.[0]}
       />
       <div className="grid grid-cols-2 gap-s">
-        <ImageUploadModal />
+        <ModalImageUpload />
         <Button type="submit" variant="primary" fullWidth icon="send">
           Absenden
         </Button>

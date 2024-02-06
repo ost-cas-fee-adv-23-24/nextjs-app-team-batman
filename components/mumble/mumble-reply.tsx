@@ -1,25 +1,24 @@
+import { MUMBLE_USER_INFO_VARIANT, MumbleUserInfo } from '@/components/mumble';
+import { decodeULIDTimestamp } from '@/utils/api/api-helpers';
 import { TAPIReply } from '@/utils/api/api-types';
 import { PAGE_ROUTES, RouteService } from '@/utils/route-service';
-import {
-  CopyButton,
-  Image,
-  Label,
-  LikeButton,
-} from '@ost-cas-fee-adv-23-24/design-system-component-library-team-batman';
+import { CopyButton, Image, LikeButton } from '@ost-cas-fee-adv-23-24/design-system-component-library-team-batman';
 import NextImage from 'next/image';
-import Link from 'next/link';
 
-export default function Reply({ post }: { post: TAPIReply }) {
-  // TODO:  Add server actions here
-  // TODO: it should work with live posts (client component)
+export const MumbleReply = ({ post }: { post: TAPIReply }) => {
+  // TODO:  Add server actions
 
   return (
-    <div className="grid gap-m">
-      <Link href={RouteService.page(PAGE_ROUTES.USER, { id: post.creator.id })}>
-        <Label size="m" as={'span'}>
-          {post.creator.username ?? ''}
-        </Label>
-      </Link>
+    <div className="grid gap-s">
+      <MumbleUserInfo
+        variant={MUMBLE_USER_INFO_VARIANT.REPLY}
+        displayname="First Name"
+        userId={post.creator.id!}
+        username={post.creator.username!}
+        imageSrc={post.creator.avatarUrl ?? undefined}
+        date={decodeULIDTimestamp(post.id)}
+      />
+
       <p>{post.text}</p>
 
       {post.mediaUrl && (
@@ -43,4 +42,4 @@ export default function Reply({ post }: { post: TAPIReply }) {
       </div>
     </div>
   );
-}
+};

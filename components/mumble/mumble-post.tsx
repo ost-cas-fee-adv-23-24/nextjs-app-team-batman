@@ -1,26 +1,35 @@
+import { MUMBLE_USER_INFO_VARIANT, MumbleUserInfo } from '@/components/mumble';
+import { decodeULIDTimestamp } from '@/utils/api/api-helpers';
 import { TAPIPost } from '@/utils/api/api-types';
 import { PAGE_ROUTES, RouteService } from '@/utils/route-service';
 import {
   CommentButton,
   CopyButton,
   Image,
-  Label,
   LikeButton,
 } from '@ost-cas-fee-adv-23-24/design-system-component-library-team-batman';
 import NextImage from 'next/image';
 import Link from 'next/link';
 
-export default function Post({ post }: { post: TAPIPost }) {
+export const MumblePost = ({
+  post,
+  variant,
+}: {
+  post: TAPIPost;
+  variant: MUMBLE_USER_INFO_VARIANT.DETAILVIEW | MUMBLE_USER_INFO_VARIANT.TIMELINE;
+}) => {
   // TODO:  Add server actions here
-  // TODO: it should work with live posts (client component)
 
   return (
     <div className="grid gap-m">
-      <Link href={RouteService.page(PAGE_ROUTES.USER, { id: post.creator.id })}>
-        <Label size="m" as={'span'}>
-          {post.creator.username ?? ''}
-        </Label>
-      </Link>
+      <MumbleUserInfo
+        variant={variant}
+        displayname="First Name"
+        userId={post.creator.id!}
+        username={post.creator.username!}
+        date={decodeULIDTimestamp(post.id)}
+      />
+
       <Link href={RouteService.page(PAGE_ROUTES.POSTS, { id: post.id })}>
         <p>{post.text}</p>
       </Link>
@@ -47,4 +56,4 @@ export default function Post({ post }: { post: TAPIPost }) {
       </div>
     </div>
   );
-}
+};

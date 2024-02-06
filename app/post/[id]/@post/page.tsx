@@ -1,11 +1,10 @@
 import { auth } from '@/app/api/auth/[...nextauth]/auth';
-import Post from '@/components/post';
-import { decodeULIDTimestamp } from '@/utils/api/api-helpers';
+import { MUMBLE_USER_INFO_VARIANT, MumblePost } from '@/components/mumble';
+import { DELETE_POST, GET_POST_BY_ID, MUMBLE_LIKE_HANDLER } from '@/utils/api/api-actions-post';
 import { APIError } from '@/utils/api/api-service-base';
-import { CREATE_POST_LIKE, DELETE_POST, DELETE_POST_LIKE, GET_POST_BY_ID } from '@/utils/api/api-service-post';
-import { API_ROUTES, PAGE_ROUTES, RouteService } from '@/utils/route-service';
+import { MUMBLE_LIKE_TYPE } from '@/utils/api/api-types';
+import { PAGE_ROUTES, RouteService } from '@/utils/route-service';
 import { Button } from '@ost-cas-fee-adv-23-24/design-system-component-library-team-batman';
-import { revalidatePath } from 'next/cache';
 import { notFound, redirect } from 'next/navigation';
 
 export default async function Page({ params }: { params: { id: string } }) {
@@ -19,30 +18,20 @@ export default async function Page({ params }: { params: { id: string } }) {
       await DELETE_POST({ id: params.id });
       redirect(RouteService.page(PAGE_ROUTES.HOME));
     };
+
     const handleLike = async () => {
       'use server';
-      await CREATE_POST_LIKE({ id: params.id });
-      revalidatePath(RouteService.api(API_ROUTES.POSTS_ID, { id: params.id }));
+      await MUMBLE_LIKE_HANDLER({ id: params.id, type: MUMBLE_LIKE_TYPE.LIKE });
     };
-    const handleUnlike = async () => {
+
+    const handleDisklike = async () => {
       'use server';
-      await DELETE_POST_LIKE({ id: params.id });
-      revalidatePath(RouteService.api(API_ROUTES.POSTS_ID, { id: params.id }));
+      await MUMBLE_LIKE_HANDLER({ id: params.id, type: MUMBLE_LIKE_TYPE.DISLIKE });
     };
 
     return (
-      <div className="overflow-auto">
-        <div>id: {post.id}</div>
-        <div>created: {decodeULIDTimestamp(post.id).toLocaleDateString()}</div>
-        <div className="overflow-auto">creator: {JSON.stringify(post.creator)}</div>
-        <div>likes: {post.likes}</div>
-        <div>likedBySelf: {JSON.stringify(post.likedBySelf)}</div>
-        <div>mediaType: {post.mediaType}</div>
-        <div>text: {post.text}</div>
-        <div>replies: {post.replies}</div>
-        <div>mediaUrl: {post.mediaUrl}</div>
-
-        <Post post={post} />
+      <div>
+        <MumblePost post={post} variant={MUMBLE_USER_INFO_VARIANT.DETAILVIEW} />
 
         <div className="flex gap-m">
           {session?.user?.id === post.creator.id && (
@@ -57,7 +46,7 @@ export default async function Page({ params }: { params: { id: string } }) {
               ❤️LIKE POST
             </Button>
           </form>
-          <form action={handleUnlike}>
+          <form action={handleDisklike}>
             <Button type="submit" variant="secondary">
               💔 UNLIKE POST
             </Button>
@@ -66,9 +55,8 @@ export default async function Page({ params }: { params: { id: string } }) {
       </div>
     );
   } catch (error) {
-    if (error instanceof APIError && error.status === 404) {
-      return notFound();
-    }
+    if (error instanceof APIError && error.status === 404) return notFound();
+
     throw error;
   }
 }

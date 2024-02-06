@@ -1,9 +1,9 @@
 import { PAGE_ROUTES, RouteService } from '@/utils/route-service';
 import { Button } from '@ost-cas-fee-adv-23-24/design-system-component-library-team-batman';
 import Link from 'next/link';
-import { Suspense } from 'react';
+import { ReactNode, Suspense } from 'react';
 
-export default function Layout({ children, params }: { children: React.ReactNode; params: { id: string } }) {
+export default function Layout({ children, params }: { children: ReactNode; params: { id: string } }) {
   return (
     <>
       <nav className="grid grid-cols-2">

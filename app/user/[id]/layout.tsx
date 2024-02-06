@@ -1,6 +1,6 @@
-import { Suspense } from 'react';
+import { ReactNode, Suspense } from 'react';
 
-export default function Layout({ user, posts }: { user: React.ReactNode; posts: React.ReactNode }) {
+export default function Layout({ user, posts }: { user: ReactNode; posts: ReactNode }) {
   return (
     <div className="grid w-full gap-l">
       <Suspense fallback={<p>LOADING USER...</p>}>{user}</Suspense>

@@ -1,3 +1,6 @@
+// Details of the API types can be found in the API documentation
+// @see https://mumble-api-prod-4cxdci3drq-oa.a.run.app/
+
 export type TAPIUser = {
   id: string | null;
   username: string | null;
@@ -73,10 +76,6 @@ export type TAPIPostPaginatedResult = {
   previous: string | null;
 };
 
-export type TAPIUpdatePostText = { text: string | null };
-
-export type TAPIUpdatePost = { text?: string | undefined; media?: File | undefined };
-
 export type TAPIQueryPagination = {
   offset?: number | undefined;
   limit?: number | undefined;
@@ -94,4 +93,9 @@ export type TAPIQueryPost = {
 export enum MUMBLE_TYPE {
   POST = 'POST',
   REPLY = 'REPLY',
+}
+
+export enum MUMBLE_LIKE_TYPE {
+  LIKE = 'LIKE',
+  DISLIKE = 'DISLIKE',
 }
