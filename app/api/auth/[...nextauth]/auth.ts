@@ -6,6 +6,7 @@ import Zitadel from 'next-auth/providers/zitadel';
 export const {
   handlers: { GET, POST },
   auth,
+  signIn,
 } = NextAuth({
   trustHost: true,
   providers: [
@@ -23,6 +24,11 @@ export const {
       },
     }),
   ],
+  session: {
+    // in zitadel the session is default set on 12 hours
+    // so we set the maxAge to 10 hours to be sure the session is valid & not expired
+    maxAge: 10 * 60 * 60,
+  },
   callbacks: {
     async jwt({ token, user, account }) {
       if (account) {
