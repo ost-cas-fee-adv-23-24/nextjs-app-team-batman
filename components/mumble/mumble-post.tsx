@@ -1,24 +1,23 @@
+import { auth } from '@/app/api/auth/[...nextauth]/auth';
 import { MUMBLE_USER_INFO_VARIANT, MumbleUserInfo } from '@/components/mumble';
 import { decodeULIDTimestamp } from '@/utils/api/api-helpers';
 import { TAPIPost } from '@/utils/api/api-types';
 import { PAGE_ROUTES, RouteService } from '@/utils/route-service';
-import {
-  CommentButton,
-  CopyButton,
-  Image,
-  LikeButton,
-} from '@ost-cas-fee-adv-23-24/design-system-component-library-team-batman';
+import { CommentButton, Image } from '@ost-cas-fee-adv-23-24/design-system-component-library-team-batman';
 import NextImage from 'next/image';
 import Link from 'next/link';
+import { MumbleCopy } from './mumble-copy';
+import { MumbleDelete } from './mumble-delete';
+import { MumbleLike } from './mumble-like';
 
-export const MumblePost = ({
+export const MumblePost = async ({
   post,
   variant,
 }: {
   post: TAPIPost;
   variant: MUMBLE_USER_INFO_VARIANT.DETAILVIEW | MUMBLE_USER_INFO_VARIANT.TIMELINE;
 }) => {
-  // TODO:  Add server actions here
+  const session = await auth();
 
   return (
     <div className="grid gap-m">
@@ -29,6 +28,7 @@ export const MumblePost = ({
         username={post.creator.username!}
         date={decodeULIDTimestamp(post.id)}
       />
+      {session && variant === MUMBLE_USER_INFO_VARIANT.DETAILVIEW && <MumbleDelete post={post} />}
 
       <Link href={RouteService.page(PAGE_ROUTES.POSTS, { id: post.id })}>
         <p>{post.text}</p>
@@ -49,10 +49,12 @@ export const MumblePost = ({
         </div>
       )}
 
-      <div className="flex gap-l">
-        <CommentButton comments={post.replies ?? 0} />
-        <LikeButton likes={post.likes ?? 0} isLikedByUser={Boolean(post.likedBySelf)} />
-        <CopyButton textToCopy={RouteService.page(PAGE_ROUTES.POSTS, { id: post.id })} />
+      <div className="-ml-xs flex flex-wrap gap-xxs gap-y-0 sm:gap-l">
+        <Link href={RouteService.page(PAGE_ROUTES.POSTS, { id: post.id })}>
+          <CommentButton comments={post.replies ?? 0} />
+        </Link>
+        <MumbleLike post={post} />
+        <MumbleCopy post={post} />
       </div>
     </div>
   );

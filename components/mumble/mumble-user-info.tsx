@@ -43,7 +43,7 @@ export const MumbleUserInfo = ({ variant, date, username, displayname, imageSrc,
       {variant === MUMBLE_USER_INFO_VARIANT.REPLY && <Avatar {...avatarProps} />}
       <div className="flex flex-col gap-xs">
         <Label {...labelProps} />
-        <div className="flex gap-s">
+        <div className="flex flex-wrap gap-s">
           <LinkIcon icon="profile" text={username} />
           {date && <LinkIcon icon="calendar" text={date.toLocaleDateString()} variant="secondary" />}
         </div>

@@ -52,7 +52,7 @@ export const MumbleCreate = (props: TNewMumblePost) => {
         rows={6}
         error={formState?.errors?.text?.[0] ?? formState?.errors?.media?.[0]}
       />
-      <div className="grid grid-cols-2 gap-s">
+      <div className="grid grid-cols-1 gap-s sm:grid-cols-2">
         <ModalImageUpload />
         <Button type="submit" variant="primary" fullWidth icon="send">
           Absenden
