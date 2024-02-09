@@ -1,4 +1,4 @@
-import { auth } from '@/app/api/auth/[...nextauth]/auth';
+import { auth, signIn } from '@/app/api/auth/[...nextauth]/auth';
 
 /**
  * @description Base class for API services
@@ -21,7 +21,10 @@ export class APIServiceBase {
       },
       ...init,
     });
-    if (!res.ok) APIServiceBase._handleError(res);
+    if (!res.ok) {
+      if (res.status === 401) await signIn('zitadel');
+      APIServiceBase._handleError(res);
+    }
     return res;
   };
 
