@@ -28,7 +28,9 @@ export const MumblePost = async ({
         username={post.creator.username!}
         date={decodeULIDTimestamp(post.id)}
       />
-      {session && variant === MUMBLE_USER_INFO_VARIANT.DETAILVIEW && <MumbleDelete post={post} />}
+      {session && variant === MUMBLE_USER_INFO_VARIANT.DETAILVIEW && session.user?.id === post.creator.id && (
+        <MumbleDelete post={post} />
+      )}
 
       <Link href={RouteService.page(PAGE_ROUTES.POSTS, { id: post.id })}>
         <p>{post.text}</p>
