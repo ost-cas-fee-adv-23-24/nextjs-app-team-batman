@@ -9,7 +9,7 @@ export default function Layout({ user, posts, params }: { user: ReactNode; posts
       <div className="mb-m w-[400px]">
         <MumbleUserTabGroup id={params.id} />
       </div>
-      <div>{posts}</div>
+      {posts}
     </div>
   );
 }

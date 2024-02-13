@@ -3,9 +3,9 @@ import Image from 'next/image';
 
 import { GET_USER_BY_ID } from '@/utils/api/api-actions-user';
 import { APIError } from '@/utils/api/api-service-base';
+import { AVATAR_FALLBACK } from '@/utils/avatar-fallback';
 import { notFound } from 'next/navigation';
 import { ProfileImage } from './profileImage';
-import { AVATAR_FALLBACK } from '@/utils/avatar-fallback';
 
 export default async function Page({ params }: { params: { id: string } }) {
   try {

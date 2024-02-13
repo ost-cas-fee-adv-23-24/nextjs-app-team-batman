@@ -1,6 +1,6 @@
 import { MUMBLE_USER_INFO_VARIANT, MumblePost } from '@/components/mumble';
-import { GET_POSTS } from '@/utils/api/api-actions-post';
 import { MumbleCard } from '@/components/mumble/mumble-card';
+import { GET_POSTS } from '@/utils/api/api-actions-post';
 import { APIError } from '@/utils/api/api-service-base';
 import { notFound } from 'next/navigation';
 
