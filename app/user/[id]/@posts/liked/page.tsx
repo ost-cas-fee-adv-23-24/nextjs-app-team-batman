@@ -1,4 +1,4 @@
-import { MUMBLE_USER_INFO_VARIANT, MumblePost } from '@/components/mumble';
+import { MUMBLE_USER_INFO_VARIANT, MumbleCard, MumblePost } from '@/components/mumble';
 import { GET_POSTS } from '@/utils/api/api-actions-post';
 import { APIError } from '@/utils/api/api-service-base';
 import { notFound } from 'next/navigation';
@@ -8,9 +8,11 @@ export default async function Page({ params }: { params: { id: string } }) {
     const userPosts = await GET_POSTS({ query: { likedBy: [params.id] } });
 
     return (
-      <div className="overflow-auto">
+      <div className="grid gap-s">
         {userPosts.data.map((post) => (
-          <MumblePost post={post} key={post.id} variant={MUMBLE_USER_INFO_VARIANT.TIMELINE} />
+          <MumbleCard key={post.id}>
+            <MumblePost post={post} key={post.id} variant={MUMBLE_USER_INFO_VARIANT.TIMELINE} />
+          </MumbleCard>
         ))}
       </div>
     );

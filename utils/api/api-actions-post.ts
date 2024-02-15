@@ -1,6 +1,7 @@
 'use server';
 import { revalidatePath } from 'next/cache';
-import { API_ROUTES, RouteService } from '../route-service';
+import { redirect } from 'next/navigation';
+import { API_ROUTES, PAGE_ROUTES, RouteService } from '../route-service';
 import { APIServiceBase } from './api-service-base';
 import {
   MUMBLE_LIKE_TYPE,
@@ -111,6 +112,7 @@ export const DELETE_POST = async (payload: { id: string }) => {
   await APIServiceBase._fetch(RouteService.api(API_ROUTES.POSTS_ID, { id: payload.id }), {
     method: 'DELETE',
   });
+  redirect(RouteService.page(PAGE_ROUTES.HOME));
 };
 
 /**

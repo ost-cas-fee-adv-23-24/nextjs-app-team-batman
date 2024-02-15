@@ -1,13 +1,11 @@
 import { MUMBLE_USER_INFO_VARIANT, MumbleUserInfo } from '@/components/mumble';
 import { decodeULIDTimestamp } from '@/utils/api/api-helpers';
 import { TAPIReply } from '@/utils/api/api-types';
-import { PAGE_ROUTES, RouteService } from '@/utils/route-service';
-import { CopyButton, Image, LikeButton } from '@ost-cas-fee-adv-23-24/design-system-component-library-team-batman';
+import { Image } from '@ost-cas-fee-adv-23-24/design-system-component-library-team-batman';
 import NextImage from 'next/image';
+import { MumbleLike } from './mumble-like';
 
 export const MumbleReply = ({ post }: { post: TAPIReply }) => {
-  // TODO:  Add server actions
-
   return (
     <div className="grid gap-s">
       <MumbleUserInfo
@@ -36,9 +34,8 @@ export const MumbleReply = ({ post }: { post: TAPIReply }) => {
         </div>
       )}
 
-      <div className="flex gap-l">
-        <LikeButton likes={post.likes ?? 0} isLikedByUser={Boolean(post.likedBySelf)} />
-        <CopyButton textToCopy={RouteService.page(PAGE_ROUTES.POSTS, { id: post.id })} />
+      <div className="-ml-xs">
+        <MumbleLike post={post} />
       </div>
     </div>
   );
