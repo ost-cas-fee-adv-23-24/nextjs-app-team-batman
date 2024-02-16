@@ -1,3 +1,5 @@
+import PostSkeleton from '@/components/mumble/mumble-post-skeleton';
+
 export default function Page() {
-  return <div>LOADING POST...</div>;
+  return <PostSkeleton />;
 }
