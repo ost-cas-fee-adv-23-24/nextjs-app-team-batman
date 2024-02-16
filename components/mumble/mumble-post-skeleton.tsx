@@ -1,11 +1,8 @@
-import { AVATAR_SKELETON } from '@/utils/avatar-fallback';
-import { Avatar } from '@ost-cas-fee-adv-23-24/design-system-component-library-team-batman';
-
 export default function PostSkeleton() {
   return (
     <div className="relative h-fit w-full items-center rounded-m bg-white px-xl py-l">
-      <div className="absolute left-[-30px] top-m animate-skeleton rounded-full">
-        <Avatar size="m" image={{ alt: '', src: AVATAR_SKELETON, width: 100, height: 100 }} />
+      <div className="absolute left-[-30px] top-m h-[60px] w-[60px] animate-skeleton rounded-full border-[6px] border-base-100">
+        &nbsp;
       </div>
       <div className="pb-m">
         <div className="mb-m w-4/12 animate-skeleton rounded-s pb-m">&nbsp;</div>
