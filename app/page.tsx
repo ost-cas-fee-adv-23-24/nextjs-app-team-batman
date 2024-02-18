@@ -6,6 +6,8 @@ import { MUMBLE_TYPE } from '@/utils/api/api-types';
 import { Heading } from '@ost-cas-fee-adv-23-24/design-system-component-library-team-batman';
 import { Suspense } from 'react';
 
+import PostSkeleton from '@/components/mumble/mumble-post-skeleton';
+
 export default async function Home() {
   const session = await auth();
 
@@ -26,8 +28,7 @@ export default async function Home() {
             <MumbleCreate type={MUMBLE_TYPE.POST} />
           </MumbleCard>
         )}
-
-        <Suspense fallback={<p>LOADING POSTS...</p>}>
+        <Suspense fallback={<PostSkeleton skeletons={4} />}>
           <DashboardPosts />
         </Suspense>
       </div>
