@@ -28,7 +28,7 @@ export default async function Home() {
             <MumbleCreate type={MUMBLE_TYPE.POST} />
           </MumbleCard>
         )}
-        <Suspense fallback={<PostSkeleton />}>
+        <Suspense fallback={<PostSkeleton skeletons={4} />}>
           <DashboardPosts />
         </Suspense>
       </div>

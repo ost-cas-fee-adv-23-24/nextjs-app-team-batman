@@ -10,7 +10,7 @@ export default function Layout({ user, posts, params }: { user: ReactNode; posts
       <div className="mb-m w-[400px]">
         <MumbleUserTabGroup id={params.id} />
       </div>
-      <Suspense fallback={<PostSkeleton />}>{posts}</Suspense>
+      <Suspense fallback={<PostSkeleton skeletons={2} />}>{posts}</Suspense>
     </div>
   );
 }
