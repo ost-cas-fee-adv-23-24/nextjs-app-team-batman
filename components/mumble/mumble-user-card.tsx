@@ -15,14 +15,23 @@ interface IMumbleUserCard {
   lastname: string;
   username: string;
   avatarUrl?: string;
+  userId?: string;
+  sessionUserId?: string;
 }
 
-export const MumbleUserCard = ({ firstname, lastname, username, avatarUrl }: IMumbleUserCard) => {
+export const MumbleUserCard = ({
+  firstname,
+  lastname,
+  username,
+  avatarUrl,
+  userId,
+  sessionUserId,
+}: IMumbleUserCard) => {
   const [modalState, setModalState] = useState<boolean>(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
   return (
-    <div>
+    <>
       <div className="relative">
         <div className="mb-4 relative h-[320px] cursor-pointer overflow-hidden rounded-m bg-primary-600 object-contain">
           <Image src={ProfileImage} alt="profile image" className="duration-200 ease-in-out hover:opacity-50" fill />
@@ -35,10 +44,11 @@ export const MumbleUserCard = ({ firstname, lastname, username, avatarUrl }: IMu
             }}
             size="xl"
             onEdit={() => setModalState(!modalState)}
+            edit={userId === sessionUserId}
           />
         </div>
       </div>
-      <input type="file" name="media" id="upload-media" ref={inputRef} hidden />
+      <input type="file" name="media" id="upload-media" ref={inputRef} />
       <Modal
         isOpen={modalState}
         onClose={() => {
@@ -69,6 +79,6 @@ export const MumbleUserCard = ({ firstname, lastname, username, avatarUrl }: IMu
           <LinkIcon icon="location" text="Switzerland" variant="secondary" />
         </div>
       </div>
-    </div>
+    </>
   );
 };
