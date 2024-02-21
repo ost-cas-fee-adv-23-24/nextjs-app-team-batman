@@ -45,7 +45,7 @@
   "dependencies": {
     "@commitlint/cli": "18.6.0",
     "@commitlint/config-conventional": "18.6.0",
-    "@ost-cas-fee-adv-23-24/design-system-component-library-team-batman": "^1.18.7",
+    "@ost-cas-fee-adv-23-24/design-system-component-library-team-batman": "^1.18.8",
     "@smartive/eslint-config": "5.1.0",
     "@types/node": "20.11.16",
     "@types/react": "18.2.55",

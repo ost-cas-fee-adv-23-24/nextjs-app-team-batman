@@ -11,7 +11,7 @@ export const DashboardPosts = async () => {
       {/* <LivePosts /> */}
 
       {posts.data.map((post) => (
-        <MumbleCard key={post.id}>
+        <MumbleCard key={post.id} imageSrc={post.creator?.avatarUrl ?? undefined}>
           <MumblePost post={post} variant={MUMBLE_USER_INFO_VARIANT.TIMELINE} />
         </MumbleCard>
       ))}
