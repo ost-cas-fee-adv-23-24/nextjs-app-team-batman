@@ -1,12 +1,12 @@
 'use client';
 import { useRef, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import {
   Avatar,
   ImageUpload,
   Modal,
   LinkIcon,
   Label,
-  Button,
 } from '@ost-cas-fee-adv-23-24/design-system-component-library-team-batman';
 import { UPDATE_USER_AVATAR } from '@/utils/api/api-actions-user';
 import { ProfileImage } from './profileImage';
@@ -32,6 +32,7 @@ export const MumbleUserCard = ({
   const [modalState, setModalState] = useState<boolean>(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
+  const router = useRouter();
 
   const formAction = async (formData: FormData) => {
     if (sessionUserId) {
@@ -42,6 +43,13 @@ export const MumbleUserCard = ({
       formRef.current?.reset();
     }
   };
+
+  const handleClose = () => {
+    formRef.current?.requestSubmit();
+    setModalState(!modalState);
+    router.refresh();
+  };
+
   return (
     <>
       <form ref={formRef} action={formAction} className="grid w-full gap-s">
@@ -61,19 +69,13 @@ export const MumbleUserCard = ({
             />
           </div>
         </div>
-        <input type="file" name="media" id="upload-media" ref={inputRef} />
-        <Button type="submit" variant="primary" fullWidth icon="send">
-          Absenden
-        </Button>
+        <input type="file" name="media" id="upload-media" ref={inputRef} hidden />
         <Modal
           isOpen={modalState}
           onClose={() => {
             setModalState(!modalState);
-            formRef.current?.submit();
           }}
-          onSubmit={() => {
-            setModalState(!modalState);
-          }}
+          onSubmit={handleClose}
           width="m"
           title="Bild hochladen"
         >
