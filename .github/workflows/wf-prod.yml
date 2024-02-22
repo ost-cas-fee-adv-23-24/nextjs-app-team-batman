@@ -8,18 +8,18 @@ jobs:
     uses: ./.github/workflows/task-verify-code.yml
     secrets: inherit
 
-  deploy-staging:
+  deploy-preview:
     needs: verify
     uses: ./.github/workflows/task-deploy.yml
     with:
-      VARIANT: 'STAGING'
+      VARIANT: 'PREVIEW'
     secrets: inherit
 
   e2e:
-    needs: deploy-staging
+    needs: deploy-preview
     uses: ./.github/workflows/task-e2e.yml
     with:
-      DEPLOY_URL: ${{ needs.deploy-staging.outputs.DEPLOY_URL }}
+      DEPLOY_URL: ${{ needs.deploy-preview.outputs.DEPLOY_URL }}
     secrets: inherit
 
   deploy-prod:

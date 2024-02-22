@@ -44,5 +44,5 @@ export const {
       return session;
     },
   },
-  secret: 'this-is-very-secret',
+  secret: process.env.NEXTAUTH_SECRET,
 });

@@ -1,4 +1,4 @@
-name: 🐼 PULL-REQUEST-WORKFLOW
+name: 🐼 BRANCH-WORKFLOW
 on:
   pull_request:
     branches: [main]
@@ -12,7 +12,7 @@ jobs:
     needs: verify
     uses: ./.github/workflows/task-deploy.yml
     with:
-      VARIANT: 'PREVIEW'
+      VARIANT: 'BRANCH'
     secrets: inherit
 
   e2e:
