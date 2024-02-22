@@ -10,7 +10,7 @@ export default async function Page({ params }: { params: { id: string } }) {
     return (
       <div className="grid gap-s">
         {userPosts.data.map((post) => (
-          <MumbleCard key={post.id}>
+          <MumbleCard key={post.id} imageSrc={post.creator?.avatarUrl ?? undefined}>
             <MumblePost post={post} key={post.id} variant={MUMBLE_USER_INFO_VARIANT.TIMELINE} />
           </MumbleCard>
         ))}

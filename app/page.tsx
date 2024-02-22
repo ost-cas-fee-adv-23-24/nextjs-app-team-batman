@@ -5,11 +5,12 @@ import { MumbleCard } from '@/components/mumble/mumble-card';
 import { MUMBLE_TYPE } from '@/utils/api/api-types';
 import { Heading } from '@ost-cas-fee-adv-23-24/design-system-component-library-team-batman';
 import { Suspense } from 'react';
-
+import { userAvatar } from '@/utils/user-avatar';
 import PostSkeleton from '@/components/mumble/mumble-post-skeleton';
 
 export default async function Home() {
   const session = await auth();
+  const avatar = await userAvatar(session?.user?.id);
 
   return (
     <div className="grid gap-l">
@@ -24,7 +25,7 @@ export default async function Home() {
 
       <div className="grid gap-s">
         {session && (
-          <MumbleCard>
+          <MumbleCard imageSrc={avatar}>
             <MumbleCreate type={MUMBLE_TYPE.POST} />
           </MumbleCard>
         )}
