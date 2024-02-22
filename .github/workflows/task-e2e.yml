@@ -1,0 +1,45 @@
+name: '🚧 TASK-E2E'
+
+on:
+  workflow_call:
+    inputs:
+      DEPLOY_URL:
+        description: 'URL of the where the e2e tests will run'
+        required: true
+        type: string
+
+jobs:
+  deploy:
+    name: 🚧 e2e test
+    timeout-minutes: 30
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: 👀 cache node modules
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: 📦 install dependencies
+        run: |
+          npm ci
+          npx playwright install --with-deps
+
+      - name: 🚦 run playwright tests (with netlify url)
+        run: npx playwright test
+        env:
+          E2E_BASE_URL: ${{ inputs.DEPLOY_URL }}
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 10

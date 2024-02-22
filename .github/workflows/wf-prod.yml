@@ -1,0 +1,30 @@
+name: 🐼 PROD-WORKFLOW
+on:
+  push:
+    branches: [main]
+
+jobs:
+  verify:
+    uses: ./.github/workflows/task-verify-code.yml
+    secrets: inherit
+
+  deploy-staging:
+    needs: verify
+    uses: ./.github/workflows/task-deploy.yml
+    with:
+      VARIANT: 'STAGING'
+    secrets: inherit
+
+  e2e:
+    needs: deploy-staging
+    uses: ./.github/workflows/task-e2e.yml
+    with:
+      DEPLOY_URL: ${{ needs.deploy-staging.outputs.DEPLOY_URL }}
+    secrets: inherit
+
+  deploy-prod:
+    needs: e2e
+    uses: ./.github/workflows/task-deploy.yml
+    with:
+      VARIANT: 'PROD'
+    secrets: inherit

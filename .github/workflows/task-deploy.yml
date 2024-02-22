@@ -1,0 +1,90 @@
+name: '🚀 TASK-DEPLOY'
+
+on:
+  workflow_call:
+    inputs:
+      VARIANT:
+        description: 'variant of the deployment'
+        required: true
+        type: string
+        default: 'PREVIEW' # STAGING, PROD
+
+    outputs:
+      DEPLOY_URL:
+        description: 'URL of the deployment'
+        value: ${{ jobs.deploy.outputs.DEPLOY_URL }}
+
+jobs:
+  deploy:
+    name: 🚀 deploy
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    outputs:
+      DEPLOY_URL: ${{ steps.deploy.outputs.DEPLOY_URL }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: 👀 cache node modules
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: 📦 install & build
+        run: |
+          npm ci
+          npm run build
+          npm install -g netlify-cli @netlify/plugin-nextjs@appdir
+
+      - name: 🚀 deploy to netlify
+        id: deploy
+        run: |
+          if [[ "${{ inputs.VARIANT }}" == "PROD" ]]; then
+            FLAGS="--prod"
+          elif [[ "${{ inputs.VARIANT }}" == "PREVIEW" ]]; then
+            FLAGS="--alias=preview-${{ github.event.number }}"
+          fi  
+          DEPLOY_URL=$(netlify deploy \
+            --site ${{ secrets.NETLIFY_SITE_ID }} \
+            --auth ${{ secrets.NETLIFY_AUTH_TOKEN }} \
+            --dir=.next \
+            --build \
+            $FLAGS \
+            --message "Deploy - GitHub Actions" \
+            | grep -o 'https://.*--team-batman\.netlify\.app')
+          echo $DEPLOY_URL
+          echo "DEPLOY_URL=$DEPLOY_URL" >> $GITHUB_OUTPUT
+
+      - name: 📝 prepare comment body
+        id: prepare-comment
+        run: |
+          echo "COMMENT_BODY=[![Netlify Status](https://api.netlify.com/api/v1/badges/c3cc25f4-113a-4173-914b-60aa82745cf7/deploy-status?branch=preview-${{ github.event.number }})](https://app.netlify.com/sites/team-batman/deploys)<br/><h3>🚀 Preview URL</h3><br/>${{ steps.deploy.outputs.DEPLOY_URL }}" >> $GITHUB_OUTPUT
+
+      - name: 👀 find comment
+        if: inputs.VARIANT == 'PREVIEW'
+        uses: peter-evans/find-comment@v3
+        id: find-comment
+        with:
+          issue-number: ${{ github.event.pull_request.number }}
+          comment-author: 'github-actions[bot]'
+          body-includes: ${{ steps.deploy.outputs.DEPLOY_URL }}
+
+      - name: ⤴️ create comment
+        if: inputs.VARIANT == 'PREVIEW' && steps.find-comment.outputs.comment-id == ''
+        uses: peter-evans/create-or-update-comment@v4
+        with:
+          issue-number: ${{ github.event.pull_request.number }}
+          body: ${{ steps.prepare-comment.outputs.COMMENT_BODY }}
+
+      - name: ⤴️ Update comment
+        if: inputs.VARIANT == 'PREVIEW' && steps.find-comment.outputs.comment-id != ''
+        uses: peter-evans/create-or-update-comment@v4
+        with:
+          comment-id: ${{ steps.find-comment.outputs.comment-id }}
+          body: ${{ steps.prepare-comment.outputs.COMMENT_BODY }}
+          edit-mode: replace
