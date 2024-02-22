@@ -1,0 +1,103 @@
+name: '🚀 TASK-DEPLOY'
+
+on:
+  workflow_call:
+    inputs:
+      VARIANT:
+        description: 'variant of the deployment'
+        required: true
+        type: string
+        default: 'BRANCH' # PREVIEW, PROD
+
+    outputs:
+      DEPLOY_URL:
+        description: 'URL of the deployment'
+        value: ${{ jobs.deploy.outputs.DEPLOY_URL }}
+
+jobs:
+  deploy:
+    name: 🚀 deploy
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    outputs:
+      DEPLOY_URL: ${{ steps.set-url.outputs.DEPLOY_URL }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: 👀 cache node modules
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: 🔒 set DEPLOY_URL
+        id: set-url
+        run: |
+          if [[ "${{ inputs.VARIANT }}" == "PROD" ]]; then
+            echo "DEPLOY_URL=https://team-batman.netlify.app" >> $GITHUB_OUTPUT
+          elif [[ "${{ inputs.VARIANT }}" == "BRANCH" ]]; then
+            echo "DEPLOY_URL=https://branch-${{ github.event.number }}--team-batman.netlify.app" >> $GITHUB_OUTPUT
+          elif [[ "${{ inputs.VARIANT }}" == "PREVIEW" ]]; then
+            echo "DEPLOY_URL=https://preview-${{ github.sha }}--team-batman.netlify.app" >> $GITHUB_OUTPUT
+          fi
+
+      - name: 📦 install & build
+        env:
+          NEXTAUTH_URL: ${{ steps.set-url.outputs.DEPLOY_URL }}
+        run: |
+          echo $NEXTAUTH_URL
+          npm ci
+          npm run build
+          npm install -g netlify-cli @netlify/plugin-nextjs@appdir
+
+      - name: 🚀 deploy to netlify
+        id: deploy
+        run: |
+          if [[ "${{ inputs.VARIANT }}" == "PROD" ]]; then
+            FLAGS="--prod"
+          elif [[ "${{ inputs.VARIANT }}" == "BRANCH" ]]; then
+            FLAGS="--alias=branch-${{ github.event.number }}"
+          elif [[ "${{ inputs.VARIANT }}" == "PREVIEW" ]]; then
+            FLAGS="--alias=preview-${{ github.sha }}"
+          fi  
+          netlify deploy \
+            --site ${{ secrets.NETLIFY_SITE_ID }} \
+            --auth ${{ secrets.NETLIFY_AUTH_TOKEN }} \
+            --dir=.next \
+            --build \
+            $FLAGS \
+            --message "Deploy - GitHub Actions" \
+
+      - name: 📝 prepare comment body
+        id: prepare-comment
+        run: |
+          echo "COMMENT_BODY=[![Netlify Status](https://api.netlify.com/api/v1/badges/c3cc25f4-113a-4173-914b-60aa82745cf7/deploy-status?branch=branch-${{ github.event.number }})](https://app.netlify.com/sites/team-batman/deploys)<br/><h3>🚀 Preview URL</h3><br/>${{ steps.set-url.outputs.DEPLOY_URL }}" >> $GITHUB_OUTPUT
+
+      - name: 👀 find comment
+        if: inputs.VARIANT == 'BRANCH'
+        uses: peter-evans/find-comment@v3
+        id: find-comment
+        with:
+          issue-number: ${{ github.event.pull_request.number }}
+          comment-author: 'github-actions[bot]'
+          body-includes: ${{ steps.deploy.outputs.DEPLOY_URL }}
+
+      - name: ⤴️ create comment
+        if: inputs.VARIANT == 'BRANCH' && steps.find-comment.outputs.comment-id == ''
+        uses: peter-evans/create-or-update-comment@v4
+        with:
+          issue-number: ${{ github.event.pull_request.number }}
+          body: ${{ steps.prepare-comment.outputs.COMMENT_BODY }}
+
+      - name: ⤴️ Update comment
+        if: inputs.VARIANT == 'BRANCH' && steps.find-comment.outputs.comment-id != ''
+        uses: peter-evans/create-or-update-comment@v4
+        with:
+          comment-id: ${{ steps.find-comment.outputs.comment-id }}
+          body: ${{ steps.prepare-comment.outputs.COMMENT_BODY }}
+          edit-mode: replace

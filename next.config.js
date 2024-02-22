@@ -15,7 +15,8 @@ const nextConfig = {
     ],
   },
   env: {
-    NEXTAUTH_URL: process.env.DEPLOY_PRIME_URL || process.env.URL || 'http://localhost:3000',
+    NEXTAUTH_URL: process.env.NEXTAUTH_URL,
+    NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
   },
 };
 
