@@ -76,7 +76,7 @@ jobs:
       - name: 📝 prepare comment body
         id: prepare-comment
         run: |
-          echo "COMMENT_BODY=[![Netlify Status](https://api.netlify.com/api/v1/badges/c3cc25f4-113a-4173-914b-60aa82745cf7/deploy-status?branch=branch-${{ github.event.number }})](https://app.netlify.com/sites/team-batman/deploys)<br/><h3>🚀 Preview URL</h3><br/>${{ steps.deploy.outputs.DEPLOY_URL }}" >> $GITHUB_OUTPUT
+          echo "COMMENT_BODY=[![Netlify Status](https://api.netlify.com/api/v1/badges/c3cc25f4-113a-4173-914b-60aa82745cf7/deploy-status?branch=branch-${{ github.event.number }})](https://app.netlify.com/sites/team-batman/deploys)<br/><h3>🚀 Preview URL</h3><br/>${{ steps.set-url.outputs.DEPLOY_URL }}" >> $GITHUB_OUTPUT
 
       - name: 👀 find comment
         if: inputs.VARIANT == 'BRANCH'
