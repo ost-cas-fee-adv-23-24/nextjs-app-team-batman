@@ -91,6 +91,7 @@ export const UPDATE_USER_AVATAR = async (payload: { id: string; data: FormData }
   await APIServiceBase._fetch(RouteService.api(API_ROUTES.USERS_AVATAR, { id: payload.id }), {
     method: 'PUT',
     body: payload.data,
+    /* ToDo add file validation and errors */
   });
 };
 
