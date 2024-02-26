@@ -12,7 +12,7 @@ import { MumbleLike } from './mumble-like';
 import { getUser } from '@/utils/user';
 
 const parseUserFirstLastName = (user: Pick<TAPIUser, 'firstname' | 'lastname'>) => {
-  return user?.firstname && user?.lastname ? `${user?.firstname} ${user?.lastname}` : 'First Lastname';
+  return `${user?.firstname} ${user?.lastname}`;
 };
 
 export const MumblePost = async ({
