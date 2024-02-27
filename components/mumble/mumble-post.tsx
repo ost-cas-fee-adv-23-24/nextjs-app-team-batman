@@ -24,7 +24,7 @@ export const MumblePost = async ({
   const user = await getUser(post.creator.id ? post.creator.id : undefined);
 
   let displayname = 'First Lastname';
-  if (user) {
+  if (user?.firstname) {
     displayname = parseUserFirstLastName(user);
   }
 
