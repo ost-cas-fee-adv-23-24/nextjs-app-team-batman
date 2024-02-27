@@ -1,4 +1,3 @@
-import { auth } from '@/app/api/auth/[...nextauth]/auth';
 import { MUMBLE_USER_INFO_VARIANT, MumbleUserInfo } from '@/components/mumble';
 import { decodeULIDTimestamp } from '@/utils/api/api-helpers';
 import { TAPIPost } from '@/utils/api/api-types';
@@ -10,27 +9,23 @@ import { MumbleCopy } from './mumble-copy';
 import { MumbleDelete } from './mumble-delete';
 import { MumbleLike } from './mumble-like';
 
-export const MumblePost = async ({
+export const MumblePost = ({
   post,
   variant,
 }: {
   post: TAPIPost;
   variant: MUMBLE_USER_INFO_VARIANT.DETAILVIEW | MUMBLE_USER_INFO_VARIANT.TIMELINE;
 }) => {
-  const session = await auth();
-
   return (
     <div className="grid gap-m">
       <MumbleUserInfo
         variant={variant}
-        displayname="First Name"
+        displayname=""
         userId={post.creator.id!}
         username={post.creator.username!}
         date={decodeULIDTimestamp(post.id)}
       />
-      {session && variant === MUMBLE_USER_INFO_VARIANT.DETAILVIEW && session.user?.id === post.creator.id && (
-        <MumbleDelete post={post} />
-      )}
+      {variant === MUMBLE_USER_INFO_VARIANT.DETAILVIEW && <MumbleDelete post={post} />}
 
       <Link href={RouteService.page(PAGE_ROUTES.POSTS, { id: post.id })}>
         <p>{post.text}</p>

@@ -1,8 +1,10 @@
 import { LayoutHeader, LayoutMainWrapper } from '@/components/layout';
 import { cn } from '@/utils/tailwind';
 import type { Metadata } from 'next';
+import { SessionProvider } from 'next-auth/react';
 import { Poppins } from 'next/font/google';
 import { ReactNode } from 'react';
+import { auth } from './api/auth/[...nextauth]/auth';
 import './globals.css';
 
 const font = Poppins({
@@ -16,14 +18,21 @@ export const metadata: Metadata = {
   description: 'Twitter clone for the CAS FEE 2023/24',
 };
 
-export default function RootLayout({ children }: { children: ReactNode }) {
+export default async function RootLayout({ children }: { children: ReactNode }) {
+  const session = await auth();
+
   return (
     <html lang="en">
       <body
-        className={cn(font.className, 'grid h-dvh grid-cols-1 grid-rows-[auto_1fr] justify-items-center bg-base-100')}
+        className={cn(
+          font.className,
+          'grid h-dvh grid-cols-1 grid-rows-[auto_1fr] justify-items-center overscroll-none bg-base-100',
+        )}
       >
         <LayoutHeader />
-        <LayoutMainWrapper>{children}</LayoutMainWrapper>
+        <SessionProvider session={session}>
+          <LayoutMainWrapper>{children}</LayoutMainWrapper>
+        </SessionProvider>
       </body>
     </html>
   );
