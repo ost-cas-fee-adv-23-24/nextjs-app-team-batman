@@ -2,8 +2,8 @@
 import { useRef, useState } from 'react';
 import { Label, Modal, Icon, Input } from '@ost-cas-fee-adv-23-24/design-system-component-library-team-batman';
 import { TAPIUser } from '@/utils/api/api-types';
-//import { UPDATE_USER } from '@/utils/api/api-actions-user';
-import { useRouter } from 'next/navigation';
+// import { UPDATE_USER } from '@/utils/api/api-actions-user';
+// import { useRouter } from 'next/navigation';
 
 interface IModalSettings {
   user?: TAPIUser;
@@ -13,16 +13,12 @@ export const ModalSettings = ({ user }: IModalSettings) => {
   const [modalState, setModalState] = useState<boolean>(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
-  const router = useRouter();
+  // const router = useRouter();
 
-  // const formAction = async (formData: { firstname: string; lastname: string; username: string }) => {
+  // const formAction = async (formData: FormData) => {
   //   if (user) {
   //     await UPDATE_USER({
-  //       data: {
-  //         firstname: formData.firstname,
-  //         lastname: formData.lastname,
-  //         username: formData.username,
-  //       },
+  //       data: formData,
   //       id: user?.id,
   //     });
   //     formRef.current?.reset();
@@ -30,9 +26,10 @@ export const ModalSettings = ({ user }: IModalSettings) => {
   // };
 
   const handleClose = () => {
-    formRef.current?.requestSubmit();
-    setModalState(!modalState);
-    router.refresh();
+    /* TodO fix saving */
+    //formRef.current?.requestSubmit();
+    // setModalState(!modalState);
+    //router.refresh();
   };
 
   return (
@@ -60,6 +57,7 @@ export const ModalSettings = ({ user }: IModalSettings) => {
         title="Settings"
       >
         <form ref={formRef}>
+          {/* action={formAction} */}
           <Label size="xl" as="h1" className="mb-m">
             Persönliche Einstellungen
           </Label>
