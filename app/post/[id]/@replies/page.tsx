@@ -11,7 +11,7 @@ export default async function Page({ params }: { params: { id: string } }) {
     <>
       {session && (
         <div className="grid gap-s">
-          <MumbleUserInfo variant={MUMBLE_USER_INFO_VARIANT.REPLY} displayname="First Name" username={'todo'} />
+          <MumbleUserInfo variant={MUMBLE_USER_INFO_VARIANT.REPLY} displayname="" username={'todo'} />
           <MumbleCreate type={MUMBLE_TYPE.REPLY} parentId={params.id} />
         </div>
       )}

@@ -1,4 +1,3 @@
-import { auth } from '@/app/api/auth/[...nextauth]/auth';
 import { MUMBLE_USER_INFO_VARIANT, MumbleUserInfo } from '@/components/mumble';
 import { decodeULIDTimestamp } from '@/utils/api/api-helpers';
 import { TAPIPost, TAPIUser } from '@/utils/api/api-types';
@@ -22,7 +21,6 @@ export const MumblePost = async ({
   post: TAPIPost;
   variant: MUMBLE_USER_INFO_VARIANT.DETAILVIEW | MUMBLE_USER_INFO_VARIANT.TIMELINE;
 }) => {
-  const session = await auth();
   const user = await getUser(post.creator.id ? post.creator.id : undefined);
 
   let displayname = 'First Lastname';
@@ -39,9 +37,7 @@ export const MumblePost = async ({
         username={post.creator.username!}
         date={decodeULIDTimestamp(post.id)}
       />
-      {session && variant === MUMBLE_USER_INFO_VARIANT.DETAILVIEW && session.user?.id === post.creator.id && (
-        <MumbleDelete post={post} />
-      )}
+      {variant === MUMBLE_USER_INFO_VARIANT.DETAILVIEW && <MumbleDelete post={post} />}
 
       <Link href={RouteService.page(PAGE_ROUTES.POSTS, { id: post.id })}>
         <p>{post.text}</p>
