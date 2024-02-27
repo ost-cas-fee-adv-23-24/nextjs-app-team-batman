@@ -1,5 +1,5 @@
 import PostSkeleton from '@/components/mumble/mumble-post-skeleton';
 
 export default function Page() {
-  return <PostSkeleton skeletons={2} />;
+  return <PostSkeleton count={2} />;
 }

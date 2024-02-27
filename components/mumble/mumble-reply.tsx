@@ -10,7 +10,7 @@ export const MumbleReply = ({ post }: { post: TAPIReply }) => {
     <div className="grid gap-s">
       <MumbleUserInfo
         variant={MUMBLE_USER_INFO_VARIANT.REPLY}
-        displayname="First Name"
+        displayname=""
         userId={post.creator.id!}
         username={post.creator.username!}
         imageSrc={post.creator.avatarUrl ?? undefined}

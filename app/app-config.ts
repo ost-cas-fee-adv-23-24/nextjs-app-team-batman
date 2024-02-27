@@ -1,0 +1,1 @@
+export const MUMBLE_POSTS_PAGINATION = 10;

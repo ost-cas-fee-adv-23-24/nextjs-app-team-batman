@@ -1,17 +1,11 @@
-import { auth } from '@/app/api/auth/[...nextauth]/auth';
-import { DashboardPosts } from '@/components/dashboard';
-import { MumbleCreate } from '@/components/mumble';
-import { MumbleCard } from '@/components/mumble/mumble-card';
-import { MUMBLE_TYPE } from '@/utils/api/api-types';
+import PostSkeleton from '@/components/mumble/mumble-post-skeleton';
 import { Heading } from '@ost-cas-fee-adv-23-24/design-system-component-library-team-batman';
 import { Suspense } from 'react';
-import { userAvatar } from '@/utils/user-avatar';
-import PostSkeleton from '@/components/mumble/mumble-post-skeleton';
+import { MUMBLE_POSTS_PAGINATION } from './app-config';
+import DashboardCreateMumble from './dashboard-create-mumble';
+import { DashboardPosts } from './dashboard-posts';
 
-export default async function Home() {
-  const session = await auth();
-  const avatar = await userAvatar(session?.user?.id);
-
+export default function Home() {
   return (
     <div className="grid gap-l">
       <div className="grid gap-xs">
@@ -24,12 +18,10 @@ export default async function Home() {
       </div>
 
       <div className="grid gap-s">
-        {session && (
-          <MumbleCard imageSrc={avatar}>
-            <MumbleCreate type={MUMBLE_TYPE.POST} />
-          </MumbleCard>
-        )}
-        <Suspense fallback={<PostSkeleton skeletons={4} />}>
+        <Suspense fallback={<PostSkeleton count={1} />}>
+          <DashboardCreateMumble />
+        </Suspense>
+        <Suspense fallback={<PostSkeleton count={MUMBLE_POSTS_PAGINATION} />}>
           <DashboardPosts />
         </Suspense>
       </div>

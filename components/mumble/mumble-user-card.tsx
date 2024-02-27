@@ -1,17 +1,12 @@
 'use client';
-import { useRef, useState } from 'react';
-import { useRouter } from 'next/navigation';
-import {
-  Avatar,
-  ImageUpload,
-  Modal,
-  LinkIcon,
-  Label,
-} from '@ost-cas-fee-adv-23-24/design-system-component-library-team-batman';
 import { UPDATE_USER_AVATAR } from '@/utils/api/api-actions-user';
-import { ProfileImage } from './profileImage';
 import { AVATAR_FALLBACK } from '@/utils/avatar-fallback';
+import { Avatar, ImageUpload, Modal } from '@ost-cas-fee-adv-23-24/design-system-component-library-team-batman';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+import { useRef, useState } from 'react';
+import { MUMBLE_USER_INFO_VARIANT, MumbleUserInfo } from '.';
+import { ProfileImage } from './profileImage';
 interface IMumbleUserCard {
   firstname: string;
   lastname: string;
@@ -54,10 +49,10 @@ export const MumbleUserCard = ({
   return (
     <>
       <div className="relative">
-        <div className="mb-4 relative h-[320px] cursor-pointer overflow-hidden rounded-m bg-primary-600 object-contain">
+        <div className="relative h-[320px] cursor-pointer overflow-hidden rounded-m bg-primary-600 object-contain">
           <Image src={ProfileImage} alt="profile image" className="duration-200 ease-in-out hover:opacity-50" fill />
         </div>
-        <div className="absolute bottom-[-70px] right-[30px]">
+        <div className="absolute bottom-[-70px] right-[30px] z-10">
           <Avatar
             image={{
               src: avatarUrl ?? AVATAR_FALLBACK,
@@ -91,17 +86,13 @@ export const MumbleUserCard = ({
               }}
             />
           </Modal>
-          <div className="flex flex-col gap-xs">
-            <Label size="xl" as="h1" className="mt-m">
-              {`${firstname} ${lastname}`}
-            </Label>
-            <div className="flex flex-wrap gap-s">
-              <LinkIcon icon="profile" text={username ? username : ''} />
-              <LinkIcon icon="location" text="Switzerland" variant="secondary" />
-            </div>
-          </div>
         </form>
       )}
+      <MumbleUserInfo
+        username={username}
+        displayname={`${firstname} ${lastname}`}
+        variant={MUMBLE_USER_INFO_VARIANT.DETAILVIEW}
+      />
     </>
   );
 };

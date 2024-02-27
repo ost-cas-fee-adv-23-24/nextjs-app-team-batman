@@ -1,8 +1,10 @@
+import { Fragment } from 'react';
+
 interface IPostSkeleton {
-  skeletons?: number;
+  count?: number;
 }
 
-export default function PostSkeleton({ skeletons = 1 }: IPostSkeleton) {
+export default function PostSkeleton({ count = 1 }: IPostSkeleton) {
   const skeleton = (
     <div className="relative h-fit w-full items-center rounded-m bg-white px-xl py-l">
       <div className="absolute left-[-30px] top-m grid h-[60px] w-[60px]  rounded-full border-[6px] border-base-100 bg-base-100">
@@ -18,10 +20,8 @@ export default function PostSkeleton({ skeletons = 1 }: IPostSkeleton) {
       </div>
     </div>
   );
-  const renderSkeletons = [];
-  for (let i = 0; i < skeletons; i++) {
-    renderSkeletons.push(skeleton);
-  }
 
-  return renderSkeletons;
+  return Array(count)
+    .fill(0)
+    .map((_, i) => <Fragment key={i}>{skeleton}</Fragment>);
 }
