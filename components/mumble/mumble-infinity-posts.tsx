@@ -3,8 +3,10 @@ import { GET_POSTS } from '@/utils/api/api-actions-post';
 import { TAPIPost } from '@/utils/api/api-types';
 import { useEffect, useRef, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
-import { MUMBLE_USER_INFO_VARIANT, MumbleCard, MumblePost } from '.';
-import PostSkeleton from './mumble-post-skeleton';
+import SkeletonPost from '../skeleton/skeleton-post';
+import { MumbleCard } from './mumble-card';
+import { MumblePost } from './mumble-post';
+import { MUMBLE_USER_INFO_VARIANT } from './mumble-user-info';
 
 export type TInfinityPostsProps = {
   olderThan: string;
@@ -63,7 +65,7 @@ export const MumbleInfinityPosts = ({ olderThan, limit, creators, likedBy }: TIn
 
       {!limitReached ? (
         <>
-          {loading && <PostSkeleton count={3} />}
+          {loading && <SkeletonPost count={3} />}
           <div ref={ref} />
         </>
       ) : (

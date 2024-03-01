@@ -1,20 +1,17 @@
-import { MUMBLE_USER_INFO_VARIANT, MumbleUserInfo } from '@/components/mumble';
 import { decodeULIDTimestamp } from '@/utils/api/api-helpers';
 import { TAPIReply } from '@/utils/api/api-types';
 import { Image } from '@ost-cas-fee-adv-23-24/design-system-component-library-team-batman';
 import NextImage from 'next/image';
 import { MumbleLike } from './mumble-like';
+import { MUMBLE_USER_INFO_VARIANT, MumbleUserInfo } from './mumble-user-info';
 
 export const MumbleReply = ({ post }: { post: TAPIReply }) => {
   return (
     <div className="grid gap-s">
       <MumbleUserInfo
         variant={MUMBLE_USER_INFO_VARIANT.REPLY}
-        displayname=""
-        userId={post.creator.id!}
-        username={post.creator.username!}
-        imageSrc={post.creator.avatarUrl ?? undefined}
-        date={decodeULIDTimestamp(post.id)}
+        user={post.creator}
+        postDate={decodeULIDTimestamp(post.id)}
       />
 
       <p>{post.text}</p>
