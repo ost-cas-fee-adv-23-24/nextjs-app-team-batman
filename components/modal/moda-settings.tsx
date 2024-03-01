@@ -2,11 +2,11 @@
 import { useRef, useState } from 'react';
 import { Label, Modal, Icon, Input } from '@ost-cas-fee-adv-23-24/design-system-component-library-team-batman';
 import { TAPIUser } from '@/utils/api/api-types';
-// import { UPDATE_USER } from '@/utils/api/api-actions-user';
 // import { useRouter } from 'next/navigation';
+import { updateUser } from './actions';
 
 interface IModalSettings {
-  user?: TAPIUser;
+  user: TAPIUser;
 }
 
 export const ModalSettings = ({ user }: IModalSettings) => {
@@ -15,19 +15,23 @@ export const ModalSettings = ({ user }: IModalSettings) => {
   const formRef = useRef<HTMLFormElement>(null);
   // const router = useRouter();
 
-  // const formAction = async (formData: FormData) => {
-  //   if (user) {
-  //     await UPDATE_USER({
-  //       data: formData,
-  //       id: user?.id,
-  //     });
-  //     formRef.current?.reset();
-  //   }
-  // };
+  interface FormData {
+    firstname: string;
+    lastname: string;
+    username: string;
+  }
 
-  const handleClose = () => {
+  const formAction = async (formData: FormData) => {
+    console.log('formData', formData);
+    if (user) {
+      // await updateUser(user.id, formData);
+    }
+    //    formRef.current?.reset();
+  };
+
+  const handleSubmit = () => {
     /* TodO fix saving */
-    //formRef.current?.requestSubmit();
+    formRef.current?.requestSubmit();
     // setModalState(!modalState);
     //router.refresh();
   };
@@ -52,12 +56,11 @@ export const ModalSettings = ({ user }: IModalSettings) => {
         onClose={() => {
           setModalState(!modalState);
         }}
-        onSubmit={handleClose}
+        onSubmit={handleSubmit}
         width="m"
         title="Settings"
       >
-        <form ref={formRef}>
-          {/* action={formAction} */}
+        <form ref={formRef} action={formAction}>
           <Label size="xl" as="h1" className="mb-m">
             Persönliche Einstellungen
           </Label>
@@ -65,6 +68,7 @@ export const ModalSettings = ({ user }: IModalSettings) => {
             defaultValue={user?.firstname ? user.firstname : ''}
             label="Vorname"
             name="firstname"
+            id="firstname"
             placeholder=""
             className="mb-m"
           />

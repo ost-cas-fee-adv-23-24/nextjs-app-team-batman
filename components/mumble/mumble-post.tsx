@@ -1,6 +1,6 @@
 import { MUMBLE_USER_INFO_VARIANT, MumbleUserInfo } from '@/components/mumble';
 import { decodeULIDTimestamp } from '@/utils/api/api-helpers';
-import { TAPIPost, TAPIUser } from '@/utils/api/api-types';
+import { TAPIPost } from '@/utils/api/api-types';
 import { PAGE_ROUTES, RouteService } from '@/utils/route-service';
 import { CommentButton, Image } from '@ost-cas-fee-adv-23-24/design-system-component-library-team-batman';
 import NextImage from 'next/image';
@@ -8,31 +8,20 @@ import Link from 'next/link';
 import { MumbleCopy } from './mumble-copy';
 import { MumbleDelete } from './mumble-delete';
 import { MumbleLike } from './mumble-like';
-import { getUser } from '@/utils/user';
 
-const parseUserFirstLastName = (user: Pick<TAPIUser, 'firstname' | 'lastname'>) => {
-  return `${user?.firstname} ${user?.lastname}`;
-};
-
-export const MumblePost = async ({
+export const MumblePost = ({
   post,
   variant,
 }: {
   post: TAPIPost;
   variant: MUMBLE_USER_INFO_VARIANT.DETAILVIEW | MUMBLE_USER_INFO_VARIANT.TIMELINE;
+  loggedIn?: boolean;
 }) => {
-  const user = await getUser(post.creator.id ? post.creator.id : undefined);
-
-  let displayname = 'First Lastname';
-  if (user?.firstname) {
-    displayname = parseUserFirstLastName(user);
-  }
-
   return (
     <div className="grid gap-m">
       <MumbleUserInfo
         variant={variant}
-        displayname={displayname}
+        displayname={post.creator.username!}
         userId={post.creator.id!}
         username={post.creator.username!}
         date={decodeULIDTimestamp(post.id)}

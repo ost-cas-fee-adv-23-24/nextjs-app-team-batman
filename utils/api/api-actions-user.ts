@@ -76,7 +76,8 @@ export const GET_USERS = async (payload?: { query?: TAPIQueryPagination }) => {
  * @description Update a user
  * @info PATCH-method
  */
-export const UPDATE_USER = async (payload: { id: string; data: TAPIUpdateUserData }) => {
+export const UPDATE_USER = async (payload: { id?: string; data: TAPIUpdateUserData }) => {
+  console.log(payload.id, payload);
   await APIServiceBase._fetch(RouteService.api(API_ROUTES.USERS, { id: payload.id }), {
     method: 'PATCH',
     body: JSON.stringify(payload.data),
