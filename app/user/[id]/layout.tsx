@@ -1,18 +1,19 @@
-import { MUMBLE_POSTS_PAGINATION } from '@/app/app-config';
-import PostSkeleton from '@/components/mumble/mumble-post-skeleton';
 import UserSkeleton from '@/components/mumble/mumble-user-skeleton';
 import MumbleUserTabGroup from '@/components/mumble/mumble-user-tabs';
 import { ReactNode, Suspense } from 'react';
+import UserTop from './_user-top';
 
-export default function Layout({ user, posts, params }: { user: ReactNode; posts: ReactNode; params: { id: string } }) {
+export default function Layout({ children, params }: { children: ReactNode; params: { id: string } }) {
   return (
     <div className="grid w-full gap-s">
-      <Suspense fallback={<UserSkeleton />}>{user}</Suspense>
+      <Suspense fallback={<UserSkeleton />}>
+        <UserTop params={params} />
+      </Suspense>
 
       <div className="mt-s max-w-[400px]">
         <MumbleUserTabGroup id={params.id} />
       </div>
-      <Suspense fallback={<PostSkeleton count={MUMBLE_POSTS_PAGINATION} />}>{posts}</Suspense>
+      {children}
     </div>
   );
 }

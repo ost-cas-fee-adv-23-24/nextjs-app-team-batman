@@ -4,5 +4,5 @@
  * loading component here to avoid flickering...
  */
 export default function Page() {
-  return null;
+  return <div>🟣🟣🟣🟣</div>;
 }
