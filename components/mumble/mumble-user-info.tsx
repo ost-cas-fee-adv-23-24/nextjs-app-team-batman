@@ -1,3 +1,4 @@
+import { TAPIPublicUser, TAPIUser } from '@/utils/api/api-types';
 import { AVATAR_FALLBACK } from '@/utils/avatar-fallback';
 import { PAGE_ROUTES, RouteService } from '@/utils/route-service';
 import { Avatar, Label, LinkIcon } from '@ost-cas-fee-adv-23-24/design-system-component-library-team-batman';
@@ -12,16 +13,16 @@ export enum MUMBLE_USER_INFO_VARIANT {
 }
 
 interface IMumbleUserInfo {
-  displayname: string;
-  username: string;
-  userId?: string;
-  imageSrc?: string;
+  user: TAPIUser | TAPIPublicUser;
   variant: MUMBLE_USER_INFO_VARIANT;
-  date?: Date;
+  postDate?: Date;
 }
 
-export const MumbleUserInfo = ({ variant, date, username, displayname, imageSrc, userId }: IMumbleUserInfo) => {
-  const image = imageSrc ?? AVATAR_FALLBACK;
+export const MumbleUserInfo = ({ variant, postDate: date, user }: IMumbleUserInfo) => {
+  const fullUser = user as TAPIUser;
+  const displayname = fullUser?.firstname && fullUser?.lastname ? `${fullUser.firstname} ${fullUser.lastname}` : null;
+  const username = user?.username;
+  const image = user.avatarUrl ?? AVATAR_FALLBACK;
 
   const avatarProps: ComponentProps<typeof Avatar> = {
     size: 's',
@@ -35,25 +36,21 @@ export const MumbleUserInfo = ({ variant, date, username, displayname, imageSrc,
       (variant === MUMBLE_USER_INFO_VARIANT.DETAILVIEW && 'xl') ||
       'm',
     as: 'span',
-    children: displayname,
+    children: displayname ?? username,
   };
 
-  const content = (
-    <div className="relative flex place-items-center gap-xs">
-      {variant === MUMBLE_USER_INFO_VARIANT.REPLY && <Avatar {...avatarProps} />}
-      <div className="flex flex-col gap-xs">
-        {displayname && <Label {...labelProps} />}
-        <div className="flex flex-wrap gap-s">
-          <LinkIcon icon="profile" text={username} />
-          {date && <LinkIcon icon="calendar" text={date.toLocaleDateString()} variant="secondary" />}
+  return (
+    <Link href={RouteService.page(PAGE_ROUTES.USER, { id: user.id })}>
+      <div className="relative flex place-items-center gap-xs">
+        {variant === MUMBLE_USER_INFO_VARIANT.REPLY && <Avatar {...avatarProps} />}
+        <div className="flex flex-col gap-xs">
+          <Label {...labelProps} className="capitalize" />
+          <div className="flex flex-wrap gap-s">
+            <LinkIcon icon="profile" text={username} />
+            {date && <LinkIcon icon="calendar" text={date.toLocaleDateString()} variant="secondary" />}
+          </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
-
-  if (userId) {
-    return <Link href={RouteService.page(PAGE_ROUTES.USER, { id: userId })}>{content}</Link>;
-  }
-
-  return content;
 };
