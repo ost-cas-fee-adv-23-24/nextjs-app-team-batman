@@ -1,7 +1,8 @@
 'use client';
 
-import { MUMBLE_USER_INFO_VARIANT, MumblePost } from '@/components/mumble';
 import { MumbleCard } from '@/components/mumble/mumble-card';
+import { MumblePost } from '@/components/mumble/mumble-post';
+import { MUMBLE_USER_INFO_VARIANT } from '@/components/mumble/mumble-user-info';
 import { TAPIPost } from '@/utils/api/api-types';
 import { PostEvents, getPostEventSource } from '@/utils/route-service';
 import { useEffect, useState } from 'react';

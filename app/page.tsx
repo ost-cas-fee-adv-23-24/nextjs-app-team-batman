@@ -1,4 +1,4 @@
-import PostSkeleton from '@/components/mumble/mumble-post-skeleton';
+import SkeletonPost from '@/components/skeleton/skeleton-post';
 import { Heading } from '@ost-cas-fee-adv-23-24/design-system-component-library-team-batman';
 import { Suspense } from 'react';
 import { MUMBLE_POSTS_PAGINATION } from './app-config';
@@ -16,12 +16,11 @@ export default function Home() {
           Voluptatem qui cumque voluptatem quia tempora dolores distinctio vel repellat dicta.
         </Heading>
       </div>
-
       <div className="grid gap-s">
-        <Suspense fallback={<PostSkeleton count={1} />}>
+        <Suspense fallback={<SkeletonPost count={1} />}>
           <DashboardCreateMumble />
         </Suspense>
-        <Suspense fallback={<PostSkeleton count={MUMBLE_POSTS_PAGINATION} />}>
+        <Suspense fallback={<SkeletonPost count={MUMBLE_POSTS_PAGINATION} />}>
           <DashboardPosts />
         </Suspense>
       </div>

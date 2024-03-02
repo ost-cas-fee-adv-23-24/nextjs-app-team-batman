@@ -1,4 +1,3 @@
-import { MUMBLE_USER_INFO_VARIANT, MumbleUserInfo } from '@/components/mumble';
 import { decodeULIDTimestamp } from '@/utils/api/api-helpers';
 import { TAPIPost } from '@/utils/api/api-types';
 import { PAGE_ROUTES, RouteService } from '@/utils/route-service';
@@ -8,6 +7,7 @@ import Link from 'next/link';
 import { MumbleCopy } from './mumble-copy';
 import { MumbleDelete } from './mumble-delete';
 import { MumbleLike } from './mumble-like';
+import { MUMBLE_USER_INFO_VARIANT, MumbleUserInfo } from './mumble-user-info';
 
 export const MumblePost = ({
   post,
@@ -19,13 +19,7 @@ export const MumblePost = ({
 }) => {
   return (
     <div className="grid gap-m">
-      <MumbleUserInfo
-        variant={variant}
-        displayname={post.creator.username!}
-        userId={post.creator.id!}
-        username={post.creator.username!}
-        date={decodeULIDTimestamp(post.id)}
-      />
+      <MumbleUserInfo variant={variant} user={post.creator} postDate={decodeULIDTimestamp(post.id)} />
       {variant === MUMBLE_USER_INFO_VARIANT.DETAILVIEW && <MumbleDelete post={post} />}
 
       <Link href={RouteService.page(PAGE_ROUTES.POSTS, { id: post.id })}>

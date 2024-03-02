@@ -2,7 +2,6 @@
 import { useRef, useState } from 'react';
 import { Label, Modal, Icon, Input } from '@ost-cas-fee-adv-23-24/design-system-component-library-team-batman';
 import { TAPIUser } from '@/utils/api/api-types';
-// import { useRouter } from 'next/navigation';
 import { updateUser } from './actions';
 
 interface IModalSettings {
@@ -11,29 +10,17 @@ interface IModalSettings {
 
 export const ModalSettings = ({ user }: IModalSettings) => {
   const [modalState, setModalState] = useState<boolean>(false);
-  const inputRef = useRef<HTMLInputElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
-  // const router = useRouter();
 
-  interface FormData {
-    firstname: string;
-    lastname: string;
-    username: string;
-  }
-
-  const formAction = async (formData: FormData) => {
-    console.log('formData', formData);
+  const formAction = async (FormData: FormData) => {
     if (user) {
-      // await updateUser(user.id, formData);
+      await updateUser(user.id, FormData);
     }
-    //    formRef.current?.reset();
   };
 
   const handleSubmit = () => {
     /* TodO fix saving */
     formRef.current?.requestSubmit();
-    // setModalState(!modalState);
-    //router.refresh();
   };
 
   return (
@@ -50,7 +37,6 @@ export const ModalSettings = ({ user }: IModalSettings) => {
           Settings
         </Label>
       </button>
-      <input type="file" name="media" id="upload-media" ref={inputRef} hidden />
       <Modal
         isOpen={modalState}
         onClose={() => {
@@ -68,7 +54,6 @@ export const ModalSettings = ({ user }: IModalSettings) => {
             defaultValue={user?.firstname ? user.firstname : ''}
             label="Vorname"
             name="firstname"
-            id="firstname"
             placeholder=""
             className="mb-m"
           />
@@ -83,9 +68,8 @@ export const ModalSettings = ({ user }: IModalSettings) => {
             defaultValue={user?.username ? user.username : ''}
             label="Benutzername"
             name="username"
-            disabled
             placeholder=""
-            className="mb-m"
+            className="disabled mb-m"
           />
         </form>
       </Modal>

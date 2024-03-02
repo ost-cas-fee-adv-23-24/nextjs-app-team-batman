@@ -1,6 +1,6 @@
 import { auth } from '@/app/api/auth/[...nextauth]/auth';
-import { MumbleCreate } from '@/components/mumble';
 import { MumbleCard } from '@/components/mumble/mumble-card';
+import { MumbleCreate } from '@/components/mumble/mumble-create';
 import { MUMBLE_TYPE } from '@/utils/api/api-types';
 import { userAvatar } from '@/utils/user-avatar';
 

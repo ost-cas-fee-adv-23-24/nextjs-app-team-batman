@@ -1,6 +1,7 @@
 import { MUMBLE_POSTS_PAGINATION } from '@/app/app-config';
-import { MUMBLE_USER_INFO_VARIANT, MumblePost } from '@/components/mumble';
 import { MumbleCard } from '@/components/mumble/mumble-card';
+import { MumblePost } from '@/components/mumble/mumble-post';
+import { MUMBLE_USER_INFO_VARIANT } from '@/components/mumble/mumble-user-info';
 import { GET_POSTS } from '@/utils/api/api-actions-post';
 import { MumbleInfinityPosts } from '../components/mumble/mumble-infinity-posts';
 

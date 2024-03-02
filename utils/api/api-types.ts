@@ -2,16 +2,16 @@
 // @see https://mumble-api-prod-4cxdci3drq-oa.a.run.app/
 
 export type TAPIUser = {
-  id: string | null;
-  username: string | null;
+  id: string;
+  username: string;
   avatarUrl: string | null;
   firstname: string | null;
   lastname: string | null;
 };
 
 export type TAPIPublicUser = {
-  id: string | null;
-  username: string | null;
+  id: string;
+  username: string;
   avatarUrl: string | null;
 };
 

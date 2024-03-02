@@ -1,3 +1,5 @@
+import SkeletonPost from '@/components/skeleton/skeleton-post';
+
 export default function Page() {
-  return <div>LOADING REPLIES...</div>;
+  return <SkeletonPost count={2} />;
 }

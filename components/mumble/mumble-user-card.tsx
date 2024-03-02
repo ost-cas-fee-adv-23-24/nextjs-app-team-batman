@@ -5,25 +5,14 @@ import { Avatar, ImageUpload, Modal } from '@ost-cas-fee-adv-23-24/design-system
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useRef, useState } from 'react';
-import { MUMBLE_USER_INFO_VARIANT, MumbleUserInfo } from '.';
 import { ProfileImage } from './profileImage';
 interface IMumbleUserCard {
-  firstname: string;
-  lastname: string;
-  username: string;
-  avatarUrl?: string;
-  userId?: string;
+  userId: string;
+  avatarUrl?: string | null;
   sessionUserId?: string;
 }
 
-export const MumbleUserCard = ({
-  firstname,
-  lastname,
-  username,
-  avatarUrl,
-  userId,
-  sessionUserId,
-}: IMumbleUserCard) => {
+export const MumbleUserCard = ({ avatarUrl, userId, sessionUserId }: IMumbleUserCard) => {
   const [modalState, setModalState] = useState<boolean>(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
@@ -88,11 +77,6 @@ export const MumbleUserCard = ({
           </Modal>
         </form>
       )}
-      <MumbleUserInfo
-        username={username}
-        displayname={`${firstname} ${lastname}`}
-        variant={MUMBLE_USER_INFO_VARIANT.DETAILVIEW}
-      />
     </>
   );
 };

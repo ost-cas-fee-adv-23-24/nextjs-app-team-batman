@@ -1,5 +1,6 @@
 import { auth } from '@/app/api/auth/[...nextauth]/auth';
 import { MumbleUserCard } from '@/components/mumble/mumble-user-card';
+import { MUMBLE_USER_INFO_VARIANT, MumbleUserInfo } from '@/components/mumble/mumble-user-info';
 import { GET_USER_BY_ID } from '@/utils/api/api-actions-user';
 import { APIError } from '@/utils/api/api-service-base';
 import { notFound } from 'next/navigation';
@@ -10,14 +11,10 @@ export default async function UserTop({ params }: { params: { id: string } }) {
     const user = await GET_USER_BY_ID({ id: params.id });
     return (
       <div>
-        <MumbleUserCard
-          firstname={user.firstname ? user.firstname : ''}
-          lastname={user.lastname ? user.lastname : ''}
-          username={user.username ? user.username : ''}
-          avatarUrl={user.avatarUrl ? user.avatarUrl : undefined}
-          userId={params.id ? params.id : undefined}
-          sessionUserId={session?.user?.id ? session.user.id : undefined}
-        />
+        <MumbleUserCard userId={user.id} sessionUserId={session?.user?.id} avatarUrl={user.avatarUrl} />
+        <div className="mt-m">
+          <MumbleUserInfo variant={MUMBLE_USER_INFO_VARIANT.DETAILVIEW} user={user} />
+        </div>
       </div>
     );
   } catch (error) {
