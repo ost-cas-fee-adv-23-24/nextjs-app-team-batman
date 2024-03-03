@@ -20,9 +20,9 @@ export const LayoutHeader = async () => {
         </div>
 
         <div className="flex items-center gap-m p-xs">
-          {session && (
+          {user && (
             <>
-              <Link href={RouteService.page(PAGE_ROUTES.USER, { id: session?.user?.id })}>
+              <Link href={RouteService.page(PAGE_ROUTES.USER, { id: user.id })}>
                 <Avatar size="s" image={{ alt: '', src: avatar, as: NextImage, width: 100, height: 100 }} />
               </Link>
               <ModalSettings user={user} />

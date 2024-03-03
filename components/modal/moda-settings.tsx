@@ -25,11 +25,6 @@ export const ModalSettings = ({ user }: IModalSettings) => {
     }
   };
 
-  const handleSubmit = () => {
-    /* TodO fix saving */
-    formRef.current?.requestSubmit();
-  };
-
   return (
     <>
       <button
@@ -49,7 +44,9 @@ export const ModalSettings = ({ user }: IModalSettings) => {
         onClose={() => {
           setModalState(!modalState);
         }}
-        onSubmit={handleSubmit}
+        onSubmit={() => {
+          formRef.current?.requestSubmit();
+        }}
         width="m"
         title="Settings"
       >
@@ -76,7 +73,7 @@ export const ModalSettings = ({ user }: IModalSettings) => {
             label="Benutzername"
             name="username"
             placeholder=""
-            className="disabled mb-m"
+            className="mb-m"
           />
         </form>
       </Modal>
