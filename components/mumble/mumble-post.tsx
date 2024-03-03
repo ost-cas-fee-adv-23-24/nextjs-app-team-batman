@@ -1,3 +1,4 @@
+'use client';
 import { decodeULIDTimestamp } from '@/utils/api/api-helpers';
 import { TAPIPost } from '@/utils/api/api-types';
 import { PAGE_ROUTES, RouteService } from '@/utils/route-service';
@@ -18,12 +19,14 @@ export const MumblePost = ({
 }) => {
   return (
     <div className="grid gap-m">
-      <MumbleUserInfo variant={variant} user={post.creator} postDate={decodeULIDTimestamp(post.id)} />
+      <div className="flex">
+        <div onClick={(e) => e.stopPropagation()}>
+          <MumbleUserInfo variant={variant} user={post.creator} postDate={decodeULIDTimestamp(post.id)} />
+        </div>
+      </div>
       {variant === MUMBLE_USER_INFO_VARIANT.DETAILVIEW && <MumbleDelete post={post} />}
 
-      <Link href={RouteService.page(PAGE_ROUTES.POSTS, { id: post.id })}>
-        <p>{post.text}</p>
-      </Link>
+      <p>{post.text}</p>
 
       {post.mediaUrl && (
         <div className="grid place-content-center">
@@ -40,7 +43,7 @@ export const MumblePost = ({
         </div>
       )}
 
-      <div className="-ml-xs flex flex-wrap gap-xxs gap-y-0 sm:gap-l">
+      <div className="-ml-xs flex flex-wrap gap-xxs gap-y-0 sm:gap-l" onClick={(e) => e.stopPropagation()}>
         <Link href={RouteService.page(PAGE_ROUTES.POSTS, { id: post.id })}>
           <CommentButton comments={post.replies ?? 0} />
         </Link>

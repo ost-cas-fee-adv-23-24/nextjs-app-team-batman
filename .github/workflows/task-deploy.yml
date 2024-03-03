@@ -1,4 +1,7 @@
 name: '🚀 TASK-DEPLOY'
+env:
+  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
 
 on:
   workflow_call:
@@ -54,6 +57,24 @@ jobs:
           npm ci
           npm run build
           npm install -g netlify-cli @netlify/plugin-nextjs@appdir
+
+      # ⚠️
+      # because netlify has some issues with nextjs app router
+      # we also deploy to vercel and use the vercel deployment URL
+      # we still use netlify because we have some benefits like branch deploys with the free account
+      # on vercel we can not deploy previews on specific urls
+      - name: 🔺 Install Vercel CLI
+        if: inputs.VARIANT == 'PROD'
+        run: npm install --global vercel@canary
+      - name: 🔺 Pull Vercel Environment Information
+        if: inputs.VARIANT == 'PROD'
+        run: vercel pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN }}
+      - name: 🔺 Build Project Artifacts
+        if: inputs.VARIANT == 'PROD'
+        run: vercel build --token=${{ secrets.VERCEL_TOKEN }}
+      - name: 🔺 Deploy Project Artifacts to Vercel
+        if: inputs.VARIANT == 'PROD'
+        run: vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }})
 
       - name: 🚀 deploy to netlify
         id: deploy

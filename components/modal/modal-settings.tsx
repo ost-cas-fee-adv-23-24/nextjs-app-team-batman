@@ -1,8 +1,8 @@
 'use client';
-import { useRef, useState } from 'react';
-import { Label, Modal, Icon, Input } from '@ost-cas-fee-adv-23-24/design-system-component-library-team-batman';
-import { TAPIUser } from '@/utils/api/api-types';
 import { UPDATE_USER } from '@/utils/api/api-actions-user';
+import { TAPIUser } from '@/utils/api/api-types';
+import { Icon, Input, Label, Modal } from '@ost-cas-fee-adv-23-24/design-system-component-library-team-batman';
+import { useRef, useState } from 'react';
 
 interface IModalSettings {
   user: TAPIUser;
@@ -30,12 +30,12 @@ export const ModalSettings = ({ user }: IModalSettings) => {
       <button
         type="button"
         id="modal-settings"
-        className="ml-m"
+        className="group grid place-items-center gap-xs"
         aria-label="Settings"
         onClick={() => setModalState(!modalState)}
       >
-        <Icon variant="settings" size="m" className="ml-auto mr-auto fill-white transition hover:rotate-90" />
-        <Label size="s" className="mt-xs hidden cursor-pointer text-white md:block">
+        <Icon variant="settings" size="m" className="fill-white transition group-hover:rotate-90" />
+        <Label size="s" className="hidden cursor-pointer text-white md:block">
           Settings
         </Label>
       </button>

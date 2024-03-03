@@ -40,7 +40,7 @@ export const {
     },
     session({ session, token }) {
       session.accessToken = token.accessToken;
-      session.user = token.user;
+      session.user = token.user!;
       return session;
     },
   },

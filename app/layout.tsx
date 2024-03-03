@@ -1,4 +1,5 @@
-import { LayoutHeader, LayoutMainWrapper } from '@/components/layout';
+import { LayoutHeader } from '@/components/layout/layout-header';
+import { LayoutMainWrapper } from '@/components/layout/layout-main-wrapper';
 import { cn } from '@/utils/tailwind';
 import type { Metadata } from 'next';
 import { SessionProvider } from 'next-auth/react';
@@ -26,7 +27,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
       <body
         className={cn(
           font.className,
-          'grid h-dvh grid-cols-1 grid-rows-[auto_1fr] justify-items-center overscroll-none bg-base-100',
+          'grid min-h-dvh grid-cols-1 grid-rows-[auto_1fr] justify-items-center overscroll-none bg-base-100 text-base-900',
         )}
       >
         <LayoutHeader />

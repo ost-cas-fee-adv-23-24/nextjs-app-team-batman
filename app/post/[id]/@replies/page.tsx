@@ -21,7 +21,7 @@ export default async function Page({ params }: { params: { id: string } }) {
       )}
 
       {replies.count === 0 ? (
-        <>this post hast no replies...</>
+        <div className="rounded-s bg-base-100 p-xs text-base-500">🤔 hmm... hier wurde noch nichts kommentiert</div>
       ) : (
         replies.data.map((post) => <MumbleReply post={post} key={post.id} />)
       )}

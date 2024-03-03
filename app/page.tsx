@@ -1,9 +1,10 @@
+import { LayoutPostWrapper } from '@/components/layout/layout-post-wrapper';
 import SkeletonPost from '@/components/skeleton/skeleton-post';
 import { Heading } from '@ost-cas-fee-adv-23-24/design-system-component-library-team-batman';
 import { Suspense } from 'react';
+import DashboardCreateMumble from './_dashboard-create-mumble';
+import { DashboardPosts } from './_dashboard-posts';
 import { MUMBLE_POSTS_PAGINATION } from './app-config';
-import DashboardCreateMumble from './dashboard-create-mumble';
-import { DashboardPosts } from './dashboard-posts';
 
 export default function Home() {
   return (
@@ -16,14 +17,14 @@ export default function Home() {
           Voluptatem qui cumque voluptatem quia tempora dolores distinctio vel repellat dicta.
         </Heading>
       </div>
-      <div className="grid gap-s">
+      <LayoutPostWrapper>
         <Suspense fallback={<SkeletonPost count={1} />}>
           <DashboardCreateMumble />
         </Suspense>
         <Suspense fallback={<SkeletonPost count={MUMBLE_POSTS_PAGINATION} />}>
           <DashboardPosts />
         </Suspense>
-      </div>
+      </LayoutPostWrapper>
     </div>
   );
 }
