@@ -2,7 +2,7 @@
 import { useRef, useState } from 'react';
 import { Label, Modal, Icon, Input } from '@ost-cas-fee-adv-23-24/design-system-component-library-team-batman';
 import { TAPIUser } from '@/utils/api/api-types';
-import { updateUser } from './actions';
+import { UPDATE_USER } from '@/utils/api/api-actions-user';
 
 interface IModalSettings {
   user: TAPIUser;
@@ -12,9 +12,16 @@ export const ModalSettings = ({ user }: IModalSettings) => {
   const [modalState, setModalState] = useState<boolean>(false);
   const formRef = useRef<HTMLFormElement>(null);
 
-  const formAction = async (FormData: FormData) => {
+  const formAction = async (formData: FormData) => {
     if (user) {
-      await updateUser(user.id, FormData);
+      await UPDATE_USER({
+        data: {
+          firstname: formData.get('firstname') as string,
+          lastname: formData.get('lastname') as string,
+          username: formData.get('username') as string,
+        },
+        id: user.id,
+      });
     }
   };
 
