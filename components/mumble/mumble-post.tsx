@@ -15,7 +15,6 @@ export const MumblePost = ({
 }: {
   post: TAPIPost;
   variant: MUMBLE_USER_INFO_VARIANT.DETAILVIEW | MUMBLE_USER_INFO_VARIANT.TIMELINE;
-  loggedIn?: boolean;
 }) => {
   return (
     <div className="grid gap-m">
