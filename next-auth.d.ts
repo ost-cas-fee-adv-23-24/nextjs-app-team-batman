@@ -9,7 +9,7 @@ declare module '@auth/core/types' {
   }
 
   interface Session {
-    user?: User;
+    user: User;
     accessToken?: string;
   }
 }

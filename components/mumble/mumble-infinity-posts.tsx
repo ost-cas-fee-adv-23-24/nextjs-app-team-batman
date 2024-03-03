@@ -1,6 +1,7 @@
 'use client';
 import { GET_POSTS } from '@/utils/api/api-actions-post';
 import { TAPIPost } from '@/utils/api/api-types';
+import { delay } from '@/utils/delay';
 import { useEffect, useRef, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 import SkeletonPost from '../skeleton/skeleton-post';
@@ -27,7 +28,11 @@ export const MumbleInfinityPosts = ({ olderThan, limit, creators, likedBy }: TIn
     const loadMorePosts = async () => {
       setLoading(true);
       try {
-        const apiPosts = await GET_POSTS({ query: { olderThan, offset, limit, creators, likedBy } });
+        const apiPosts = await Promise.all([
+          GET_POSTS({ query: { olderThan, offset, limit, creators, likedBy } }),
+          delay(),
+        ]).then((results) => results[0]);
+
         const newValue = !posts ? apiPosts.data : [...posts, ...apiPosts.data];
 
         if (newValue.length + limit >= apiPosts.count) {
@@ -57,7 +62,7 @@ export const MumbleInfinityPosts = ({ olderThan, limit, creators, likedBy }: TIn
     <>
       {posts?.map((post, i) => (
         <div key={post.id} ref={i === posts.length - 1 ? ref : undefined}>
-          <MumbleCard imageSrc={post.creator?.avatarUrl ?? undefined}>
+          <MumbleCard imageSrc={post.creator?.avatarUrl ?? undefined} post={post}>
             <MumblePost post={post} variant={MUMBLE_USER_INFO_VARIANT.TIMELINE} />
           </MumbleCard>
         </div>
@@ -70,7 +75,7 @@ export const MumbleInfinityPosts = ({ olderThan, limit, creators, likedBy }: TIn
         </>
       ) : (
         <p className="grid place-content-center rounded-s bg-base-200 p-xs text-base-600">
-          ab hier sind keine weiteren Beiträge verfügbar 👋
+          ab hier sind keine weiteren Mumbles verfügbar 👋
         </p>
       )}
     </>

@@ -1,9 +1,9 @@
 'use client';
-import { ModalImageUpload } from '@/components/modal';
 import { CREATE_MUMBLE } from '@/utils/api/api-actions-post';
 import { MUMBLE_TYPE } from '@/utils/api/api-types';
 import { Button, Heading, TextArea } from '@ost-cas-fee-adv-23-24/design-system-component-library-team-batman';
 import { useRef, useState } from 'react';
+import { ModalImageUpload } from '../modal/modal-image-upload';
 
 type TNewMumblePost = { type: MUMBLE_TYPE.REPLY; parentId: string } | { type: MUMBLE_TYPE.POST };
 

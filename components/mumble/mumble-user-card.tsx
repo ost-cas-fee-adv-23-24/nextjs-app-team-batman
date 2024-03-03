@@ -5,14 +5,14 @@ import { Avatar, ImageUpload, Modal } from '@ost-cas-fee-adv-23-24/design-system
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useRef, useState } from 'react';
-import { ProfileImage } from './profileImage';
 interface IMumbleUserCard {
   userId: string;
+  profileImage: string;
   avatarUrl?: string | null;
   sessionUserId?: string;
 }
 
-export const MumbleUserCard = ({ avatarUrl, userId, sessionUserId }: IMumbleUserCard) => {
+export const MumbleUserCard = ({ avatarUrl, userId, sessionUserId, profileImage }: IMumbleUserCard) => {
   const [modalState, setModalState] = useState<boolean>(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
@@ -38,8 +38,13 @@ export const MumbleUserCard = ({ avatarUrl, userId, sessionUserId }: IMumbleUser
   return (
     <>
       <div className="relative">
-        <div className="relative h-[320px] cursor-pointer overflow-hidden rounded-m bg-primary-600 object-contain">
-          <Image src={ProfileImage} alt="profile image" className="duration-200 ease-in-out hover:opacity-50" fill />
+        <div className="relative h-[320px] overflow-hidden rounded-m bg-primary-600 object-contain">
+          <Image
+            src={profileImage}
+            alt="profile image"
+            className="object-cover duration-200 ease-in-out hover:opacity-50"
+            fill
+          />
         </div>
         <div className="absolute bottom-[-70px] right-[30px] z-10">
           <Avatar

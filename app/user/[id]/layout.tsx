@@ -1,12 +1,12 @@
 import MumbleUserTabGroup from '@/components/mumble/mumble-user-tabs';
-import SkeletonUser from '@/components/skeleton/skeleton-user';
+import SkeletonUserCard from '@/components/skeleton/skeleton-user-card';
 import { ReactNode, Suspense } from 'react';
 import UserTop from './_user-top';
 
 export default function Layout({ children, params }: { children: ReactNode; params: { id: string } }) {
   return (
     <div className="grid w-full gap-s">
-      <Suspense fallback={<SkeletonUser />}>
+      <Suspense fallback={<SkeletonUserCard />}>
         <UserTop params={params} />
       </Suspense>
 

@@ -1,6 +1,6 @@
 import { Skeleton } from './skeleton';
 
-export default function SkeletonUser() {
+export default function SkeletonUserCard() {
   return (
     <div>
       <Skeleton className="relative mb-m h-[320px] w-full  items-center rounded-m bg-white px-xl py-l">
@@ -8,8 +8,7 @@ export default function SkeletonUser() {
           <Skeleton className="animate-pulse rounded-full bg-base-200" />
         </div>
       </Skeleton>
-      <Skeleton className="mb-m w-4/12 rounded-s bg-base-200 pb-m pt-m" />
-      <Skeleton className="mb-m w-10/12 rounded-s bg-base-200" />
+      <Skeleton className="h-[46px] w-4/12 rounded-s bg-base-200" />
     </div>
   );
 }

@@ -40,15 +40,16 @@ export const MumbleUserInfo = ({ variant, postDate: date, user }: IMumbleUserInf
   };
 
   return (
-    <Link href={RouteService.page(PAGE_ROUTES.USER, { id: user.id })}>
-      <div className="relative flex place-items-center gap-xs">
-        {variant === MUMBLE_USER_INFO_VARIANT.REPLY && <Avatar {...avatarProps} />}
-        <div className="flex flex-col gap-xs">
-          <Label {...labelProps} className="capitalize" />
-          <div className="flex flex-wrap gap-s">
-            <LinkIcon icon="profile" text={username} />
-            {date && <LinkIcon icon="calendar" text={date.toLocaleDateString()} variant="secondary" />}
-          </div>
+    <Link
+      href={RouteService.page(PAGE_ROUTES.USER, { id: user.id })}
+      className="relative flex place-items-center gap-xs"
+    >
+      {variant === MUMBLE_USER_INFO_VARIANT.REPLY && <Avatar {...avatarProps} />}
+      <div className="flex flex-col gap-xs">
+        <Label {...labelProps} className="capitalize" />
+        <div className="flex flex-wrap gap-s">
+          <LinkIcon icon="profile" text={username} />
+          {date && <LinkIcon icon="calendar" text={date.toLocaleDateString('de-CH')} variant="secondary" />}
         </div>
       </div>
     </Link>

@@ -2,11 +2,12 @@ import { auth } from '@/app/api/auth/[...nextauth]/auth';
 import { MumbleCard } from '@/components/mumble/mumble-card';
 import { MumbleCreate } from '@/components/mumble/mumble-create';
 import { MUMBLE_TYPE } from '@/utils/api/api-types';
+import { delay } from '@/utils/delay';
 import { userAvatar } from '@/utils/user-avatar';
 
 export default async function DashboardCreateMumble() {
   const session = await auth();
-  const avatar = await userAvatar(session?.user?.id);
+  const avatar = await Promise.all([userAvatar(session?.user?.id), delay()]).then((results) => results[0]);
 
   if (!session) return null;
 
