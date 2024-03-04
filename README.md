@@ -1,13 +1,13 @@
 <!-- PROJECT SHIELDS -->
 
 <div align="center">
-  <a href="https://team-batman.netlify.app">
     <img src="docs/assets/team-batman-logo.png" alt="Logo" width="150" height="150">
-  </a>
-
+<br/>
 <br/>
 
-[![website status](https://img.shields.io/website-up-down-green-red/https/team-batman.netlify.app.svg?label=Website%20status)](https://team-batman.netlify.app)
+[![Netlify](https://img.shields.io/website-up-down-green-red/https/team-batman.netlify.app.svg?label=Netlify)](https://team-batman.netlify.app)
+[![Vercel](https://img.shields.io/website-up-down-green-red/https/team-batman.onivue.ch.svg?label=Vercel)](https://team-batman.onivue.ch)
+
 ![wf-prod.yml](https://github.com/ost-cas-fee-adv-23-24/nextjs-app-team-batman/actions/workflows/wf-prod.yml/badge.svg)
 
 ![](https://img.shields.io/github/contributors/ost-cas-fee-adv-23-24/design-system-component-library-team-batman)
@@ -29,6 +29,7 @@ We are a team of students from the CAS Frontend Engineering course at the OST Ca
 
 - ⚛️ [react](https://reactjs.org/): JavaScript library for building user interfaces.
 - ⏩ [next](https://nextjs.org/): React framework for server-side rendering, static site generation, and more.
+- 🔒 [next-auth](https://next-auth.js.org/) NextAuth.js is a complete open-source authentication solution for Next.js applications.
 - 🎨 [tailwindcss](https://tailwindcss.com/): Utility-first CSS framework for rapidly building custom designs.
 - 📘 [typescript](https://www.typescriptlang.org/): Typed superset of JavaScript that compiles to plain JavaScript.
 - 💈 [design-system-component-library-team-batman](https://github.com/ost-cas-fee-adv-23-24/design-system-component-library-team-batman): Re-usable design system component library.
@@ -39,12 +40,21 @@ We are a team of students from the CAS Frontend Engineering course at the OST Ca
 - 👮 [eslint](https://eslint.org/): Pluggable and configurable linter tool for identifying and reporting on patterns in JavaScript.
 - ✏️ [prettier](https://prettier.io/): Opinionated code formatter that enforces a consistent code style.
 
+## 🔒 Authentication
+
+- we use [NextAuth.js](https://next-auth.js.org/) for authentication
+- as IDP we use [Zitadel](https://zitadel.com/)
+
 ## 🌍 Deployment
 
 The project is deployed with [Netlify](https://www.netlify.com/).  
 Automatically deploys are disabled, we deploy manually via the Netlify CLI in our CI/CD pipeline.
 
 [https://team-batman.netlify.app](https://team-batman.netlify.app)
+
+⚠️ Netlify has some issues with next.js app router, so we decided to deploy on vercel as well but use netlify for our e2e tests, because on vercel we have some limitations with the free plan.
+
+[https://team-batman.onivue.ch](https://team-batman.onivue.ch)
 
 ## 🚦 CI/CD (GitHub Actions)
 
