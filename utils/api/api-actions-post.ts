@@ -1,11 +1,10 @@
 'use server';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
+import { MUMBLE_LIKE_TYPE, MUMBLE_TYPE } from '../enums';
 import { API_ROUTES, PAGE_ROUTES, RouteService } from '../route-service';
 import { APIServiceBase } from './api-service-base';
 import {
-  MUMBLE_LIKE_TYPE,
-  MUMBLE_TYPE,
   TAPIPost,
   TAPIPostPaginatedResult,
   TAPIQueryPagination,

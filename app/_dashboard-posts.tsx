@@ -1,10 +1,10 @@
 import { MUMBLE_POSTS_PAGINATION } from '@/app/app-config';
-import { MumbleCard } from '@/components/mumble/mumble-card';
-import { MumblePost } from '@/components/mumble/mumble-post';
-import { MUMBLE_USER_INFO_VARIANT } from '@/components/mumble/mumble-user-info';
+import { MumbleCard } from '@/components/mumble/card/mumble-card';
+import { MumblePost } from '@/components/mumble/post/mumble-post';
 import { GET_POSTS } from '@/utils/api/api-actions-post';
-import { delay } from '@/utils/delay';
-import { MumbleInfinityPosts } from '../components/mumble/mumble-infinity-posts';
+import { MUMBLE_VARIANT } from '@/utils/enums';
+import { delay } from '@/utils/helpers/delay';
+import { MumbleInfinityPosts } from '../components/mumble/post/mumble-infinity-posts';
 
 export const DashboardPosts = async () => {
   const posts = await Promise.all([GET_POSTS({ query: { limit: MUMBLE_POSTS_PAGINATION } }), delay()]).then(
@@ -17,7 +17,7 @@ export const DashboardPosts = async () => {
 
       {posts.data.map((post) => (
         <MumbleCard imageSrc={post.creator?.avatarUrl ?? undefined} key={post.id} post={post}>
-          <MumblePost post={post} variant={MUMBLE_USER_INFO_VARIANT.TIMELINE} />
+          <MumblePost post={post} variant={MUMBLE_VARIANT.TIMELINE} />
         </MumbleCard>
       ))}
 

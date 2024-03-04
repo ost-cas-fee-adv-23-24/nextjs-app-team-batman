@@ -1,13 +1,13 @@
 'use client';
+import { AVATAR_FALLBACK } from '@/app/app-config';
 import { TAPIPost } from '@/utils/api/api-types';
-import { AVATAR_FALLBACK } from '@/utils/avatar-fallback';
 import { PAGE_ROUTES, RouteService } from '@/utils/route-service';
 import { cn } from '@/utils/tailwind';
 import { Avatar } from '@ost-cas-fee-adv-23-24/design-system-component-library-team-batman';
 import NextImage from 'next/image';
 import { useRouter } from 'next/navigation';
 import { ReactNode } from 'react';
-import { Skeleton } from '../skeleton/skeleton';
+import { Skeleton } from '../../skeleton/skeleton';
 
 interface IMumbleCard {
   children: ReactNode;

@@ -1,17 +1,19 @@
 'use client';
-import { Button, ImageUpload, Modal } from '@ost-cas-fee-adv-23-24/design-system-component-library-team-batman';
-import { useRef, useState } from 'react';
+import { ImageUpload, Modal } from '@ost-cas-fee-adv-23-24/design-system-component-library-team-batman';
+import { ChangeEvent, useState } from 'react';
 
-export const ModalImageUpload = () => {
-  const [modalState, setModalState] = useState<boolean>(false);
-  const inputRef = useRef<HTMLInputElement>(null);
+interface IModalImageUpload {
+  onChange: (image: string) => void;
+  inputRef: React.RefObject<HTMLInputElement>;
+  modalState: boolean;
+  setModalState: (state: boolean) => void;
+}
 
+export const ModalImageUpload = ({ onChange, inputRef, modalState, setModalState }: IModalImageUpload) => {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+  const [currentEvent, setCurrentEvent] = useState<ChangeEvent<HTMLInputElement> | null>(null);
   return (
     <>
-      <Button type="button" variant="secondary" fullWidth icon="upload" onClick={() => setModalState(!modalState)}>
-        Bild hochladen
-      </Button>
-      <input type="file" name="media" id="upload-media" ref={inputRef} hidden />
       <Modal
         isOpen={modalState}
         onClose={() => {
@@ -19,6 +21,10 @@ export const ModalImageUpload = () => {
         }}
         onSubmit={() => {
           setModalState(!modalState);
+          if (currentEvent && inputRef.current && currentEvent.target.files && currentEvent.target.files.length > 0) {
+            inputRef.current.files = currentEvent.target.files;
+            onChange?.(URL.createObjectURL(currentEvent.target.files[0]));
+          }
         }}
         width="m"
         title="Bild hochladen"
@@ -27,9 +33,7 @@ export const ModalImageUpload = () => {
           id="temp-upload-media"
           name="temp-media"
           onChange={(event) => {
-            if (inputRef.current && event.target.files && event.target.files.length > 0) {
-              inputRef.current.files = event.target.files;
-            }
+            setCurrentEvent(event);
           }}
         />
       </Modal>

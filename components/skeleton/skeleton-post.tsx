@@ -1,5 +1,5 @@
 import { Fragment } from 'react';
-import { MumbleCard } from '../mumble/mumble-card';
+import { MumbleCard } from '../mumble/card/mumble-card';
 import SkeletonPostContent from './skeleton-post-content';
 
 interface ISkeletonPost {
