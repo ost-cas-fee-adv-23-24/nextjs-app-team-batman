@@ -1,13 +1,13 @@
 'use client';
 import { GET_POSTS } from '@/utils/api/api-actions-post';
 import { TAPIPost } from '@/utils/api/api-types';
-import { delay } from '@/utils/delay';
+import { MUMBLE_VARIANT } from '@/utils/enums';
+import { delay } from '@/utils/helpers/delay';
 import { useEffect, useRef, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
-import SkeletonPost from '../skeleton/skeleton-post';
-import { MumbleCard } from './mumble-card';
+import SkeletonPost from '../../skeleton/skeleton-post';
+import { MumbleCard } from '../card/mumble-card';
 import { MumblePost } from './mumble-post';
-import { MUMBLE_USER_INFO_VARIANT } from './mumble-user-info';
 
 export type TInfinityPostsProps = {
   olderThan: string;
@@ -63,7 +63,7 @@ export const MumbleInfinityPosts = ({ olderThan, limit, creators, likedBy }: TIn
       {posts?.map((post, i) => (
         <div key={post.id} ref={i === posts.length - 1 ? ref : undefined}>
           <MumbleCard imageSrc={post.creator?.avatarUrl ?? undefined} post={post}>
-            <MumblePost post={post} variant={MUMBLE_USER_INFO_VARIANT.TIMELINE} />
+            <MumblePost post={post} variant={MUMBLE_VARIANT.TIMELINE} />
           </MumbleCard>
         </div>
       ))}

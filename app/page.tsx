@@ -8,13 +8,13 @@ import { MUMBLE_POSTS_PAGINATION } from './app-config';
 
 export default function Home() {
   return (
-    <div className="grid gap-l">
+    <div className="grid w-full gap-l">
       <div className="grid gap-xs">
         <Heading level={1} visualLevel={2} className="text-primary-600">
           Willkommen auf Mumble
         </Heading>
         <Heading level={4} className="text-base-500">
-          Voluptatem qui cumque voluptatem quia tempora dolores distinctio vel repellat dicta.
+          Meinungs-Zirkus: Trapez optional! 🎪😄💬
         </Heading>
       </div>
       <LayoutPostWrapper>

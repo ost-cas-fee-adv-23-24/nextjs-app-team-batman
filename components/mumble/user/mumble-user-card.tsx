@@ -1,7 +1,8 @@
 'use client';
+import { AVATAR_FALLBACK } from '@/app/app-config';
+import { ModalImageUpload } from '@/components/modal/modal-image-upload';
 import { UPDATE_USER_AVATAR } from '@/utils/api/api-actions-user';
-import { AVATAR_FALLBACK } from '@/utils/avatar-fallback';
-import { Avatar, ImageUpload, Modal } from '@ost-cas-fee-adv-23-24/design-system-component-library-team-batman';
+import { Avatar } from '@ost-cas-fee-adv-23-24/design-system-component-library-team-batman';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useRef, useState } from 'react';
@@ -61,25 +62,12 @@ export const MumbleUserCard = ({ avatarUrl, userId, sessionUserId, profileImage 
       {isOwnUser && (
         <form ref={formRef} action={formAction} className="grid w-full gap-s">
           <input type="file" name="media" id="upload-media" ref={inputRef} hidden />
-          <Modal
-            isOpen={modalState}
-            onClose={() => {
-              setModalState(!modalState);
-            }}
-            onSubmit={handleClose}
-            width="m"
-            title="Bild hochladen"
-          >
-            <ImageUpload
-              id="temp-upload-media"
-              name="temp-media"
-              onChange={(event) => {
-                if (inputRef.current && event.target.files && event.target.files.length > 0) {
-                  inputRef.current.files = event.target.files;
-                }
-              }}
-            />
-          </Modal>
+          <ModalImageUpload
+            inputRef={inputRef}
+            modalState={modalState}
+            setModalState={setModalState}
+            onChange={handleClose}
+          />
         </form>
       )}
     </>

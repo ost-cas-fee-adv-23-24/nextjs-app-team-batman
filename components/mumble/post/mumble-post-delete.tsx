@@ -4,7 +4,7 @@ import { TAPIPost, TAPIReply } from '@/utils/api/api-types';
 import { Icon } from '@ost-cas-fee-adv-23-24/design-system-component-library-team-batman';
 import { useSession } from 'next-auth/react';
 
-export const MumbleDelete = ({ post }: { post: TAPIPost | TAPIReply }) => {
+export const MumblePostDelete = ({ post }: { post: TAPIPost | TAPIReply }) => {
   const { data } = useSession();
   const handleDelete = async () => {
     await DELETE_POST({ id: post.id });
