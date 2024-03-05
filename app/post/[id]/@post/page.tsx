@@ -9,7 +9,7 @@ export default async function Page({ params }: { params: { id: string } }) {
   try {
     const post = await GET_POST_BY_ID({ id: params.id });
     return (
-      <MumbleCard>
+      <MumbleCard imageSrc={post.creator?.avatarUrl ?? undefined}>
         <MumblePost post={post} variant={MUMBLE_VARIANT.DETAILVIEW} />
       </MumbleCard>
     );

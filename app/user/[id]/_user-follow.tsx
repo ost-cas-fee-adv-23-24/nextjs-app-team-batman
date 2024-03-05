@@ -1,22 +1,31 @@
 'use client';
-import { PAGE_ROUTES, RouteService } from '@/utils/route-service';
 import { Button } from '@ost-cas-fee-adv-23-24/design-system-component-library-team-batman';
-import { usePathname, useRouter } from 'next/navigation';
-import { UPDATE_USERS_FOLLOWERS } from '@/utils/api/api-actions-user';
+import { useRouter } from 'next/navigation';
+import { UPDATE_USERS_FOLLOWERS, UPDATE_USERS_UNFOLLOW } from '@/utils/api/api-actions-user';
 
-export default function UserTabs({ id }: { id: string }) {
+export default function UserTabs({ id, iAmFollower = false }: { id: string; iAmFollower: boolean }) {
   const router = useRouter();
-  const pathname = usePathname();
 
   const handleFollow = async () => {
     await UPDATE_USERS_FOLLOWERS({ id });
+    router.refresh();
+  };
+  const handleUnFollow = async () => {
+    await UPDATE_USERS_UNFOLLOW({ id });
+    router.refresh();
   };
 
   return (
     <div className="grid w-full content-end justify-end gap-l">
-      <Button variant="secondary" size="l" onClick={handleFollow}>
-        Follow
-      </Button>
+      {iAmFollower ? (
+        <Button variant="secondary" size="l" onClick={handleUnFollow} icon="cancel">
+          Unfollow
+        </Button>
+      ) : (
+        <Button variant="secondary" size="l" onClick={handleFollow}>
+          Follow
+        </Button>
+      )}
     </div>
   );
 }

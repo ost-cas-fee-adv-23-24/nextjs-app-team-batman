@@ -107,3 +107,13 @@ export const UPDATE_USERS_FOLLOWERS = async (payload: { id: string }) => {
     method: 'PUT',
   });
 };
+
+/**
+ * @description Unollow a user
+ * @info DELETE-method
+ */
+export const UPDATE_USERS_UNFOLLOW = async (payload: { id: string }) => {
+  await APIServiceBase._fetch(RouteService.api(API_ROUTES.USERS_ID_FOLLOWERS, { id: payload.id }), {
+    method: 'DELETE',
+  });
+};

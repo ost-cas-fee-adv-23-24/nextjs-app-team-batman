@@ -1,5 +1,5 @@
 import { AVATAR_FALLBACK } from '@/app/app-config';
-import { TAPIPublicUser, TAPIUser, TAPIUserPaginatedResult } from '@/utils/api/api-types';
+import { TAPIPublicUser, TAPIUser } from '@/utils/api/api-types';
 import { MUMBLE_VARIANT } from '@/utils/enums';
 import { PAGE_ROUTES, RouteService } from '@/utils/route-service';
 import { Avatar, Label, LinkIcon } from '@ost-cas-fee-adv-23-24/design-system-component-library-team-batman';
@@ -9,7 +9,6 @@ import { ComponentProps } from 'react';
 
 interface IMumbleUserInfo {
   user: TAPIUser | TAPIPublicUser;
-  userFollowees?: any;
   variant: MUMBLE_VARIANT;
   postDate?: Date;
 }

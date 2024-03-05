@@ -14,21 +14,24 @@ export default async function UserCard({ params }: { params: { id: string } }) {
   const session = await auth();
   try {
     const user = await Promise.all([GET_USER_BY_ID({ id: params.id }), delay()]).then((results) => results[0]);
-    const userFollowees = await Promise.all([GET_USER_FOLLOWERS({ id: params.id }), delay()]).then(
-      (results) => results[0],
-    );
-    const test =
+    const iAmFollower = await Promise.all([GET_USER_FOLLOWERS({ id: params.id }), delay()])
+      .then((results) => results[0])
+      .then((users) =>
+        users.data.some((follower) => {
+          return follower.id === session?.user.id;
+        }),
+      );
+    const userActions =
       session?.user.id === user.id ? (
         <div className="mt-s max-w-[400px]">
           <UserTabs id={params.id} />
         </div>
       ) : (
-        <UserFollow id={params.id} />
+        <UserFollow id={params.id} iAmFollower={iAmFollower} />
       );
 
     return (
       <div>
-        {JSON.stringify(user)}
         <MumbleUserCard
           userId={user.id}
           sessionUserId={session?.user?.id}
@@ -36,9 +39,9 @@ export default async function UserCard({ params }: { params: { id: string } }) {
           profileImage={ProfileImage}
         />
         <div className="mt-m">
-          <MumbleUserInfo variant={MUMBLE_VARIANT.DETAILVIEW} user={user} userFollowees={userFollowees} />
+          <MumbleUserInfo variant={MUMBLE_VARIANT.DETAILVIEW} user={user} />
         </div>
-        {test}
+        {userActions}
       </div>
     );
   } catch (error) {
