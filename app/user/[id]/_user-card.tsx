@@ -1,17 +1,35 @@
 import { auth } from '@/app/api/auth/[...nextauth]/auth';
 import { MumbleUserCard } from '@/components/mumble/user/mumble-user-card';
 import { MumbleUserInfo } from '@/components/mumble/user/mumble-user-info';
-import { GET_USER_BY_ID } from '@/utils/api/api-actions-user';
+import { GET_USER_BY_ID, GET_USER_FOLLOWERS } from '@/utils/api/api-actions-user';
 import { APIError } from '@/utils/api/api-service-base';
 import { MUMBLE_VARIANT } from '@/utils/enums';
 import { delay } from '@/utils/helpers/delay';
 import { ProfileImage } from '@/utils/helpers/profile-image';
 import { notFound } from 'next/navigation';
+import UserTabs from '@/app/user/[id]/_user-tabs';
+import UserFollow from '@/app/user/[id]/_user-follow';
 
 export default async function UserCard({ params }: { params: { id: string } }) {
   const session = await auth();
   try {
     const user = await Promise.all([GET_USER_BY_ID({ id: params.id }), delay()]).then((results) => results[0]);
+    const iAmFollower = await Promise.all([GET_USER_FOLLOWERS({ id: params.id }), delay()])
+      .then((results) => results[0])
+      .then((users) =>
+        users.data.some((follower) => {
+          return follower.id === session?.user.id;
+        }),
+      );
+    const userActions =
+      session?.user.id === user.id ? (
+        <div className="mt-s max-w-[400px]">
+          <UserTabs id={params.id} />
+        </div>
+      ) : (
+        <UserFollow id={params.id} iAmFollower={iAmFollower} />
+      );
+
     return (
       <div>
         <MumbleUserCard
@@ -23,6 +41,7 @@ export default async function UserCard({ params }: { params: { id: string } }) {
         <div className="mt-m">
           <MumbleUserInfo variant={MUMBLE_VARIANT.DETAILVIEW} user={user} />
         </div>
+        {userActions}
       </div>
     );
   } catch (error) {
