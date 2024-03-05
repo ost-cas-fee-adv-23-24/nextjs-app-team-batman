@@ -1,7 +1,9 @@
 'use server';
+import { revalidatePath } from 'next/cache';
 import { API_ROUTES, RouteService } from '../route-service';
 import { APIServiceBase } from './api-service-base';
 import { TAPIQueryPagination, TAPIUpdateUserData, TAPIUser, TAPIUserPaginatedResult } from './api-types';
+import { SCHEMA_USER } from './api-validation';
 
 /**
  * @description Remove users avatar picture
@@ -77,13 +79,22 @@ export const GET_USERS = async (payload?: { query?: TAPIQueryPagination }) => {
  * @info PATCH-method
  */
 export const UPDATE_USER = async (payload: { id?: string; data: TAPIUpdateUserData }) => {
+  const validation = SCHEMA_USER.safeParse(payload.data);
+  if (!validation.success) {
+    return {
+      errors: validation.error.flatten().fieldErrors,
+    };
+  }
+
   await APIServiceBase._fetch(RouteService.api(API_ROUTES.USERS, { id: payload.id }), {
     headers: {
-      ContentType: 'application/json',
+      'Content-Type': 'application/json',
     },
     method: 'PATCH',
     body: JSON.stringify(payload.data),
   });
+
+  revalidatePath(RouteService.api(API_ROUTES.USERS_ID, { id: payload.id }));
 };
 
 /**

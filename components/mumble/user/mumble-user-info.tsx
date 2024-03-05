@@ -41,7 +41,7 @@ export const MumbleUserInfo = ({ variant, postDate: date, user }: IMumbleUserInf
     >
       {variant === MUMBLE_VARIANT.REPLY && <Avatar {...avatarProps} />}
       <div className="flex flex-col gap-xs">
-        <Label {...labelProps} className="capitalize" />
+        <Label {...labelProps} className="max-w-[150px] truncate capitalize sm:max-w-none" />
         <div className="flex flex-wrap gap-s">
           <LinkIcon icon="profile" text={username} />
           {date && <LinkIcon icon="calendar" text={date.toLocaleDateString('de-CH')} variant="secondary" />}
