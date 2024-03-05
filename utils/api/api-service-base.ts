@@ -10,13 +10,17 @@ export class APIServiceBase {
    */
   public static _fetch = async (input: RequestInfo, init?: RequestInit) => {
     const authHeader = await this._authHeader();
-    const res = await fetch(input, {
+
+    const options: RequestInit = {
+      ...init,
       headers: {
         ...init?.headers,
         ...authHeader,
       },
-      ...init,
-    });
+    };
+
+    const res = await fetch(input, options);
+
     if (!res.ok) {
       if (res.status === 401) await signIn('zitadel');
       APIServiceBase._handleError(res);

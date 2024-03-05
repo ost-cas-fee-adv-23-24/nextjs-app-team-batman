@@ -11,10 +11,11 @@ interface IModalSettings {
 export const ModalSettings = ({ user }: IModalSettings) => {
   const [modalState, setModalState] = useState<boolean>(false);
   const formRef = useRef<HTMLFormElement>(null);
+  const [formState, setFormState] = useState<Awaited<ReturnType<typeof UPDATE_USER>>>();
 
   const formAction = async (formData: FormData) => {
     if (user) {
-      await UPDATE_USER({
+      const result = await UPDATE_USER({
         data: {
           firstname: formData.get('firstname') as string,
           lastname: formData.get('lastname') as string,
@@ -22,6 +23,12 @@ export const ModalSettings = ({ user }: IModalSettings) => {
         },
         id: user.id,
       });
+
+      setFormState(result);
+
+      if (!result?.errors) {
+        setModalState(false);
+      }
     }
   };
 
@@ -50,30 +57,27 @@ export const ModalSettings = ({ user }: IModalSettings) => {
         width="m"
         title="Settings"
       >
-        <form ref={formRef} action={formAction}>
-          <Label size="xl" as="h1" className="mb-m">
+        <form ref={formRef} action={formAction} className="grid gap-m">
+          <Label size="xl" as="h1">
             Persönliche Einstellungen
           </Label>
           <Input
-            defaultValue={user?.firstname ? user.firstname : ''}
+            defaultValue={user.firstname ?? ''}
             label="Vorname"
             name="firstname"
-            placeholder=""
-            className="mb-m"
+            error={formState?.errors?.firstname?.[0] ?? ''}
           />
           <Input
-            defaultValue={user?.lastname ? user.lastname : ''}
+            defaultValue={user.lastname ?? ''}
             label="Name"
             name="lastname"
-            placeholder=""
-            className="mb-m"
+            error={formState?.errors?.lastname?.[0] ?? ''}
           />
           <Input
             defaultValue={user?.username ? user.username : ''}
             label="Benutzername"
             name="username"
-            placeholder=""
-            className="mb-m"
+            error={formState?.errors?.username?.[0] ?? ''}
           />
         </form>
       </Modal>

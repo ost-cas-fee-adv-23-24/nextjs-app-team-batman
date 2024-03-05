@@ -1,4 +1,6 @@
 import { auth } from '@/app/api/auth/[...nextauth]/auth';
+import UserFollow from '@/app/user/[id]/_user-follow';
+import UserTabs from '@/app/user/[id]/_user-tabs';
 import { MumbleUserCard } from '@/components/mumble/user/mumble-user-card';
 import { MumbleUserInfo } from '@/components/mumble/user/mumble-user-info';
 import { GET_USER_BY_ID, GET_USER_FOLLOWERS } from '@/utils/api/api-actions-user';
@@ -7,20 +9,20 @@ import { MUMBLE_VARIANT } from '@/utils/enums';
 import { delay } from '@/utils/helpers/delay';
 import { ProfileImage } from '@/utils/helpers/profile-image';
 import { notFound } from 'next/navigation';
-import UserTabs from '@/app/user/[id]/_user-tabs';
-import UserFollow from '@/app/user/[id]/_user-follow';
 
 export default async function UserCard({ params }: { params: { id: string } }) {
   const session = await auth();
   try {
-    const user = await Promise.all([GET_USER_BY_ID({ id: params.id }), delay()]).then((results) => results[0]);
-    const iAmFollower = await Promise.all([GET_USER_FOLLOWERS({ id: params.id }), delay()])
-      .then((results) => results[0])
-      .then((users) =>
-        users.data.some((follower) => {
-          return follower.id === session?.user.id;
-        }),
-      );
+    const [user, followers] = await Promise.all([
+      GET_USER_BY_ID({ id: params.id }),
+      GET_USER_FOLLOWERS({ id: params.id }),
+      delay(),
+    ]);
+
+    const iAmFollower = followers.data.some((follower) => {
+      return follower.id === session?.user.id;
+    });
+
     const userActions =
       session?.user.id === user.id ? (
         <div className="mt-s max-w-[400px]">
