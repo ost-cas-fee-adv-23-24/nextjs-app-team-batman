@@ -1,17 +1,28 @@
-import { MUMBLE_POSTS_PAGINATION } from '@/app/app-config';
-import { LayoutPostWrapper } from '@/components/layout/layout-post-wrapper';
-import { MumbleCard } from '@/components/mumble/card/mumble-card';
-import { MumbleInfinityPosts } from '@/components/mumble/post/mumble-infinity-posts';
-import { MumblePost } from '@/components/mumble/post/mumble-post';
-import { GET_POSTS } from '@/utils/api/api-actions-post';
+import { LayoutTinyUserWrapper } from '@/components/layout/layout-tinyuser-wrapper';
 import { APIError } from '@/utils/api/api-service-base';
-import { MUMBLE_VARIANT } from '@/utils/enums';
 import { delay } from '@/utils/helpers/delay';
 import { notFound } from 'next/navigation';
+import { GET_USER_FOLLOWEES } from '@/utils/api/api-actions-user';
+import { MumbleUserCard } from '@/components/mumble/user/mumboe-user-tiny-card';
 
 export default async function Page({ params }: { params: { id: string } }) {
   try {
-    return <LayoutPostWrapper>test abc</LayoutPostWrapper>;
+    const [followers] = await Promise.all([GET_USER_FOLLOWEES({ id: params.id }), delay()]);
+    return (
+      <LayoutTinyUserWrapper>
+        {followers?.data?.map((user) => {
+          return (
+            <MumbleUserCard
+              id={user.id}
+              firstname={user.firstname ?? ''}
+              lastname={user.lastname ?? ''}
+              avatarUrl={user.avatarUrl ?? ''}
+              key={user.id}
+            />
+          );
+        })}
+      </LayoutTinyUserWrapper>
+    );
   } catch (error) {
     if (error instanceof APIError && error.status === 404) return notFound();
     throw error;
