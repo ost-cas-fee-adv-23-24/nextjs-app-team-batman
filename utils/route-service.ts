@@ -5,6 +5,7 @@ export enum PAGE_ROUTES {
   USER = '/user/:id',
   USER_LIKED = '/user/:id/liked',
   POSTS = '/post/:id',
+  ERROR = '/error',
 }
 
 export enum API_ROUTES {
