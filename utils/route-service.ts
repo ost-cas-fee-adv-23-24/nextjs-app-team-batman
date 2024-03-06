@@ -4,6 +4,7 @@ export enum PAGE_ROUTES {
   HOME = '/',
   USER = '/user/:id',
   USER_LIKED = '/user/:id/liked',
+  USER_FOLLOW = '/user/:id/follow',
   POSTS = '/post/:id',
   ERROR = '/error',
 }

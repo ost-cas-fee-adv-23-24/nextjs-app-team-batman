@@ -21,6 +21,11 @@ export default function UserTabs({ id }: { id: string }) {
             onClick: () => router.push(RouteService.page(PAGE_ROUTES.USER_LIKED, { id })),
             selected: pathname === RouteService.page(PAGE_ROUTES.USER_LIKED, { id }),
           },
+          {
+            text: 'I follow',
+            onClick: () => router.push(RouteService.page(PAGE_ROUTES.USER_FOLLOW, { id })),
+            selected: pathname === RouteService.page(PAGE_ROUTES.USER_FOLLOW, { id }),
+          },
         ]}
       />
     </div>
