@@ -4,11 +4,10 @@ import UserTabs from '@/app/user/[id]/_user-tabs';
 import { MumbleUserCard } from '@/components/mumble/user/mumble-user-card';
 import { MumbleUserInfo } from '@/components/mumble/user/mumble-user-info';
 import { GET_USER_BY_ID, GET_USER_FOLLOWERS } from '@/utils/api/api-actions-user';
-import { APIError } from '@/utils/api/api-service-base';
 import { MUMBLE_VARIANT } from '@/utils/enums';
 import { delay } from '@/utils/helpers/delay';
+import { errorHandler } from '@/utils/helpers/error-handler';
 import { ProfileImage } from '@/utils/helpers/profile-image';
-import { notFound } from 'next/navigation';
 
 export default async function UserCard({ params }: { params: { id: string } }) {
   const session = await auth();
@@ -47,7 +46,6 @@ export default async function UserCard({ params }: { params: { id: string } }) {
       </div>
     );
   } catch (error) {
-    if (error instanceof APIError && error.status === 404) return notFound();
-    throw error;
+    errorHandler(error);
   }
 }

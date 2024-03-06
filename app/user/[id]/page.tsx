@@ -4,10 +4,9 @@ import { MumbleCard } from '@/components/mumble/card/mumble-card';
 import { MumbleInfinityPosts } from '@/components/mumble/post/mumble-infinity-posts';
 import { MumblePost } from '@/components/mumble/post/mumble-post';
 import { GET_POSTS } from '@/utils/api/api-actions-post';
-import { APIError } from '@/utils/api/api-service-base';
 import { MUMBLE_VARIANT } from '@/utils/enums';
 import { delay } from '@/utils/helpers/delay';
-import { notFound } from 'next/navigation';
+import { errorHandler } from '@/utils/helpers/error-handler';
 
 export default async function Page({ params }: { params: { id: string } }) {
   try {
@@ -33,7 +32,6 @@ export default async function Page({ params }: { params: { id: string } }) {
       </LayoutPostWrapper>
     );
   } catch (error) {
-    if (error instanceof APIError && error.status === 404) return notFound();
-    throw error;
+    errorHandler(error);
   }
 }

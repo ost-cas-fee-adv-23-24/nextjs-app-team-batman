@@ -22,7 +22,10 @@ export const MumbleCard = ({ children, imageSrc, skeleton = false, post }: IMumb
 
   return (
     <div
-      className={cn('relative h-fit w-full items-center rounded-m bg-white px-xl py-l', post && 'cursor-pointer')}
+      className={cn(
+        'relative h-fit w-full items-center rounded-m bg-white px-xl py-l pr-m sm:pr-xl',
+        post && 'cursor-pointer',
+      )}
       onClick={() => {
         if (post) router.push(RouteService.page(PAGE_ROUTES.POSTS, { id: post.id }));
       }}
