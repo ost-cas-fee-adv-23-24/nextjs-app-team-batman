@@ -7,13 +7,21 @@ import NextImage from 'next/image';
 import Link from 'next/link';
 import { ComponentProps } from 'react';
 
+import { readableCreatedDate } from '@/utils/helpers/readable-created-date';
+import dayjs from 'dayjs';
+import 'dayjs/locale/de';
+import dayOfYear from 'dayjs/plugin/dayOfYear'; // Import the plugin
+import relativeTime from 'dayjs/plugin/relativeTime';
+dayjs.extend(relativeTime);
+dayjs.extend(dayOfYear);
+
 interface IMumbleUserInfo {
   user: TAPIUser | TAPIPublicUser;
   variant: MUMBLE_VARIANT;
   postDate?: Date;
 }
 
-export const MumbleUserInfo = ({ variant, postDate: date, user }: IMumbleUserInfo) => {
+export const MumbleUserInfo = ({ variant, postDate, user }: IMumbleUserInfo) => {
   const fullUser = user as TAPIUser;
   const displayname = fullUser?.firstname && fullUser?.lastname ? `${fullUser.firstname} ${fullUser.lastname}` : null;
   const username = user?.username;
@@ -34,17 +42,30 @@ export const MumbleUserInfo = ({ variant, postDate: date, user }: IMumbleUserInf
     children: displayname ?? username,
   };
 
+  const isDetailView = variant === MUMBLE_VARIANT.DETAILVIEW;
+  const isReply = variant === MUMBLE_VARIANT.REPLY;
+
   return (
     <Link
       href={RouteService.page(PAGE_ROUTES.USER, { id: user.id })}
-      className="relative flex place-items-center gap-xs"
+      className="duratin-300 relative flex place-items-center gap-xs  rounded-s transition-all hover:scale-105"
     >
-      {variant === MUMBLE_VARIANT.REPLY && <Avatar {...avatarProps} />}
+      {isReply && <Avatar {...avatarProps} />}
       <div className="flex flex-col gap-xs">
         <Label {...labelProps} className="max-w-[150px] truncate capitalize sm:max-w-none" />
         <div className="flex flex-wrap gap-s">
           <LinkIcon icon="profile" text={username} />
-          {date && <LinkIcon icon="calendar" text={date.toLocaleDateString('de-CH')} variant="secondary" />}
+          {postDate && (
+            <LinkIcon
+              icon="calendar"
+              text={
+                isDetailView
+                  ? dayjs(postDate).locale('de').format('D. MMMM YYYY - hh:mm')
+                  : readableCreatedDate(postDate)
+              }
+              variant="secondary"
+            />
+          )}
         </div>
       </div>
     </Link>

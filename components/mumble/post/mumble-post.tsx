@@ -40,7 +40,7 @@ export const MumblePost = ({ post, variant }: { post: TAPIPost | TAPIReply; vari
   };
 
   return (
-    <div className="grid gap-m">
+    <div className="grid gap-s sm:gap-m">
       <div className="flex">
         <div onClick={(e) => e.stopPropagation()}>
           <MumbleUserInfo variant={variant} user={post.creator} postDate={decodeULIDTimestamp(post.id)} />
