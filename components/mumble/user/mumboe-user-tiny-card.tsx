@@ -16,10 +16,8 @@ interface IMumbleUserTinyCard {
 export const MumbleUserTinyCard = ({ avatarUrl, id, firstname, lastname, buttonText = '' }: IMumbleUserTinyCard) => {
   const router = useRouter();
   const handleUnfollow = async () => {
-    // Call unfollow API
     await UPDATE_USERS_UNFOLLOW({ id });
 
-    // Refresh page
     router.refresh();
   };
   return (
