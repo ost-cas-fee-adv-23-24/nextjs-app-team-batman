@@ -1,21 +1,13 @@
 import { LayoutTinyUserWrapper } from '@/components/layout/layout-tinyuser-wrapper';
 import { APIError } from '@/utils/api/api-service-base';
 import { delay } from '@/utils/helpers/delay';
-import { GET_USER_FOLLOWEES, UPDATE_USERS_UNFOLLOW } from '@/utils/api/api-actions-user';
+import { GET_USER_FOLLOWEES } from '@/utils/api/api-actions-user';
 import { MumbleUserTinyCard } from '@/components/mumble/user/mumboe-user-tiny-card';
-import { useRouter, notFound } from 'next/navigation';
+import { notFound } from 'next/navigation';
 
 export default async function Page({ params }: { params: { id: string } }) {
-  //  const router = useRouter();
   try {
     const [followers] = await Promise.all([GET_USER_FOLLOWEES({ id: params.id }), delay()]);
-    const handleUnfollow = async (userId: string) => {
-      // Call unfollow API
-      await UPDATE_USERS_UNFOLLOW({ id: userId });
-
-      // Refresh page
-      //  router.refresh();
-    };
 
     return (
       <LayoutTinyUserWrapper>
@@ -28,7 +20,6 @@ export default async function Page({ params }: { params: { id: string } }) {
               avatarUrl={user.avatarUrl ?? ''}
               key={user.id}
               buttonText="Unfollow"
-              onClick={() => handleUnfollow(user.id)}
             />
           );
         })}

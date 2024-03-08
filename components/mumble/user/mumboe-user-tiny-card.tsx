@@ -2,6 +2,8 @@
 import { cn } from '@/utils/tailwind';
 import { Avatar, Label, Button } from '@ost-cas-fee-adv-23-24/design-system-component-library-team-batman';
 import { AVATAR_FALLBACK } from '@/app/app-config';
+import { UPDATE_USERS_UNFOLLOW } from '@/utils/api/api-actions-user';
+import { useRouter } from 'next/navigation';
 
 interface IMumbleUserTinyCard {
   id: string;
@@ -9,19 +11,19 @@ interface IMumbleUserTinyCard {
   firstname?: string;
   lastname?: string;
   buttonText?: string;
-  onClick?: () => void;
 }
 
-export const MumbleUserTinyCard = ({
-  avatarUrl,
-  id,
-  firstname,
-  lastname,
-  buttonText = '',
-  onClick,
-}: IMumbleUserTinyCard) => {
+export const MumbleUserTinyCard = ({ avatarUrl, id, firstname, lastname, buttonText = '' }: IMumbleUserTinyCard) => {
+  const router = useRouter();
+  const handleUnfollow = async () => {
+    // Call unfollow API
+    await UPDATE_USERS_UNFOLLOW({ id });
+
+    // Refresh page
+    router.refresh();
+  };
   return (
-    <div className={cn('relative h-[242px] w-[216px] items-center rounded-m bg-white p-s')}>
+    <div className={cn('relative h-[242px] w-full items-center rounded-m bg-white p-s sm:w-[216px]')}>
       <div className="flex items-center justify-center">
         <Avatar
           image={{
@@ -36,8 +38,8 @@ export const MumbleUserTinyCard = ({
           {firstname} {lastname}
         </Label>
       </div>
-      <div className="pt-s">
-        <Button size="m" variant="primary" onClick={onClick}>
+      <div className="flex justify-center pt-s">
+        <Button size="m" variant="primary" onClick={handleUnfollow} fullWidth>
           {buttonText}
         </Button>
       </div>
