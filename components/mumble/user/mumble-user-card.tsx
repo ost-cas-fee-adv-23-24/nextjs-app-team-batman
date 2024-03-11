@@ -26,14 +26,12 @@ export const MumbleUserCard = ({ avatarUrl, userId, sessionUserId, profileImage 
         data: formData,
         id: sessionUserId,
       });
-      formRef.current?.reset();
+      router.refresh();
     }
   };
 
   const handleClose = () => {
     formRef.current?.requestSubmit();
-    setModalState(!modalState);
-    router.refresh();
   };
 
   return (
