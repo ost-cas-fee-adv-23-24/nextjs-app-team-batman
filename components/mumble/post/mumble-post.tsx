@@ -39,7 +39,6 @@ export const MumblePost = ({ post, variant }: { post: TAPIPost | TAPIReply; vari
   const handleDisklike = async () => {
     await MUMBLE_LIKE_HANDLER({ id: post.id, type: MUMBLE_LIKE_TYPE.DISLIKE });
   };
-
   return (
     <div className="grid gap-s sm:gap-m">
       <div className="flex">
@@ -49,13 +48,7 @@ export const MumblePost = ({ post, variant }: { post: TAPIPost | TAPIReply; vari
       </div>
       {isDetailView && <MumblePostDelete post={post} />}
 
-      {post.text && (
-        <div
-          onClick={(e) => e.stopPropagation()}
-          className="cursor-auto whitespace-pre-wrap"
-          dangerouslySetInnerHTML={{ __html: tagReplacement(post.text)! }}
-        />
-      )}
+      {post.text && <div className="whitespace-pre-wrap" dangerouslySetInnerHTML={{ __html: post.text }} />}
 
       {post.mediaUrl && (
         <div className="grid cursor-auto place-content-center object-contain" onClick={(e) => e.stopPropagation()}>
