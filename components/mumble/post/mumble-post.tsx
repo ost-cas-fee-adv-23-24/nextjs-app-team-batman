@@ -48,7 +48,7 @@ export const MumblePost = ({ post, variant }: { post: TAPIPost | TAPIReply; vari
       </div>
       {isDetailView && <MumblePostDelete post={post} />}
 
-      <p>{post.text}</p>
+      {post.text && <div className="whitespace-pre-wrap" dangerouslySetInnerHTML={{ __html: post.text }} />}
 
       {post.mediaUrl && (
         <div className="grid place-content-center object-contain" onClick={(e) => e.stopPropagation()}>
