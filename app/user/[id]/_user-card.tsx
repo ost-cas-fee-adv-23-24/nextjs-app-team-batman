@@ -39,7 +39,7 @@ export default async function UserCard({ params }: { params: { id: string } }) {
           avatarUrl={user.avatarUrl}
           profileImage={ProfileImage}
         />
-        <div className="mt-m">
+        <div className="pointer-events-none mt-m">
           <MumbleUserInfo variant={MUMBLE_VARIANT.DETAILVIEW} user={user} />
         </div>
         {userActions}

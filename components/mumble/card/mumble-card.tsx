@@ -23,8 +23,8 @@ export const MumbleCard = ({ children, imageSrc, skeleton = false, post }: IMumb
   return (
     <div
       className={cn(
-        'relative h-fit w-full items-center rounded-m bg-white px-xl py-l pr-m sm:pr-xl',
-        post && 'cursor-pointer',
+        'relative h-fit w-full items-center rounded-m bg-white px-xl py-s pr-m sm:py-l sm:pr-xl',
+        post && 'cursor-pointer transition-colors duration-150 hover:ring hover:ring-primary-200',
       )}
       onClick={() => {
         if (post) router.push(RouteService.page(PAGE_ROUTES.POSTS, { id: post.id }));
@@ -37,7 +37,7 @@ export const MumbleCard = ({ children, imageSrc, skeleton = false, post }: IMumb
           <Avatar size="m" image={{ alt: 'User Picture', src: image, as: NextImage, width: 100, height: 100 }} />
         )}
       </div>
-      <div className="grid gap-m">{children}</div>
+      <div className="grid gap-s sm:gap-m">{children}</div>
     </div>
   );
 };
