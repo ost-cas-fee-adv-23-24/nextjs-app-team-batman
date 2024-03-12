@@ -8,7 +8,6 @@ import { notFound } from 'next/navigation';
 export default async function Page({ params }: { params: { id: string } }) {
   try {
     const [followers] = await Promise.all([GET_USER_FOLLOWEES({ id: params.id }), delay()]);
-
     return (
       <LayoutTinyUserWrapper>
         {followers?.data?.map((user) => {
@@ -19,7 +18,6 @@ export default async function Page({ params }: { params: { id: string } }) {
               lastname={user.lastname ?? ''}
               avatarUrl={user.avatarUrl ?? ''}
               key={user.id}
-              buttonText="Unfollow"
             />
           );
         })}
