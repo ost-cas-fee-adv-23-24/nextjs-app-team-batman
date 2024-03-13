@@ -7,6 +7,7 @@ export enum PAGE_ROUTES {
   USER_FOLLOW = '/user/:id/follow',
   POSTS = '/post/:id',
   ERROR = '/error',
+  TAGS = '/tags',
 }
 
 export enum API_ROUTES {
