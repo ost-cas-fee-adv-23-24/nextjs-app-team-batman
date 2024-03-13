@@ -1,0 +1,21 @@
+{
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "workbench.colorCustomizations": {
+    "activityBar.activeBackground": "#831843",
+    "activityBar.activeBorder": "#FBCFE8",
+    "activityBar.foreground": "#FBCFE8",
+    "statusBar.foreground": "#FBCFE8",
+    "activityBarBadge.foreground": "#FBCFE8",
+    "titleBar.activeForeground": "#FBCFE8",
+    "titleBar.inactiveForeground": "#FBCFE8",
+    "activityBarBadge.background": "#DB2777",
+    "statusBar.background": "#831843",
+    "titleBar.activeBackground": "#831843",
+    "titleBar.inactiveBackground": "#831843"
+  },
+  "tailwindCSS.experimental.classRegex": [
+    ["clsx\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"],
+    ["cn\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"]
+  ]
+}

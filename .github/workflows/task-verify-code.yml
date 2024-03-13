@@ -1,0 +1,32 @@
+name: '🔍 TASK-VERIFY-CODE'
+
+on:
+  workflow_call:
+
+jobs:
+  verify-code:
+    name: 🔍 verify code
+    timeout-minutes: 10
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: 👀 cache node modules
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: 📦 install dependencies
+        run: npm ci
+
+      - name: 🔍 run lint
+        run: npm run lint
+
+      - name: 🔵 run typecheck
+        run: npx tsc --noEmit

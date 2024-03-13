@@ -1,0 +1,15 @@
+export enum MUMBLE_VARIANT {
+  REPLY = 'REPLY',
+  TIMELINE = 'TIMELINE',
+  DETAILVIEW = 'DETAILVIEW',
+}
+
+export enum MUMBLE_TYPE {
+  POST = 'POST',
+  REPLY = 'REPLY',
+}
+
+export enum MUMBLE_LIKE_TYPE {
+  LIKE = 'LIKE',
+  DISLIKE = 'DISLIKE',
+}
