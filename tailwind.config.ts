@@ -4,6 +4,7 @@ import type { Config } from 'tailwindcss';
 import { cn } from './utils/tailwind';
 
 const config: Config = {
+  safelist: ['hover:text-primary-900', 'hover:underline'],
   presets: [require('@ost-cas-fee-adv-23-24/design-system-component-library-team-batman/tailwind.config.ts')],
   content: [
     './node_modules/@ost-cas-fee-adv-23-24/design-system-component-library-team-batman/dist/**/*.{js,ts,jsx,tsx}',

@@ -3,6 +3,7 @@ import { MUMBLE_LIKE_HANDLER } from '@/utils/api/api-actions-post';
 import { decodeULIDTimestamp } from '@/utils/api/api-helpers';
 import { TAPIPost, TAPIReply } from '@/utils/api/api-types';
 import { MUMBLE_LIKE_TYPE, MUMBLE_VARIANT } from '@/utils/enums';
+import { tagReplacement } from '@/utils/helpers/tags-replacement';
 import { PAGE_ROUTES, RouteService } from '@/utils/route-service';
 import {
   CommentButton,
@@ -16,7 +17,6 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { MumbleUserInfo } from '../user/mumble-user-info';
 import { MumblePostDelete } from './mumble-post-delete';
-import { tagReplacement } from '@/utils/helpers/tags-replacement';
 
 export const MumblePost = ({ post, variant }: { post: TAPIPost | TAPIReply; variant: MUMBLE_VARIANT }) => {
   const { data } = useSession();
@@ -50,11 +50,15 @@ export const MumblePost = ({ post, variant }: { post: TAPIPost | TAPIReply; vari
       {isDetailView && <MumblePostDelete post={post} />}
 
       {post.text && (
-        <div className="whitespace-pre-wrap" dangerouslySetInnerHTML={{ __html: tagReplacement(post.text)! }} />
+        <div
+          onClick={(e) => e.stopPropagation()}
+          className="cursor-auto whitespace-pre-wrap"
+          dangerouslySetInnerHTML={{ __html: tagReplacement(post.text)! }}
+        />
       )}
 
       {post.mediaUrl && (
-        <div className="grid place-content-center object-contain" onClick={(e) => e.stopPropagation()}>
+        <div className="grid cursor-auto place-content-center object-contain" onClick={(e) => e.stopPropagation()}>
           <Image
             as={NextImage}
             src={post.mediaUrl}
