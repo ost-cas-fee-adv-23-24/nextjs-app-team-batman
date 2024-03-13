@@ -8,7 +8,6 @@ import { useInView } from 'react-intersection-observer';
 import SkeletonPost from '../../skeleton/skeleton-post';
 import { MumbleCard } from '../card/mumble-card';
 import { MumblePost } from './mumble-post';
-import { tagReplacement } from '@/utils/helpers/tags-replacement';
 
 export type TInfinityPostsProps = {
   olderThan: string;
@@ -64,7 +63,7 @@ export const MumbleInfinityPosts = ({ olderThan, limit, creators, likedBy }: TIn
       {posts?.map((post, i) => (
         <div key={post.id} ref={i === posts.length - 1 ? ref : undefined}>
           <MumbleCard imageSrc={post.creator?.avatarUrl ?? undefined} post={post}>
-            <MumblePost post={tagReplacement(post)!} variant={MUMBLE_VARIANT.TIMELINE} />
+            <MumblePost post={post} variant={MUMBLE_VARIANT.TIMELINE} />
           </MumbleCard>
         </div>
       ))}

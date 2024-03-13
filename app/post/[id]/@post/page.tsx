@@ -5,7 +5,6 @@ import { ULID_SCHEMA } from '@/utils/api/api-helpers';
 import { MUMBLE_VARIANT } from '@/utils/enums';
 import { errorHandler } from '@/utils/helpers/error-handler';
 import { notFound } from 'next/navigation';
-import { tagReplacement } from '@/utils/helpers/tags-replacement';
 
 export default async function Page({ params }: { params: { id: string } }) {
   if (!ULID_SCHEMA.safeParse(params.id).success) {
@@ -16,7 +15,7 @@ export default async function Page({ params }: { params: { id: string } }) {
     const post = await GET_POST_BY_ID({ id: params.id });
     return (
       <MumbleCard imageSrc={post.creator?.avatarUrl ?? undefined}>
-        <MumblePost post={tagReplacement(post)!} variant={MUMBLE_VARIANT.DETAILVIEW} />
+        <MumblePost post={post} variant={MUMBLE_VARIANT.DETAILVIEW} />
       </MumbleCard>
     );
   } catch (error) {
