@@ -16,6 +16,7 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { MumbleUserInfo } from '../user/mumble-user-info';
 import { MumblePostDelete } from './mumble-post-delete';
+import { tagReplacement } from '@/utils/helpers/tags-replacement';
 
 export const MumblePost = ({ post, variant }: { post: TAPIPost | TAPIReply; variant: MUMBLE_VARIANT }) => {
   const { data } = useSession();
@@ -48,7 +49,9 @@ export const MumblePost = ({ post, variant }: { post: TAPIPost | TAPIReply; vari
       </div>
       {isDetailView && <MumblePostDelete post={post} />}
 
-      <p>{post.text}</p>
+      {post.text && (
+        <div className="whitespace-pre-wrap" dangerouslySetInnerHTML={{ __html: tagReplacement(post.text)! }} />
+      )}
 
       {post.mediaUrl && (
         <div className="grid place-content-center object-contain" onClick={(e) => e.stopPropagation()}>
