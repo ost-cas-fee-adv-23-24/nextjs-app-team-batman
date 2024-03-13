@@ -10,6 +10,7 @@ export const DashboardPosts = async () => {
   const posts = await Promise.all([GET_POSTS({ query: { limit: MUMBLE_POSTS_PAGINATION } }), delay()]).then(
     (results) => results[0],
   );
+
   return (
     <>
       {/* <LivePosts /> */}
