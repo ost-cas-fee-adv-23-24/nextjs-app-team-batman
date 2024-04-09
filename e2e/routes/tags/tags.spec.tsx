@@ -1,12 +1,12 @@
 import { E2EPageObject } from '@/e2e/helpers/models/e2e-page-object';
 import { expect } from '@playwright/test';
-import { HomePageObject } from './home-page-object';
+import { TagsPageObject } from './tags-page-object';
 
 const test = E2EPageObject.initTest({
-  pageObject: HomePageObject,
+  pageObject: TagsPageObject,
 });
 
-test.describe(`Check ${HomePageObject.url}`, () => {
+test.describe(`Check ${TagsPageObject.url}`, () => {
   test.describe('user: @anonymous', () => {
     test.beforeEach(async ({ pageObject }) => {
       await pageObject.navigate();

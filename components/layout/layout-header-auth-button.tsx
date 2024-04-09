@@ -10,7 +10,11 @@ export const LayoutHeaderAuthButton = ({ variant }: ILayoutHeaderAuthButton) => 
   const label = variant === 'login' ? 'Login with Zitadel' : 'Log out';
 
   return (
-    <button onClick={() => (variant === 'login' ? signIn('zitadel') : signOut())} className="group grid gap-xs">
+    <button
+      onClick={() => (variant === 'login' ? signIn('zitadel') : signOut())}
+      className="group grid gap-xs"
+      data-testid={variant === 'login' ? 'login-button' : 'logout-button'}
+    >
       <Icon variant="logout-animated" size="m" className="ml-auto mr-auto fill-white transition" />
       <Label size="s" className="hidden cursor-pointer text-white md:block" as={'span'}>
         {label}

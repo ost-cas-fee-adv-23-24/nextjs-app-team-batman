@@ -1,4 +1,7 @@
 import { defineConfig, devices } from '@playwright/test';
+import dotenv from 'dotenv';
+// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+dotenv.config({ path: '.env.local' });
 
 /* See https://playwright.dev/docs/test-configuration */
 export default defineConfig({
