@@ -20,7 +20,7 @@ export default async function Page({ params }: { params: { id: string } }) {
   return (
     <>
       {session && user && (
-        <div className="grid gap-s">
+        <div className="grid gap-s" data-testid="create-reply-wrapper">
           <div className="flex">
             <MumbleUserInfo variant={MUMBLE_VARIANT.REPLY} user={user} />
           </div>
@@ -29,7 +29,9 @@ export default async function Page({ params }: { params: { id: string } }) {
       )}
 
       {replies.count === 0 ? (
-        <div className="rounded-s bg-base-100 p-xs text-base-500">🤔 hmm... hier wurde noch nichts kommentiert</div>
+        <div className="rounded-s bg-base-100 p-xs text-base-500" data-testid="no-replies">
+          🤔 hmm... hier wurde noch nichts kommentiert
+        </div>
       ) : (
         replies.data.map((post) => <MumblePost post={post} key={post.id} variant={MUMBLE_VARIANT.REPLY} />)
       )}

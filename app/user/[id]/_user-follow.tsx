@@ -3,7 +3,7 @@ import { UPDATE_USERS_FOLLOWERS, UPDATE_USERS_UNFOLLOW } from '@/utils/api/api-a
 import { Button, Label } from '@ost-cas-fee-adv-23-24/design-system-component-library-team-batman';
 import { useRouter } from 'next/navigation';
 
-export default function UserTabs({ id, iAmFollower = false }: { id: string; iAmFollower: boolean }) {
+export default function UserFollow({ id, iAmFollower = false }: { id: string; iAmFollower: boolean }) {
   const router = useRouter();
 
   const handleFollow = async () => {

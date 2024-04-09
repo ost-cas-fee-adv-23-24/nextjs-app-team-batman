@@ -14,7 +14,9 @@ export default function Layout({
     <LayoutPostWrapper className="w-full">
       <div className="grid w-full rounded-m bg-white">
         {post}
-        <div className="grid gap-l px-xl pb-l">{replies}</div>
+        <div className="grid gap-l px-xl pb-l" data-testid="replies-wrapper">
+          {replies}
+        </div>
       </div>
     </LayoutPostWrapper>
   );

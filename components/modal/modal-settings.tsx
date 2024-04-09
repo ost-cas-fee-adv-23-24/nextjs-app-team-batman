@@ -56,6 +56,7 @@ export const ModalSettings = ({ user }: IModalSettings) => {
         }}
         width="m"
         title="Settings"
+        data-testid="modal-settings"
       >
         <form ref={formRef} action={formAction} className="grid gap-m">
           <Label size="xl" as="h1">

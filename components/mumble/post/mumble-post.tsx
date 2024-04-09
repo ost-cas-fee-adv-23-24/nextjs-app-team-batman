@@ -51,6 +51,7 @@ export const MumblePost = ({ post, variant }: { post: TAPIPost | TAPIReply; vari
 
       {post.text && (
         <div
+          data-testid="mumble-post--text"
           onClick={(e) => e.stopPropagation()}
           className="cursor-auto whitespace-pre-wrap"
           dangerouslySetInnerHTML={{ __html: tagReplacement(post.text)! }}
@@ -58,7 +59,11 @@ export const MumblePost = ({ post, variant }: { post: TAPIPost | TAPIReply; vari
       )}
 
       {post.mediaUrl && (
-        <div className="grid cursor-auto place-content-center object-contain" onClick={(e) => e.stopPropagation()}>
+        <div
+          className="grid cursor-auto place-content-center object-contain"
+          onClick={(e) => e.stopPropagation()}
+          data-testid="mumble-post--image"
+        >
           <Image
             as={NextImage}
             src={post.mediaUrl}
@@ -79,6 +84,7 @@ export const MumblePost = ({ post, variant }: { post: TAPIPost | TAPIReply; vari
             <CommentButton
               comments={(post as TAPIPost).replies ?? 0}
               onClick={() => router.push(RouteService.page(PAGE_ROUTES.POSTS, { id: post.id }))}
+              data-testid="mumble-post--comment"
             />
           )}
 
@@ -88,10 +94,13 @@ export const MumblePost = ({ post, variant }: { post: TAPIPost | TAPIReply; vari
               isLikedByUser={Boolean(post.likedBySelf)}
               onLikeAdd={handleLike}
               onLikeRemove={handleDisklike}
+              data-testid="mumble-post--like"
             />
           )}
 
-          {!isReply && <CopyButton textToCopy={textToCopy} text={['Copy Link', 'Link kopiert']} />}
+          {!isReply && (
+            <CopyButton textToCopy={textToCopy} text={['Copy Link', 'Link kopiert']} data-testid="mumble-post--copy" />
+          )}
         </div>
       </div>
     </div>

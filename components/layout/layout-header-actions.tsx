@@ -17,7 +17,7 @@ export const LayoutHeaderActions = async () => {
 
   return (
     <>
-      <Link href={RouteService.page(PAGE_ROUTES.USER, { id: user.id })}>
+      <Link href={RouteService.page(PAGE_ROUTES.USER, { id: user.id })} date-testid="header-avatar">
         <Avatar size="s" image={{ alt: '', src: avatar, as: NextImage, width: 100, height: 100 }} />
       </Link>
       <ModalSettings user={user} />
