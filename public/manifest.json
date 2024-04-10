@@ -1,0 +1,21 @@
+{
+  "name": "Mumble",
+  "short_name": "Mumble",
+  "start_url": "/",
+  "display": "standalone",
+  "description": "A twitter better clone.",
+  "icons": [
+    {
+      "src": "images/homescreen72.png",
+      "sizes": "72x72",
+      "type": "image/png"
+    },
+    {
+      "src": "images/homescreen96.png",
+      "sizes": "96x96",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#7C3AED",
+  "background_color": "#F1F5F9"
+}
