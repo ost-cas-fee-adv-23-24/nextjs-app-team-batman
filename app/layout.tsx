@@ -31,10 +31,12 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
         )}
       >
         <link rel="manifest" href="/manifest.json" />
-        <LayoutHeader />
-        <SessionProvider session={session}>
-          <LayoutMainWrapper>{children}</LayoutMainWrapper>
-        </SessionProvider>
+        <main>
+          <LayoutHeader />
+          <SessionProvider session={session}>
+            <LayoutMainWrapper>{children}</LayoutMainWrapper>
+          </SessionProvider>
+        </main>
       </body>
     </html>
   );
