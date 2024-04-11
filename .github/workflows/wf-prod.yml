@@ -28,3 +28,11 @@ jobs:
     with:
       VARIANT: 'PROD'
     secrets: inherit
+
+  lighthouse:
+    needs: deploy-prod
+    uses: ./.github/workflows/task-lighthouse.yml
+    with:
+      DEPLOY_URL: ${{ needs.deploy-prod.outputs.DEPLOY_URL }}
+      VARIANT: 'PROD'
+    secrets: inherit

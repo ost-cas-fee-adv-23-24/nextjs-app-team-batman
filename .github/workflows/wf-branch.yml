@@ -21,3 +21,11 @@ jobs:
     with:
       DEPLOY_URL: ${{ needs.deploy.outputs.DEPLOY_URL }}
     secrets: inherit
+
+  lighthouse:
+    needs: deploy
+    uses: ./.github/workflows/task-lighthouse.yml
+    with:
+      DEPLOY_URL: ${{ needs.deploy.outputs.DEPLOY_URL }}
+      VARIANT: 'BRANCH'
+    secrets: inherit
