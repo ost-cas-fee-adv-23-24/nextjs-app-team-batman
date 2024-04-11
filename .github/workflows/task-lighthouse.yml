@@ -1,0 +1,36 @@
+name: '🗼 TASK-LIGHTHOUSE'
+
+on:
+  workflow_call:
+    inputs:
+      DEPLOY_URL:
+        description: 'URL of the deployment to test'
+        required: true
+        type: string
+      VARIANT:
+        description: 'variant of the deployment'
+        required: true
+        type: string
+        default: 'BRANCH' # PROD
+
+jobs:
+  lighthouse:
+    name: '🗼 lighthouse'
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📝 urls to check
+        id: urls
+        run: |
+          echo "URLS=${{ inputs.DEPLOY_URL }}" >> $GITHUB_OUTPUT
+          if [ "${{ inputs.VARIANT }}" == "PROD" ]; then
+            echo "URLS=${{ inputs.DEPLOY_URL }} https://team-batman.netlify.app" >> $GITHUB_OUTPUT
+          fi
+      - uses: actions/checkout@v4
+      - name: Audit URLs using Lighthouse
+        uses: treosh/lighthouse-ci-action@v11
+        with:
+          urls: |
+            ${{ steps.urls.outputs.URLS }}
+          budgetPath: ./lighthouse-budget.json # test performance budgets
+          uploadArtifacts: true # save results as an action artifacts
+          temporaryPublicStorage: true # upload lighthouse report to the temporary storage
