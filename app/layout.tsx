@@ -24,19 +24,18 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
 
   return (
     <html lang="en">
+      <meta name="theme-color" content="#7C3AED" />
+      <link rel="manifest" href="/manifest.json" />
       <body
         className={cn(
           font.className,
           'grid min-h-dvh grid-cols-1 grid-rows-[auto_1fr] justify-items-center overscroll-none bg-base-100 text-base-900',
         )}
       >
-        <link rel="manifest" href="/manifest.json" />
-        <main>
-          <LayoutHeader />
-          <SessionProvider session={session}>
-            <LayoutMainWrapper>{children}</LayoutMainWrapper>
-          </SessionProvider>
-        </main>
+        <LayoutHeader />
+        <SessionProvider session={session}>
+          <LayoutMainWrapper>{children}</LayoutMainWrapper>
+        </SessionProvider>
       </body>
     </html>
   );
