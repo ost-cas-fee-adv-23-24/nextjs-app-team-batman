@@ -25,6 +25,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
 
   return (
     <html lang="en">
+      <meta name="theme-color" content="#7C3AED" />
       <body
         className={cn(
           font.className,
