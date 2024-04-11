@@ -26,7 +26,6 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
   return (
     <html lang="en">
       <meta name="theme-color" content="#7C3AED" />
-      <link rel="manifest" href="/manifest.json" />
       <body
         className={cn(
           font.className,
