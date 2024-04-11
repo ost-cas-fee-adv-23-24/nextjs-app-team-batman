@@ -2,8 +2,8 @@ import { E2EPageObject } from '@/e2e/helpers/models/e2e-page-object';
 import { PAGE_ROUTES, RouteService } from '@/utils/route-service';
 import { Page } from 'playwright';
 
-export class HomePageObject extends E2EPageObject {
-  public static url = RouteService.page(PAGE_ROUTES.HOME);
+export class UserPageObject extends E2EPageObject {
+  public static url = RouteService.page(PAGE_ROUTES.USER, { id: '245807989095758678' });
 
   /* ELEMENTS */
   public static pageElements(page: Page) {
@@ -13,6 +13,6 @@ export class HomePageObject extends E2EPageObject {
   }
 
   public get pageElements() {
-    return HomePageObject.pageElements(this.page);
+    return UserPageObject.pageElements(this.page);
   }
 }

@@ -28,6 +28,7 @@ export const ModalImageUpload = ({ onChange, inputRef, modalState, setModalState
         }}
         width="m"
         title="Bild hochladen"
+        data-testid="modal-image-upload"
       >
         <ImageUpload
           id="temp-upload-media"

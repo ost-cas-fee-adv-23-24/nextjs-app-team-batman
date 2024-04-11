@@ -36,7 +36,7 @@ export const ModalSettings = ({ user }: IModalSettings) => {
     <>
       <button
         type="button"
-        id="modal-settings"
+        data-testid="modal-settings-button"
         className="group grid place-items-center gap-xs"
         aria-label="Settings"
         onClick={() => setModalState(!modalState)}
@@ -56,6 +56,7 @@ export const ModalSettings = ({ user }: IModalSettings) => {
         }}
         width="m"
         title="Settings"
+        data-testid="modal-settings"
       >
         <form ref={formRef} action={formAction} className="grid gap-m">
           <Label size="xl" as="h1">

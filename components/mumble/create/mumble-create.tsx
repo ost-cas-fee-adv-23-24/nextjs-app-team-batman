@@ -44,7 +44,7 @@ export const MumbleCreate = (props: TNewMumblePost) => {
   const placeholder = props.type === MUMBLE_TYPE.POST ? 'Deine Meinung zählt!' : 'Und was meinst du dazu?';
 
   return (
-    <form ref={formRef} action={formAction} className="grid w-full gap-s">
+    <form ref={formRef} action={formAction} className="grid w-full gap-s" data-testid="mumble-create">
       {props.type === MUMBLE_TYPE.POST && (
         <Heading level={3} visualLevel={4} className="text-base-900">
           Hey, was gibt’s neues?
@@ -63,7 +63,7 @@ export const MumbleCreate = (props: TNewMumblePost) => {
                   mediaRef.current.value = '';
                 }
               }}
-              className="mt-s text-primary-600 transition-colors hover:text-primary-700 "
+              className="mt-s text-primary-600 transition-colors hover:text-primary-700"
             >
               Bild entfernen
             </button>
@@ -75,13 +75,21 @@ export const MumbleCreate = (props: TNewMumblePost) => {
         placeholder={placeholder}
         rows={6}
         error={formState?.errors?.text?.[0] ?? formState?.errors?.media?.[0]}
+        data-testid="mumble-create--text"
       />
 
       <div className="grid grid-cols-1 gap-s sm:grid-cols-2">
-        <Button type="button" variant="secondary" fullWidth icon="upload" onClick={() => setModalState(!modalState)}>
+        <Button
+          type="button"
+          variant="secondary"
+          fullWidth
+          icon="upload"
+          onClick={() => setModalState(!modalState)}
+          data-testid="mumble-create--media"
+        >
           Bild hochladen
         </Button>
-        <Button type="submit" variant="primary" fullWidth icon="send">
+        <Button type="submit" variant="primary" fullWidth icon="send" data-testid="mumble-create--send">
           Absenden
         </Button>
       </div>

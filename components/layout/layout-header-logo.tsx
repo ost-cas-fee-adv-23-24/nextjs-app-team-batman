@@ -2,7 +2,7 @@ import { PAGE_ROUTES, RouteService } from '@/utils/route-service';
 import Link from 'next/link';
 
 export const LayoutHeaderLogo = () => (
-  <Link href={RouteService.page(PAGE_ROUTES.HOME)}>
+  <Link href={RouteService.page(PAGE_ROUTES.HOME)} data-testid="header-logo">
     <svg
       xmlns="http://www.w3.org/2000/svg"
       fill="none"

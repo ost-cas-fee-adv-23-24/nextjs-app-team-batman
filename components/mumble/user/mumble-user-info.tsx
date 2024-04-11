@@ -49,6 +49,7 @@ export const MumbleUserInfo = ({ variant, postDate, user }: IMumbleUserInfo) => 
     <Link
       href={RouteService.page(PAGE_ROUTES.USER, { id: user.id })}
       className="duratin-300 relative flex place-items-center gap-xs  rounded-s transition-all hover:scale-105"
+      data-testid="mumble-user-info"
     >
       {isReply && <Avatar {...avatarProps} />}
       <div className="flex flex-col gap-xs">

@@ -7,7 +7,7 @@ export default function NotFound() {
     <>
       <Image src="/404.svg" alt="404" width={500} height={500} className="mx-auto" />
 
-      <Link href="/" className="grid items-center">
+      <Link href="/" className="grid items-center" data-testid="notfound--button">
         <Button variant="secondary">Zurück zur Startseite</Button>
       </Link>
     </>

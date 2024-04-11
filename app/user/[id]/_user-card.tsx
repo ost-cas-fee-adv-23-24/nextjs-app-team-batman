@@ -42,7 +42,8 @@ export default async function UserCard({ params }: { params: { id: string } }) {
         <div className="pointer-events-none mt-m">
           <MumbleUserInfo variant={MUMBLE_VARIANT.DETAILVIEW} user={user} />
         </div>
-        {userActions}
+
+        {session && userActions}
       </div>
     );
   } catch (error) {
