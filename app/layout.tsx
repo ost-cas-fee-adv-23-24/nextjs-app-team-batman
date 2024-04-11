@@ -30,6 +30,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
           'grid min-h-dvh grid-cols-1 grid-rows-[auto_1fr] justify-items-center overscroll-none bg-base-100 text-base-900',
         )}
       >
+        <link rel="manifest" href="/manifest.json" />
         <LayoutHeader />
         <SessionProvider session={session}>
           <LayoutMainWrapper>{children}</LayoutMainWrapper>
