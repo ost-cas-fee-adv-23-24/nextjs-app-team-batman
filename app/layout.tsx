@@ -17,6 +17,7 @@ const font = Poppins({
 export const metadata: Metadata = {
   title: 'Mumble - Team Batman',
   description: 'Twitter clone for the CAS FEE 2023/24',
+  manifest: '/manifest.json',
 };
 
 export default async function RootLayout({ children }: { children: ReactNode }) {
@@ -30,13 +31,10 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
           'grid min-h-dvh grid-cols-1 grid-rows-[auto_1fr] justify-items-center overscroll-none bg-base-100 text-base-900',
         )}
       >
-        <link rel="manifest" href="/manifest.json" />
-        <main>
-          <LayoutHeader />
-          <SessionProvider session={session}>
-            <LayoutMainWrapper>{children}</LayoutMainWrapper>
-          </SessionProvider>
-        </main>
+        <LayoutHeader />
+        <SessionProvider session={session}>
+          <LayoutMainWrapper>{children}</LayoutMainWrapper>
+        </SessionProvider>
       </body>
     </html>
   );
