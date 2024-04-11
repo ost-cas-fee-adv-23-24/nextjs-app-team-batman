@@ -17,6 +17,7 @@ const font = Poppins({
 export const metadata: Metadata = {
   title: 'Mumble - Team Batman',
   description: 'Twitter clone for the CAS FEE 2023/24',
+  manifest: '/manifest.json',
 };
 
 export default async function RootLayout({ children }: { children: ReactNode }) {
