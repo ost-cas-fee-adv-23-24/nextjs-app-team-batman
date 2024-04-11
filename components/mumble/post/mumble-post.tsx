@@ -41,7 +41,7 @@ export const MumblePost = ({ post, variant }: { post: TAPIPost | TAPIReply; vari
   };
 
   return (
-    <div className="grid gap-s sm:gap-m">
+    <div className="grid gap-s sm:gap-m" data-testid="mumble-post">
       <div className="flex">
         <div onClick={(e) => e.stopPropagation()}>
           <MumbleUserInfo variant={variant} user={post.creator} postDate={decodeULIDTimestamp(post.id)} />
@@ -74,6 +74,7 @@ export const MumblePost = ({ post, variant }: { post: TAPIPost | TAPIReply; vari
             clickToPreview
             rounded="s"
             imagePlacing="cover"
+            className="h-[150px] sm:h-[350px]"
           />
         </div>
       )}
@@ -95,6 +96,7 @@ export const MumblePost = ({ post, variant }: { post: TAPIPost | TAPIReply; vari
               onLikeAdd={handleLike}
               onLikeRemove={handleDisklike}
               data-testid="mumble-post--like"
+              data-like-count={post.likes}
             />
           )}
 

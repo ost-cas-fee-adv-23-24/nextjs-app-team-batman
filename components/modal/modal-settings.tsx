@@ -36,7 +36,7 @@ export const ModalSettings = ({ user }: IModalSettings) => {
     <>
       <button
         type="button"
-        id="modal-settings"
+        data-testid="modal-settings-button"
         className="group grid place-items-center gap-xs"
         aria-label="Settings"
         onClick={() => setModalState(!modalState)}

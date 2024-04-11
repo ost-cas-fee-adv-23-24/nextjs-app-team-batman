@@ -14,7 +14,7 @@ test.describe(`Check ${TagsPageObject.url}`, () => {
 
     test('should be reachable & has basic elements', async ({ pageObject }) => {
       await pageObject.isReachable();
-      await expect(pageObject.elements.heading_1).toBeVisible();
+      await expect(pageObject.elements.tagsSearchInput).toBeVisible();
       await expect(pageObject.page).toHaveTitle('Mumble - Team Batman');
     });
   });
@@ -27,8 +27,19 @@ test.describe(`Check ${TagsPageObject.url}`, () => {
 
     test('should be reachable & has basic elements', async ({ pageObject }) => {
       await pageObject.isReachable();
-      await expect(pageObject.elements.heading_1).toBeVisible();
+      await expect(pageObject.elements.tagsSearchInput).toBeVisible();
       await expect(pageObject.page).toHaveTitle('Mumble - Team Batman');
+    });
+
+    test('should search single and multi tags', async ({ pageObject }) => {
+      await pageObject.isReachable();
+      await pageObject.elements.tagsSearchInput.fill('tag1');
+      await pageObject.page.keyboard.press('Enter');
+      await expect(pageObject.page).toHaveURL(`${TagsPageObject.url}?tag=tag1`);
+
+      await pageObject.elements.tagsSearchInput.fill('tag1 tag2');
+      await pageObject.page.keyboard.press('Enter');
+      await expect(pageObject.page).toHaveURL(`${TagsPageObject.url}?tag=tag1%20tag2`);
     });
   });
 });

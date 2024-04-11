@@ -38,6 +38,9 @@ export class E2EGlobalElements {
   public get headerLogo() {
     return this.page.getByTestId('header-logo');
   }
+  public get headerAvatar() {
+    return this.page.getByTestId('header-avatar');
+  }
 
   public get postWrapper() {
     return this.page.getByTestId('post-wrapper');
@@ -51,8 +54,20 @@ export class E2EGlobalElements {
     return this.page.getByTestId('modal-settings');
   }
 
+  public get modalSettingsButton() {
+    return this.page.getByTestId('modal-settings-button');
+  }
+
   public get mumbleCard() {
     return this.page.getByTestId('mumble-card');
+  }
+
+  public mumbleCardByText(text: string) {
+    return this.page.locator(`[data-testid="mumble-card"]:has-text("${text}")`);
+  }
+
+  public mumblePostByText(text: string) {
+    return this.page.locator(`[data-testid="mumble-post"]:has-text("${text}")`);
   }
 
   public get mumbleCreate() {
@@ -69,6 +84,10 @@ export class E2EGlobalElements {
 
   public get mumbleCreateSend() {
     return this.page.getByTestId('mumble-create--send');
+  }
+
+  public get mumblePost() {
+    return this.page.getByTestId('mumble-post');
   }
 
   public get mumblePostText() {
@@ -93,5 +112,17 @@ export class E2EGlobalElements {
 
   public get mumbleUserInfo() {
     return this.page.getByTestId('mumble-user-info');
+  }
+
+  public get mumblePostDelete() {
+    return this.page.getByTestId('mumble-post-delete');
+  }
+
+  public get notFoundButton() {
+    return this.page.getByTestId('notfound--button');
+  }
+
+  public get tagsSearchInput() {
+    return this.page.getByTestId('tags-search-input');
   }
 }

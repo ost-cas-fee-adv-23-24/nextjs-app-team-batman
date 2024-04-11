@@ -16,6 +16,7 @@ export const MumblePostDelete = ({ post }: { post: TAPIPost | TAPIReply }) => {
     <button
       onClick={handleDelete}
       className="flex w-fit place-items-center gap-xs rounded-s bg-accent-100 p-xs mumble-font-label-s"
+      data-testid="mumble-post-delete"
     >
       <Icon variant="cancel" className="fill-accent-600" size="s" />
       <span className="text-accent-600">Mumble Löschen</span>

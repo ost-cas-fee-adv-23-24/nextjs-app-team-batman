@@ -45,7 +45,7 @@ export const MumbleUserCard = ({ avatarUrl, userId, sessionUserId, profileImage 
             fill
           />
         </div>
-        <div className="absolute bottom-[-70px] right-[30px] z-10">
+        <div className="absolute bottom-[-70px] right-[30px] z-10" data-testid="avatar-wrapper">
           <Avatar
             image={{
               src: avatarUrl ?? AVATAR_FALLBACK,

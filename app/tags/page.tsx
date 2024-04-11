@@ -19,7 +19,7 @@ export default async function Home({ searchParams }: { searchParams: Record<stri
   return (
     <div className="grid w-full gap-l">
       <form action={serverAction} className="grid gap-s">
-        <Input name="tagsearch" placeholder="suche nach tags! 🚀" />
+        <Input name="tagsearch" placeholder="suche nach tags! 🚀" data-testid="tags-search-input" />
         <Button type="submit">Suchen</Button>
       </form>
 

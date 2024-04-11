@@ -6,13 +6,13 @@ export class HomePageObject extends E2EPageObject {
   public static url = RouteService.page(PAGE_ROUTES.HOME);
 
   /* ELEMENTS */
-  public static elements(page: Page) {
+  public static pageElements(page: Page) {
     return {
       heading_1: page.locator('h1'),
     };
   }
 
-  public get elements() {
-    return HomePageObject.elements(this.page);
+  public get pageElements() {
+    return HomePageObject.pageElements(this.page);
   }
 }

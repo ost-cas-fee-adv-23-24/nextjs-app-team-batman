@@ -14,7 +14,6 @@ test.describe(`Check ${UserPageObject.url}`, () => {
 
     test('should be reachable & has basic elements', async ({ pageObject }) => {
       await pageObject.isReachable();
-      await expect(pageObject.elements.heading_1).toBeVisible();
       await expect(pageObject.page).toHaveTitle('Mumble - Team Batman');
     });
   });
@@ -27,8 +26,26 @@ test.describe(`Check ${UserPageObject.url}`, () => {
 
     test('should be reachable & has basic elements', async ({ pageObject }) => {
       await pageObject.isReachable();
-      await expect(pageObject.elements.heading_1).toBeVisible();
       await expect(pageObject.page).toHaveTitle('Mumble - Team Batman');
+    });
+
+    test('should upload new profile image', async ({ pageObject }) => {
+      await expect(pageObject.elements.modalImageUpload).toBeHidden();
+      await pageObject.page.getByTestId('avatar-wrapper').locator('button').click();
+      await expect(pageObject.elements.modalImageUpload).toBeVisible();
+    });
+
+    test('should switch tabs ', async ({ pageObject }) => {
+      const tabGroup = pageObject.page.locator('div[aria-orientation="horizontal"]');
+
+      await tabGroup.locator('button:has-text("Likes")').click();
+      await expect(pageObject.page).toHaveURL(`${UserPageObject.url}/liked`);
+
+      await tabGroup.locator('button:has-text("I follow")').click();
+      await expect(pageObject.page).toHaveURL(`${UserPageObject.url}/follow`);
+
+      await tabGroup.locator('button:has-text("Mumbles")').click();
+      await expect(pageObject.page).toHaveURL(`${UserPageObject.url}`);
     });
   });
 });

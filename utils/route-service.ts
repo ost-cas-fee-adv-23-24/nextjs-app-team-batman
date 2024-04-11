@@ -40,6 +40,7 @@ export class RouteService {
   public static page(route: PAGE_ROUTES, params?: TParams, query?: TQuery): string {
     return this._processUrl('', route, params, query);
   }
+
   /**
    * Generates a URL for an API route.
    * @param route - The API route.
