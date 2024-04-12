@@ -20,6 +20,11 @@
       }
     </style>
   </head>
+  <script>
+    window.addEventListener('online', () => {
+      if (navigator.onLine) window.location.reload();
+    });
+  </script>
   <body>
     <h1>Du bist offline</h1>
     <p>Bitte überprüfe deine Internetverbindung.</p>

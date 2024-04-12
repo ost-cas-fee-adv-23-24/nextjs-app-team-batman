@@ -1,6 +1,5 @@
 'use server';
 import { revalidatePath } from 'next/cache';
-import { redirect } from 'next/navigation';
 import { MUMBLE_LIKE_TYPE, MUMBLE_TYPE } from '../enums';
 import { API_ROUTES, PAGE_ROUTES, RouteService } from '../route-service';
 import { APIServiceBase } from './api-service-base';
@@ -12,6 +11,51 @@ import {
   TAPIReplyPaginatedResult,
 } from './api-types';
 import { validateMumble } from './api-validation';
+
+export const revalidatePosts = () => {
+  revalidatePath(RouteService.page(PAGE_ROUTES.HOME));
+};
+
+export const revalidatePostsID = () => {
+  revalidatePath(RouteService.page(PAGE_ROUTES.POSTS, { id: '[id]' }), 'page');
+};
+
+/**
+ * @description Get a mumble by id
+ * @info GET-method
+ */
+export const GET_POST_BY_ID = async (payload: { id: string }) => {
+  const res = await APIServiceBase._fetch(RouteService.api(API_ROUTES.POSTS_ID, { id: payload.id }), {
+    cache: 'no-cache',
+  });
+  return (await res.json()) as TAPIPost;
+};
+
+/**
+ * @description Get mumbles
+ * @info GET-method
+ * @info query is used to filter & paginate the mumbles
+ */
+export const GET_POSTS = async (payload?: { query?: TAPIQueryPost }) => {
+  const res = await APIServiceBase._fetch(RouteService.api(API_ROUTES.POSTS, null, payload?.query), {
+    // cache: 'force-cache',
+    next: { revalidate: 60 },
+  });
+  return (await res.json()) as TAPIPostPaginatedResult;
+};
+
+/**
+ * @description Get mumbles replies
+ * @info GET-method
+ * @info query is used to paginate the replies
+ */
+export const GET_POST_REPLIES = async (payload: { id: string; query?: TAPIQueryPagination }) => {
+  const res = await APIServiceBase._fetch(
+    RouteService.api(API_ROUTES.POSTS_ID_REPLIES, { id: payload.id }, payload?.query),
+    { method: 'GET', next: { revalidate: 60 } },
+  );
+  return (await res.json()) as TAPIReplyPaginatedResult;
+};
 
 /**
  * @description Create a new mumble (post or reply)
@@ -35,14 +79,15 @@ export const CREATE_MUMBLE = async (
         method: 'POST',
         body: payload.data,
       });
-      revalidatePath(RouteService.api(API_ROUTES.POSTS));
+      revalidatePosts();
       break;
     case MUMBLE_TYPE.REPLY:
       await APIServiceBase._fetch(RouteService.api(API_ROUTES.POSTS_ID_REPLIES, { id: payload.parentId }), {
         method: 'POST',
         body: payload.data,
       });
-      revalidatePath(RouteService.api(API_ROUTES.POSTS_ID_REPLIES, { id: payload.parentId }));
+      revalidatePostsID();
+      revalidatePosts();
       break;
     default:
       throw new Error('Invalid mumble type');
@@ -75,7 +120,7 @@ export const UPDATE_MUMBLE = async (payload: { id: string; data: FormData }) => 
     });
   }
 
-  revalidatePath(RouteService.api(API_ROUTES.POSTS_ID, { id: payload.id }));
+  revalidatePostsID();
 };
 
 /**
@@ -100,7 +145,7 @@ export const MUMBLE_LIKE_HANDLER = async (payload: { id: string; type: MUMBLE_LI
       throw new Error('Invalid mumble like type');
   }
 
-  revalidatePath(RouteService.api(API_ROUTES.POSTS_ID, { id: payload.id }));
+  revalidatePostsID();
 };
 
 /**
@@ -111,37 +156,6 @@ export const DELETE_POST = async (payload: { id: string }) => {
   await APIServiceBase._fetch(RouteService.api(API_ROUTES.POSTS_ID, { id: payload.id }), {
     method: 'DELETE',
   });
-  redirect(RouteService.page(PAGE_ROUTES.HOME));
-};
-
-/**
- * @description Get a mumble by id
- * @info GET-method
- */
-export const GET_POST_BY_ID = async (payload: { id: string }) => {
-  const res = await APIServiceBase._fetch(RouteService.api(API_ROUTES.POSTS_ID, { id: payload.id }), {});
-  return (await res.json()) as TAPIPost;
-};
-
-/**
- * @description Get mumbles
- * @info GET-method
- * @info query is used to filter & paginate the mumbles
- */
-export const GET_POSTS = async (payload?: { query?: TAPIQueryPost }) => {
-  const res = await APIServiceBase._fetch(RouteService.api(API_ROUTES.POSTS, null, payload?.query));
-  return (await res.json()) as TAPIPostPaginatedResult;
-};
-
-/**
- * @description Get mumbles replies
- * @info GET-method
- * @info query is used to paginate the replies
- */
-export const GET_POST_REPLIES = async (payload: { id: string; query?: TAPIQueryPagination }) => {
-  const res = await APIServiceBase._fetch(
-    RouteService.api(API_ROUTES.POSTS_ID_REPLIES, { id: payload.id }, payload?.query),
-    { method: 'GET' },
-  );
-  return (await res.json()) as TAPIReplyPaginatedResult;
+  revalidatePosts();
+  revalidatePostsID();
 };
