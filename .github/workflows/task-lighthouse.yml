@@ -23,7 +23,7 @@ jobs:
         run: |
           echo "URLS=${{ inputs.DEPLOY_URL }}" >> $GITHUB_OUTPUT
           if [ "${{ inputs.VARIANT }}" == "PROD" ]; then
-            echo "URLS=${{ inputs.DEPLOY_URL }} https://team-batman.netlify.app" >> $GITHUB_OUTPUT
+            echo "URLS=${{ inputs.DEPLOY_URL }} https://team-batman.onivue.ch" >> $GITHUB_OUTPUT
           fi
       - uses: actions/checkout@v4
       - name: Audit URLs using Lighthouse

@@ -21,7 +21,9 @@ export const MumbleInfinityPosts = ({ olderThan, limit, creators, likedBy }: TIn
   const [posts, setPosts] = useState<TAPIPost[] | null>(null);
   const [loading, setLoading] = useState(false);
   const [limitReached, setLimitReached] = useState(false);
-  const { ref, inView } = useInView();
+  const { ref, inView } = useInView({
+    rootMargin: '0px 0px 10px 0px',
+  });
   const currentScroll = useRef(0);
 
   useEffect(() => {

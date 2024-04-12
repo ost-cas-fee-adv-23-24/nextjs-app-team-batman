@@ -6,3 +6,8 @@
   /* global focus-visible styling */
   @apply focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-500;
 }
+
+html,
+body {
+  @apply overscroll-none;
+}
