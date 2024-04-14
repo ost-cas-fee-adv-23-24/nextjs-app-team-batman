@@ -17,6 +17,7 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { MumbleUserInfo } from '../user/mumble-user-info';
 import { MumblePostDelete } from './mumble-post-delete';
+import { MumblePostEdit } from './mumble-post-edit';
 
 export const MumblePost = ({ post, variant }: { post: TAPIPost | TAPIReply; variant: MUMBLE_VARIANT }) => {
   const { data } = useSession();
@@ -47,7 +48,12 @@ export const MumblePost = ({ post, variant }: { post: TAPIPost | TAPIReply; vari
           <MumbleUserInfo variant={variant} user={post.creator} postDate={decodeULIDTimestamp(post.id)} />
         </div>
       </div>
-      {isDetailView && <MumblePostDelete post={post} />}
+      {isDetailView && (
+        <div className="flex justify-start gap-s">
+          <MumblePostEdit post={post} />
+          <MumblePostDelete post={post} />
+        </div>
+      )}
 
       {post.text && (
         <div
