@@ -25,7 +25,7 @@ export const MumblePostEdit = ({ post }: { post: TAPIPost | TAPIReply }) => {
         <Icon variant="edit" className="fill-accent-600" size="s" />
         <span className="text-accent-600">Mumble Editieren</span>
       </button>
-      <ModalPostEdit modalState={modalState} setModalState={setModalState} />
+      <ModalPostEdit modalState={modalState} setModalState={setModalState} post={post} />
     </>
   );
 };
