@@ -1,6 +1,12 @@
 'use client';
 import { useState, useRef } from 'react';
-import { Modal, ImageUpload, TextArea } from '@ost-cas-fee-adv-23-24/design-system-component-library-team-batman';
+import {
+  Modal,
+  Icon,
+  ImageUpload,
+  TextArea,
+  Image,
+} from '@ost-cas-fee-adv-23-24/design-system-component-library-team-batman';
 import { TAPIPost, TAPIReply } from '@/utils/api/api-types';
 import { UPDATE_MUMBLE } from '@/utils/api/api-actions-post';
 
@@ -11,7 +17,7 @@ interface IModalPostEdit {
 }
 
 export const ModalPostEdit = ({ modalState, setModalState, post }: IModalPostEdit) => {
-  const [showImageUploader, setShowImageUploader] = useState<boolean>(!!post.mediaUrl);
+  const [showImageUploader, setShowImageUploader] = useState<boolean>(!post.mediaUrl);
   const formRef = useRef<HTMLFormElement>(null);
 
   const formAction = async (formData: FormData) => {
@@ -26,6 +32,7 @@ export const ModalPostEdit = ({ modalState, setModalState, post }: IModalPostEdi
       isOpen={modalState}
       onClose={() => {
         setModalState(!modalState);
+        setShowImageUploader(false);
       }}
       onSubmit={() => {
         formRef.current?.requestSubmit();
@@ -38,15 +45,19 @@ export const ModalPostEdit = ({ modalState, setModalState, post }: IModalPostEdi
           {post.text}
         </TextArea>
         {showImageUploader ? (
-          <div onClick={() => setShowImageUploader(false)}>image</div>
+          <ImageUpload id="temp-upload-media" name="media" />
         ) : (
-          <ImageUpload
-            id="temp-upload-media"
-            name="temp-media"
-            //   onChange={(event) => {
-            //     setCurrentEvent(event);
-            //   }}
-          />
+          <div
+            onClick={() => setShowImageUploader(true)}
+            className="group relative ml-auto mr-auto flex max-w-[300px] cursor-pointer justify-center"
+          >
+            <div className="transition-all duration-300 group-hover:opacity-50">
+              <Image src={post.mediaUrl ?? ''} alt="Bildvorschau" className="mx-auto" rounded="m" />
+            </div>
+            <div className="absolute bottom-[40%] flex hidden h-[50px] w-[50px] items-center justify-center rounded-full bg-base-600 opacity-50 transition-all duration-300 group-hover:flex group-hover:opacity-100">
+              <Icon variant="edit" size="s" className="fill-white" />
+            </div>
+          </div>
         )}
       </form>
     </Modal>
