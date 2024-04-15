@@ -70,6 +70,9 @@ export const UPDATE_MUMBLE = async (payload: { id: string; data: FormData }) => 
     });
   } else {
     await APIServiceBase._fetch(RouteService.api(API_ROUTES.POSTS_ID, { id: payload.id }), {
+      headers: {
+        'Content-Type': 'application/json',
+      },
       method: 'PATCH',
       body: JSON.stringify(validation.data),
     });

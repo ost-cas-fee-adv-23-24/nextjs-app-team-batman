@@ -1,6 +1,5 @@
 'use client';
 import { useState } from 'react';
-// import { UPDATE_MUMBLE } from '@/utils/api/api-actions-post';
 import { TAPIPost, TAPIReply } from '@/utils/api/api-types';
 import { Icon } from '@ost-cas-fee-adv-23-24/design-system-component-library-team-batman';
 import { useSession } from 'next-auth/react';
@@ -9,12 +8,9 @@ import { ModalPostEdit } from '@/components/modal/modal-post-edit';
 export const MumblePostEdit = ({ post }: { post: TAPIPost | TAPIReply }) => {
   const { data } = useSession();
   const [modalState, setModalState] = useState<boolean>(false);
-  //   const handleEdit = () => {
-  //     () => {}
-  //     await UPDATE_MUMBLE({ id: post.id });
-  //   };
 
   if (!data?.user || data.user.id !== post.creator.id) return null;
+
   return (
     <>
       <button
