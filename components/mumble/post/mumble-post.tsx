@@ -17,6 +17,7 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { MumbleUserInfo } from '../user/mumble-user-info';
 import { MumblePostDelete } from './mumble-post-delete';
+import { MumblePostEdit } from './mumble-post-edit';
 
 export const MumblePost = ({ post, variant }: { post: TAPIPost | TAPIReply; variant: MUMBLE_VARIANT }) => {
   const { data } = useSession();
@@ -45,9 +46,12 @@ export const MumblePost = ({ post, variant }: { post: TAPIPost | TAPIReply; vari
       <div className="flex">
         <MumbleUserInfo variant={variant} user={post.creator} postDate={decodeULIDTimestamp(post.id)} />
       </div>
-
-      <MumblePostDelete post={post} goHome={variant === MUMBLE_VARIANT.DETAILVIEW} />
-
+      (
+      <div className="flex justify-start gap-s">
+        <MumblePostEdit post={post} />
+        <MumblePostDelete post={post} goHome={variant === MUMBLE_VARIANT.DETAILVIEW} />
+      </div>
+      )
       {post.text && (
         <div
           data-testid="mumble-post--text"
@@ -55,7 +59,6 @@ export const MumblePost = ({ post, variant }: { post: TAPIPost | TAPIReply; vari
           dangerouslySetInnerHTML={{ __html: tagReplacement(post.text)! }}
         />
       )}
-
       {post.mediaUrl && (
         <div className="grid cursor-auto place-content-center object-contain" data-testid="mumble-post--image">
           <Image
@@ -72,7 +75,6 @@ export const MumblePost = ({ post, variant }: { post: TAPIPost | TAPIReply; vari
           />
         </div>
       )}
-
       <div className="flex">
         <div className="-ml-xs flex flex-wrap gap-xxs gap-y-0 sm:gap-l" onClick={(e) => e.stopPropagation()}>
           {!isReply && !isDetailView && (
