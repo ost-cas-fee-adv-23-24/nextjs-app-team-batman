@@ -46,12 +46,13 @@ export const MumblePost = ({ post, variant }: { post: TAPIPost | TAPIReply; vari
       <div className="flex">
         <MumbleUserInfo variant={variant} user={post.creator} postDate={decodeULIDTimestamp(post.id)} />
       </div>
-      (
-      <div className="flex justify-start gap-s">
-        <MumblePostEdit post={post} />
-        <MumblePostDelete post={post} goHome={variant === MUMBLE_VARIANT.DETAILVIEW} />
-      </div>
-      )
+      {data?.user?.id === post.creator.id && (
+        <div className="flex justify-start gap-s">
+          <MumblePostEdit post={post} />
+          <MumblePostDelete post={post} goHome={variant === MUMBLE_VARIANT.DETAILVIEW} />
+        </div>
+      )}
+
       {post.text && (
         <div
           data-testid="mumble-post--text"

@@ -2,6 +2,7 @@
 import { revalidatePath } from 'next/cache';
 import { MUMBLE_LIKE_TYPE, MUMBLE_TYPE } from '../enums';
 import { API_ROUTES, PAGE_ROUTES, RouteService } from '../route-service';
+import { revalidateUser } from './api-actions-user';
 import { APIServiceBase } from './api-service-base';
 import {
   TAPIPost,
@@ -61,7 +62,6 @@ export const GET_POST_REPLIES = async (payload: { id: string; query?: TAPIQueryP
  * @description Create a new mumble (post or reply)
  * @info POST-method is used for both post and reply
  * @info For reply, parentId is required
- * @info revalidatePath is used to update the cache
  */
 export const CREATE_MUMBLE = async (
   payload: { data: FormData } & ({ type: MUMBLE_TYPE.POST } | { type: MUMBLE_TYPE.REPLY; parentId: string }),
@@ -80,6 +80,7 @@ export const CREATE_MUMBLE = async (
         body: payload.data,
       });
       revalidatePosts();
+      revalidateUser();
       break;
     case MUMBLE_TYPE.REPLY:
       await APIServiceBase._fetch(RouteService.api(API_ROUTES.POSTS_ID_REPLIES, { id: payload.parentId }), {
@@ -98,7 +99,6 @@ export const CREATE_MUMBLE = async (
  * @description Update a mumble
  * @info PUT-method is used when media & text is updated
  * @info PATCH-method is used when only text is updated
- * @info revalidatePath is used to update the cache
  */
 export const UPDATE_MUMBLE = async (payload: { id: string; data: FormData }) => {
   const validation = validateMumble(payload.data);
@@ -122,14 +122,15 @@ export const UPDATE_MUMBLE = async (payload: { id: string; data: FormData }) => 
     });
   }
 
+  revalidatePosts();
   revalidatePostsID();
+  revalidateUser();
 };
 
 /**
  * @description Like or dislike a mumble
  * @info PUT-method is used for like
  * @info DELETE-method is used for dislike
- * @info revalidatePath is used to update the cache
  */
 export const MUMBLE_LIKE_HANDLER = async (payload: { id: string; type: MUMBLE_LIKE_TYPE }) => {
   switch (payload.type) {
@@ -160,4 +161,5 @@ export const DELETE_POST = async (payload: { id: string }) => {
   });
   revalidatePosts();
   revalidatePostsID();
+  revalidateUser();
 };
