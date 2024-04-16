@@ -62,7 +62,6 @@ export const UPDATE_MUMBLE = async (payload: { id: string; data: FormData }) => 
       errors: validation.error.flatten().fieldErrors,
     };
   }
-
   if (validation.data.media) {
     await APIServiceBase._fetch(RouteService.api(API_ROUTES.POSTS_ID, { id: payload.id }), {
       method: 'PUT',
@@ -70,6 +69,9 @@ export const UPDATE_MUMBLE = async (payload: { id: string; data: FormData }) => 
     });
   } else {
     await APIServiceBase._fetch(RouteService.api(API_ROUTES.POSTS_ID, { id: payload.id }), {
+      headers: {
+        'Content-Type': 'application/json',
+      },
       method: 'PATCH',
       body: JSON.stringify(validation.data),
     });
