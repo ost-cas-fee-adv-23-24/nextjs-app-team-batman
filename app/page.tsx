@@ -13,7 +13,7 @@ export default function Home() {
         <Heading level={1} visualLevel={2} className="text-primary-600">
           Willkommen auf Mumble
         </Heading>
-        <Heading level={4} className="text-base-500">
+        <Heading level={2} visualLevel={4} className="text-base-500">
           Meinungs-Zirkus: Trapez optional! 🎪😄💬
         </Heading>
       </div>
