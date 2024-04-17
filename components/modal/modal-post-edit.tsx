@@ -1,14 +1,13 @@
 'use client';
-import { useState, useRef } from 'react';
-import {
-  Modal,
-  Icon,
-  ImageUpload,
-  TextArea,
-  Image,
-} from '@ost-cas-fee-adv-23-24/design-system-component-library-team-batman';
-import { TAPIPost, TAPIReply } from '@/utils/api/api-types';
 import { UPDATE_MUMBLE } from '@/utils/api/api-actions-post';
+import { TAPIPost, TAPIReply } from '@/utils/api/api-types';
+import {
+  Image,
+  ImageUpload,
+  Modal,
+  TextArea,
+} from '@ost-cas-fee-adv-23-24/design-system-component-library-team-batman';
+import { useRef, useState } from 'react';
 
 interface IModalPostEdit {
   modalState: boolean;
@@ -41,9 +40,13 @@ export const ModalPostEdit = ({ modalState, setModalState, post }: IModalPostEdi
       title="Mumble Editieren"
     >
       <form ref={formRef} action={formAction} className="grid w-full gap-s" data-testid="mumble-edit">
-        <TextArea name="text" rows={8} data-testid="mumble-edit--text" className="mb-m">
-          {post.text}
-        </TextArea>
+        <TextArea
+          name="text"
+          rows={8}
+          data-testid="mumble-edit--text"
+          className="mb-m"
+          defaultValue={post.text ?? ''}
+        />
         {showImageUploader ? (
           <ImageUpload id="temp-upload-media" name="media" />
         ) : (
@@ -53,9 +56,6 @@ export const ModalPostEdit = ({ modalState, setModalState, post }: IModalPostEdi
           >
             <div className="transition-all duration-300 group-hover:opacity-50">
               <Image src={post.mediaUrl ?? ''} alt="Bildvorschau" className="mx-auto" rounded="m" />
-            </div>
-            <div className="absolute bottom-[40%] flex hidden h-[50px] w-[50px] items-center justify-center rounded-full bg-base-600 opacity-50 transition-all duration-300 group-hover:flex group-hover:opacity-100">
-              <Icon variant="edit" size="s" className="fill-white" />
             </div>
           </div>
         )}
