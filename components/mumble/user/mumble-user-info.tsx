@@ -61,7 +61,7 @@ export const MumbleUserInfo = ({ variant, postDate, user }: IMumbleUserInfo) => 
               icon="calendar"
               text={
                 isDetailView
-                  ? dayjs(postDate).locale('de').format('D. MMMM YYYY - hh:mm')
+                  ? dayjs(postDate).locale('de').format('D. MMMM YYYY - HH:mm')
                   : readableCreatedDate(postDate)
               }
               variant="secondary"

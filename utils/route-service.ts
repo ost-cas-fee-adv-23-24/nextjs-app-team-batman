@@ -115,7 +115,6 @@ export class RouteService {
   }
 }
 
-// TODO: LIVE POSTS
 export enum PostEvents {
   created = 'postCreated',
   updated = 'postUpdated',

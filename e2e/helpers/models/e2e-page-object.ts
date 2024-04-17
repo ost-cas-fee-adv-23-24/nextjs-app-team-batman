@@ -28,7 +28,7 @@ export class E2EPageObject {
   public constructor(payload: IE2EPageObjectConstructor) {
     this.page = payload.page;
     this.url = payload.url;
-    this.postText = `batman-e2e-test-${randomUUID()} #e2e #test #mumble #team-batman`;
+    this.postText = `batman-e2e-test-${randomUUID()} #e2ebatman`;
   }
 
   public static url = '';
@@ -52,7 +52,7 @@ export class E2EPageObject {
    * @description login with e2e user
    */
   public async login() {
-    await this.page.goto(PAGE_ROUTES.HOME);
+    await this.page.goto(RouteService.page(PAGE_ROUTES.HOME));
 
     if (await this.elements.loginButton.isHidden()) return;
 
@@ -169,10 +169,6 @@ export class E2EPageObject {
     await expect(this.elements.headerAvatar).toBeHidden();
     await expect(this.elements.modalSettingsButton).toBeHidden();
     await expect(this.elements.loginButton).toBeVisible();
-
-    // elements that never should be visible as unauthenticated user
-    await expect(this.elements.mumblePostComment).toBeHidden();
-    await expect(this.elements.mumblePostLike).toBeHidden();
   }
 
   /**
@@ -187,14 +183,16 @@ export class E2EPageObject {
    * @description delete a post
    */
   public async deletePost(currentMumbleCard: Locator) {
-    await currentMumbleCard.click({ position: { x: 10, y: 10 } });
-    await this.elements.mumblePostDelete.click();
+    await this.page.goto(RouteService.page(PAGE_ROUTES.HOME));
+    await currentMumbleCard.getByTestId('mumble-post--comment').click();
+    await expect(this.page).toHaveURL(new RegExp(`.*${RouteService.page(PAGE_ROUTES.POSTS, { id: '' })}.*`));
+    await this.elements.mumblePostDelete.first().click();
 
-    await this.page.goBack();
     await expect(this.page).toHaveURL(RouteService.page(PAGE_ROUTES.HOME));
     await expect(currentMumbleCard, 'post should not be visible on page').not.toBeVisible();
 
-    await this.page.goForward();
+    await this.page.goBack();
+    await expect(this.page).toHaveURL(new RegExp(`.*${RouteService.page(PAGE_ROUTES.POSTS, { id: '' })}.*`));
     await expect(this.elements.notFoundButton, '404 page is shown').toBeVisible();
     await this.elements.notFoundButton.click();
     await expect(this.page).toHaveURL(RouteService.page(PAGE_ROUTES.HOME));

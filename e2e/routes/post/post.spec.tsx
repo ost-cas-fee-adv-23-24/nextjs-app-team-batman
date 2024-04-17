@@ -54,10 +54,10 @@ test.describe(`Check ${PostPageObject.url}`, () => {
         await expect(currentMumbleCard, 'post should be visible on page').toBeVisible();
         await expect(pageObject.elements.noReplies).toBeVisible();
         await expect(pageObject.elements.createReplyWrapper).toBeVisible();
-      });
-
-      test('should show 1 loaded posts', async ({ pageObject }) => {
-        await pageObject.shouldShowAmountOfPosts(1);
+        await test.step('should show 1 loaded posts', async () => {
+          await pageObject.shouldShowAmountOfPosts(1);
+        });
+        await pageObject.deletePost(currentMumbleCard);
       });
     });
 
