@@ -22,17 +22,17 @@ jobs:
       DEPLOY_URL: ${{ needs.deploy-preview.outputs.DEPLOY_URL }}
     secrets: inherit
 
+  lighthouse:
+    needs: deploy-preview
+    uses: ./.github/workflows/task-lighthouse.yml
+    with:
+      DEPLOY_URL: ${{ needs.deploy-preview.outputs.DEPLOY_URL }}
+      VARIANT: 'PROD'
+    secrets: inherit
+
   deploy-prod:
     needs: e2e
     uses: ./.github/workflows/task-deploy.yml
     with:
-      VARIANT: 'PROD'
-    secrets: inherit
-
-  lighthouse:
-    needs: deploy-prod
-    uses: ./.github/workflows/task-lighthouse.yml
-    with:
-      DEPLOY_URL: ${{ needs.deploy-prod.outputs.DEPLOY_URL }}
       VARIANT: 'PROD'
     secrets: inherit
