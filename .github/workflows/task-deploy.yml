@@ -30,13 +30,13 @@ jobs:
         with:
           node-version: 20
 
-      - name: 👀 cache node modules
-        uses: actions/cache@v4
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
+      # - name: 👀 cache node modules
+      #   uses: actions/cache@v4
+      #   with:
+      #     path: ~/.npm
+      #     key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+      #     restore-keys: |
+      #       ${{ runner.os }}-node-
 
       # ⚠️
       # because netlify has some issues with nextjs app router
@@ -67,14 +67,13 @@ jobs:
             echo "DEPLOY_URL=https://preview-${{ github.sha }}--team-batman.netlify.app" >> $GITHUB_OUTPUT
           fi
 
-      - name: 📦 install & build
+      - name: 📦 install packages
         env:
           NEXTAUTH_URL: ${{ steps.set-url.outputs.DEPLOY_URL }}
         run: |
           echo $NEXTAUTH_URL
-          npm ci
-          npm run build
-          npm install -g netlify-cli @netlify/plugin-nextjs@appdir
+          npm install
+          npm install -g netlify-cli
 
       - name: 🚀 deploy to netlify
         id: deploy

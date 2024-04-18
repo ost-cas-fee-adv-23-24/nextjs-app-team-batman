@@ -18,19 +18,23 @@ jobs:
     name: '🗼 lighthouse'
     runs-on: ubuntu-latest
     steps:
-      - name: 📝 urls to check
-        id: urls
-        run: |
-          echo "URLS=${{ inputs.DEPLOY_URL }}" >> $GITHUB_OUTPUT
-          if [ "${{ inputs.VARIANT }}" == "PROD" ]; then
-            echo "URLS=${{ inputs.DEPLOY_URL }} https://team-batman.onivue.ch" >> $GITHUB_OUTPUT
-          fi
       - uses: actions/checkout@v4
-      - name: Audit URLs using Lighthouse
+      - name: 🕵️‍♀️ Audit URLs using Lighthouse
+        if: ${{ inputs.VARIANT == 'BRANCH' }}
         uses: treosh/lighthouse-ci-action@v11
         with:
           urls: |
-            ${{ steps.urls.outputs.URLS }}
-          budgetPath: ./lighthouse-budget.json # test performance budgets
-          uploadArtifacts: true # save results as an action artifacts
-          temporaryPublicStorage: true # upload lighthouse report to the temporary storage
+            ${{ inputs.DEPLOY_URL }}
+          budgetPath: ./lighthouse-budget.json
+          uploadArtifacts: true
+          temporaryPublicStorage: true
+      - name: 🕵️‍♀️ Audit URLs using Lighthouse
+        if: ${{ inputs.VARIANT == 'PROD' }}
+        uses: treosh/lighthouse-ci-action@v11
+        with:
+          urls: |
+            ${{ inputs.DEPLOY_URL }}
+            https://team-batman.onivue.ch
+          budgetPath: ./lighthouse-budget.json
+          uploadArtifacts: true
+          temporaryPublicStorage: true

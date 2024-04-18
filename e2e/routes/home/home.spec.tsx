@@ -1,3 +1,4 @@
+import { MIN_DELAY } from '@/app/app-config';
 import { E2EPageObject } from '@/e2e/helpers/models/e2e-page-object';
 import { expect } from '@playwright/test';
 import { HomePageObject } from './home-page-object';
@@ -48,6 +49,7 @@ test.describe(`Check ${HomePageObject.url}`, () => {
       });
 
       test('should load 10 more on scroll to bottom', async ({ pageObject }) => {
+        await pageObject.page.waitForTimeout(MIN_DELAY);
         await pageObject.scrollToBottom();
         await pageObject.shouldShowAmountOfPosts(20);
       });

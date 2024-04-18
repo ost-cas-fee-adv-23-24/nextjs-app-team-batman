@@ -14,6 +14,7 @@ export const LayoutHeaderAuthButton = ({ variant }: ILayoutHeaderAuthButton) => 
       onClick={() => (variant === 'login' ? signIn('zitadel') : signOut())}
       className="group grid gap-xs"
       data-testid={variant === 'login' ? 'login-button' : 'logout-button'}
+      aria-label={variant === 'login' ? 'Login' : 'Log out'}
     >
       <Icon variant="logout-animated" size="m" className="ml-auto mr-auto fill-white transition" />
       <Label size="s" className="hidden cursor-pointer text-white md:block" as={'span'}>
