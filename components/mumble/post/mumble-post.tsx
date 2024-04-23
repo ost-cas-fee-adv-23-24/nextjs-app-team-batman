@@ -56,7 +56,7 @@ export const MumblePost = ({ post, variant }: { post: TAPIPost | TAPIReply; vari
       {post.text && (
         <div
           data-testid="mumble-post--text"
-          className="cursor-auto whitespace-pre-wrap"
+          className="cursor-auto whitespace-pre-wrap break-all"
           dangerouslySetInnerHTML={{ __html: tagReplacement(post.text)! }}
         />
       )}
