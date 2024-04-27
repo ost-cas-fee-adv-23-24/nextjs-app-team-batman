@@ -39,7 +39,7 @@ export const GET_POST_BY_ID = async (payload: { id: string }) => {
  */
 export const GET_POSTS = async (payload?: { query?: TAPIQueryPost }) => {
   const res = await APIServiceBase._fetch(RouteService.api(API_ROUTES.POSTS, null, payload?.query), {
-    // cache: 'force-cache',
+    cache: 'force-cache',
     next: { revalidate: 60 },
   });
   return (await res.json()) as TAPIPostPaginatedResult;
