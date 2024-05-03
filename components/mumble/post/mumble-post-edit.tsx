@@ -17,7 +17,7 @@ export const MumblePostEdit = ({ post }: { post: TAPIPost | TAPIReply }) => {
           'bg-base-100 fill-base-800 text-base-800',
           'hover:bg-accent-200 hover:fill-accent-800 hover:text-accent-800',
         )}
-        data-testid="mumble-post-edit"
+        data-testid="mumble-post--edit"
       >
         <Icon variant="edit" size="s" />
         <span>Mumble Editieren</span>

@@ -152,6 +152,22 @@ export class E2EPageObject {
   }
 
   /**
+   * @description edit a post
+   */
+  public async editPost(currentMumbleCard: Locator) {
+    const editText = `${this.postText} edited`;
+    const editButton = currentMumbleCard.getByTestId('mumble-post--edit');
+    await editButton.click();
+
+    const editTextArea = this.elements.mumbleEditText;
+    await editTextArea.fill(editText);
+    const saveButton = this.elements.modalSaveButton;
+    await saveButton.click();
+    const postText = currentMumbleCard.getByTestId('mumble-post--text');
+    await expect(postText).toHaveText(editText);
+  }
+
+  /**
    * @description basic elements that should or shouldn't be visible on every
    */
   public async shouldHaveBasicElements(authenticated: boolean) {

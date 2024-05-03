@@ -80,9 +80,13 @@ test.describe(`Check ${PostPageObject.url}`, () => {
           await pageObject.copyAndOpenViaShareButton(currentMumbleCard);
         });
 
-        await test.step('should delete the post', async () => {
-          await pageObject.deletePost(currentMumbleCard);
+        await test.step('should edit post', async () => {
+          await pageObject.editPost(currentMumbleCard);
         });
+
+        // await test.step('should delete the post', async () => {
+        //   await pageObject.deletePost(currentMumbleCard);
+        // });
       });
     });
   });

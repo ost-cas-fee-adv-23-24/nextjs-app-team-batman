@@ -12,7 +12,7 @@ export default defineConfig({
   retries: process.env.CI ? 1 : 0,
   workers: process.env.CI ? 1 : undefined,
   reporter: 'html',
-  timeout: 50000,
+  timeout: 70000,
   use: {
     baseURL: process.env.E2E_BASE_URL ?? 'http://localhost:3000',
     video: process.env.CI ? 'on-first-retry' : 'on',

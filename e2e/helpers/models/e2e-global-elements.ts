@@ -58,6 +58,10 @@ export class E2EGlobalElements {
     return this.page.getByTestId('modal-settings-button');
   }
 
+  public get modalSaveButton() {
+    return this.page.getByTestId('modal--save');
+  }
+
   public get mumbleCard() {
     return this.page.getByTestId('mumble-card');
   }
@@ -92,6 +96,10 @@ export class E2EGlobalElements {
 
   public get mumblePostText() {
     return this.page.getByTestId('mumble-post--text');
+  }
+
+  public get mumbleEditText() {
+    return this.page.getByTestId('mumble-edit--text');
   }
 
   public get mumblePostImage() {

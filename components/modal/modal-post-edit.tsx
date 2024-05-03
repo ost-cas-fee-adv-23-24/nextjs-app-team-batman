@@ -36,7 +36,7 @@ export const ModalPostEdit = ({ modalState, setModalState, post }: IModalPostEdi
       onSubmit={() => {
         formRef.current?.requestSubmit();
       }}
-      width="l"
+      width="m"
       title="Mumble Editieren"
     >
       <form ref={formRef} action={formAction} className="grid w-full gap-s" data-testid="mumble-edit">
