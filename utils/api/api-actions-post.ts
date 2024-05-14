@@ -18,7 +18,7 @@ export const revalidatePosts = () => {
 };
 
 export const revalidatePostsID = () => {
-  revalidatePath(RouteService.page(PAGE_ROUTES.POSTS, { id: '[id]' }), 'page');
+  revalidatePath(RouteService.page(PAGE_ROUTES.POSTS, { id: '[id]' }), 'layout');
 };
 
 /**
