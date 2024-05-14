@@ -1,0 +1,77 @@
+{
+  "name": "nextjs-app-team-batman",
+  "version": "0.0.0-development",
+  "description": "Mumble Application for the OST Fachhochschule - Team Batman",
+  "keywords": [
+    "stroybook",
+    "tailwindcss",
+    "react",
+    "typescript",
+    "social media"
+  ],
+  "license": "MIT",
+  "author": "OST Fachhochschule - Team Batman",
+  "contributors": [
+    {
+      "name": "Albin Hoti",
+      "url": "https://github.com/onivue"
+    },
+    {
+      "name": "Ricardo Vögeli",
+      "url": "https://github.com/risuiar2023"
+    }
+  ],
+  "scripts": {
+    "build": "next build",
+    "dev": "next dev",
+    "e2e": "playwright test",
+    "e2e:ui": "playwright test --ui",
+    "format": "prettier . --write",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "prepare": "husky install",
+    "start": "next start",
+    "updates": "npx npm-check-updates --interactive --format group"
+  },
+  "lint-staged": {
+    "*.{css,mdx,json,ts,tsx}": [
+      "prettier --write"
+    ],
+    "*.{ts,tsx}": [
+      "eslint --max-warnings 0",
+      "bash -c tsc --noEmit"
+    ]
+  },
+  "dependencies": {
+    "@commitlint/cli": "18.6.0",
+    "@commitlint/config-conventional": "18.6.0",
+    "@netlify/plugin-nextjs": "^5.1.0",
+    "@ost-cas-fee-adv-23-24/design-system-component-library-team-batman": "^1.22.0",
+    "@playwright/test": "1.41.2",
+    "@smartive/eslint-config": "5.1.0",
+    "@types/node": "20.11.16",
+    "@types/react": "18.2.55",
+    "@types/react-dom": "18.2.18",
+    "autoprefixer": "10.4.17",
+    "dayjs": "^1.11.10",
+    "dotenv": "^16.4.5",
+    "eslint": "8.56.0",
+    "eslint-config-next": "14.1.0",
+    "framer-motion": "^11.0.28",
+    "husky": "8.0.3",
+    "lint-staged": "15.2.2",
+    "next": "14.1.0",
+    "next-auth": "5.0.0-beta.4",
+    "postcss": "8.4.34",
+    "prettier": "3.2.5",
+    "prettier-plugin-packagejson": "2.4.10",
+    "prettier-plugin-tailwindcss": "0.5.11",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-intersection-observer": "^9.8.1",
+    "tailwindcss": "3.4.1",
+    "typescript": "5.3.3",
+    "ulid": "2.3.0",
+    "zod": "3.22.4"
+  }
+}

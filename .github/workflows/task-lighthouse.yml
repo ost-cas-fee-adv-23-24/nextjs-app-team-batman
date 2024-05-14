@@ -1,0 +1,40 @@
+name: '🗼 TASK-LIGHTHOUSE'
+
+on:
+  workflow_call:
+    inputs:
+      DEPLOY_URL:
+        description: 'URL of the deployment to test'
+        required: true
+        type: string
+      VARIANT:
+        description: 'variant of the deployment'
+        required: true
+        type: string
+        default: 'BRANCH' # PROD
+
+jobs:
+  lighthouse:
+    name: '🗼 lighthouse'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: 🕵️‍♀️ Audit URLs using Lighthouse
+        if: ${{ inputs.VARIANT == 'BRANCH' }}
+        uses: treosh/lighthouse-ci-action@v11
+        with:
+          urls: |
+            ${{ inputs.DEPLOY_URL }}
+          budgetPath: ./lighthouse-budget.json
+          uploadArtifacts: true
+          temporaryPublicStorage: true
+      - name: 🕵️‍♀️ Audit URLs using Lighthouse
+        if: ${{ inputs.VARIANT == 'PROD' }}
+        uses: treosh/lighthouse-ci-action@v11
+        with:
+          urls: |
+            ${{ inputs.DEPLOY_URL }}
+            https://team-batman.onivue.ch
+          budgetPath: ./lighthouse-budget.json
+          uploadArtifacts: true
+          temporaryPublicStorage: true
