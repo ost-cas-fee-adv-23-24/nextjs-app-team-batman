@@ -148,6 +148,7 @@ export const MUMBLE_LIKE_HANDLER = async (payload: { id: string; type: MUMBLE_LI
   }
 
   revalidatePostsID();
+  revalidatePosts();
 };
 
 /**
